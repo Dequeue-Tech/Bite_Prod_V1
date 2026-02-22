@@ -1,13 +1,22 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { MenuItem, Category } from '@/lib/api-client';
-import { ChefHat, ShoppingCart, Plus, Minus, Filter, Search, Menu as MenuIcon, X } from 'lucide-react';
-import { useCartStore, CartItem } from '@/store/cart';
-import { formatInr } from '@/lib/currency';
-import toast from 'react-hot-toast';
-import Image from 'next/image';
+import { useState, useEffect, useRef } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { MenuItem, Category } from "@/lib/api-client";
+import {
+  ChefHat,
+  ShoppingCart,
+  Plus,
+  Minus,
+  Filter,
+  Search,
+  Menu as MenuIcon,
+  X,
+} from "lucide-react";
+import { useCartStore, CartItem } from "@/store/cart";
+import { formatInr } from "@/lib/currency";
+import toast from "react-hot-toast";
+import Image from "next/image";
 
 // types exposed to server component
 export type MenuPageCategory = Category;
@@ -27,36 +36,42 @@ function MenuPageContent({
 }: MenuPageProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { items, addItem, removeItem, updateQuantity, setActiveOrderId } = useCartStore();
+  const { items, addItem, removeItem, updateQuantity, setActiveOrderId } =
+    useCartStore();
 
   const [menuItems, setMenuItems] = useState<MenuItem[]>(initialMenuItems);
   const [categories, setCategories] = useState<Category[]>(initialCategories);
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedSubdomain, setSelectedSubdomain] = useState<string | null>(initialSubdomain);
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedSubdomain, setSelectedSubdomain] = useState<string | null>(
+    initialSubdomain,
+  );
 
   // Filters
   const [filters, setFilters] = useState({
     isVeg: false,
     isVegan: false,
     isGlutenFree: false,
-    spiceLevel: 'all',
+    spiceLevel: "all",
   });
   const [showCategoriesPanel, setShowCategoriesPanel] = useState(false);
+  const hasShownFirstAddToast = useRef(false);
 
   useEffect(() => {
-    setActiveOrderId(searchParams.get('orderId'));
+    setActiveOrderId(searchParams.get("orderId"));
   }, [searchParams, setActiveOrderId]);
 
-
-  const filteredItems = menuItems.filter(item => {
+  const filteredItems = menuItems.filter((item) => {
     // Category filter
-    if (selectedCategory !== 'all' && item.categoryId !== selectedCategory) {
+    if (selectedCategory !== "all" && item.categoryId !== selectedCategory) {
       return false;
     }
 
     // Search filter
-    if (searchTerm && !item.name?.toLowerCase().includes(searchTerm.toLowerCase())) {
+    if (
+      searchTerm &&
+      !item.name?.toLowerCase().includes(searchTerm.toLowerCase())
+    ) {
       return false;
     }
 
@@ -64,7 +79,8 @@ function MenuPageContent({
     if (filters.isVeg && !item.isVeg) return false;
     if (filters.isVegan && !item.isVegan) return false;
     if (filters.isGlutenFree && !item.isGlutenFree) return false;
-    if (filters.spiceLevel !== 'all' && item.spiceLevel !== filters.spiceLevel) return false;
+    if (filters.spiceLevel !== "all" && item.spiceLevel !== filters.spiceLevel)
+      return false;
 
     return item.available;
   });
@@ -73,29 +89,34 @@ function MenuPageContent({
     try {
       addItem({
         id: item.id,
-        name: item.name || '',
+        name: item.name || "",
         pricePaise: item.pricePaise,
         image: item.image,
         quantity: 1,
       });
-      
+
+      const isFirstAddToast = !hasShownFirstAddToast.current;
+      if (isFirstAddToast) {
+        hasShownFirstAddToast.current = true;
+      }
+
       // Enhanced toast notification with item details
       toast.success(
         <div className="flex items-center">
-          <span className="font-medium">{item.name || 'Item'}</span>
+          <span className="font-medium">{item.name || "Item"}</span>
           <span className="mx-2">added to cart!</span>
           <span className="bg-orange-100 text-orange-800 text-xs font-medium px-2 py-1 rounded">
             {formatInr(item.pricePaise)}
           </span>
         </div>,
         {
-          duration: 3000,
-          position: 'bottom-right',
-        }
+          duration: 2000,
+          position: "top-right",
+        },
       );
     } catch (err) {
-      console.error('Error adding item to cart:', err);
-      toast.error('Failed to add item to cart');
+      console.error("Error adding item to cart:", err);
+      toast.error("Failed to add item to cart");
     }
   };
 
@@ -103,14 +124,14 @@ function MenuPageContent({
     try {
       if (newQuantity <= 0) {
         removeItem(item.id);
-        toast.success(`${item.name || 'Item'} removed from cart`);
+        toast.success(`${item.name || "Item"} removed from cart`);
       } else {
         updateQuantity(item.id, newQuantity);
         toast.success(`Quantity updated to ${newQuantity}`);
       }
     } catch (err) {
-      console.error('Error updating item quantity:', err);
-      toast.error('Failed to update item quantity');
+      console.error("Error updating item quantity:", err);
+      toast.error("Failed to update item quantity");
     }
   };
 
@@ -121,25 +142,28 @@ function MenuPageContent({
 
   const getSpiceLevelDisplay = (level: string) => {
     const spiceMap = {
-      NONE: 'No Spice',
-      MILD: 'MILD',
-      MEDIUM: 'MEDIUM',
-      HOT: 'HOT',
-      EXTRA_HOT: 'EXTRA HOT',
+      NONE: "No Spice",
+      MILD: "MILD",
+      MEDIUM: "MEDIUM",
+      HOT: "HOT",
+      EXTRA_HOT: "EXTRA HOT",
     };
-    return spiceMap[level as keyof typeof spiceMap] || '';
+    return spiceMap[level as keyof typeof spiceMap] || "";
   };
 
-
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen mb-18 bg-gray-50">
       <div className="max-w-7xl mx-auto px-3 sm:px-4 py-4 sm:py-8">
         <div className="mb-4 sm:mb-8">
-          <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2 sm:mb-4">Our Menu</h2>
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2 sm:mb-4">
+            Our Menu
+          </h2>
           {!selectedSubdomain && (
-            <p className="text-xs sm:text-sm text-orange-700 mb-1 sm:mb-2">No restaurant selected. Go to Home and select a restaurant first.</p>
+            <p className="text-xs sm:text-sm text-orange-700 mb-1 sm:mb-2">
+              No restaurant selected. Go to Home and select a restaurant first.
+            </p>
           )}
-          {searchParams.get('orderId') && (
+          {searchParams.get("orderId") && (
             <p className="text-xs sm:text-sm text-green-700 mb-1 sm:mb-2">
               You are adding dishes to an ongoing meal.
             </p>
@@ -163,22 +187,26 @@ function MenuPageContent({
           {filteredItems.length === 0 ? (
             <div className="text-center py-8 sm:py-12">
               <ChefHat className="h-12 w-12 sm:h-16 sm:w-16 text-gray-400 mx-auto mb-3 sm:mb-4" />
-              <p className="text-gray-600 text-base sm:text-lg">No items found matching your criteria</p>
+              <p className="text-gray-600 text-base sm:text-lg">
+                No items found matching your criteria
+              </p>
             </div>
           ) : (
             (() => {
               // Group items by category when showing all, respecting original category order
-              const showAllCategories = selectedCategory === 'all';
+              const showAllCategories = selectedCategory === "all";
               let itemsByCategory: Record<string, MenuItem[]> = {};
 
               if (showAllCategories) {
                 // initialize keys in the order of categories array
-                categories.forEach(cat => {
+                categories.forEach((cat) => {
                   itemsByCategory[cat.name] = [];
                 });
 
-                filteredItems.forEach(item => {
-                  const catName = categories.find(c => c.id === item.categoryId)?.name || 'Other';
+                filteredItems.forEach((item) => {
+                  const catName =
+                    categories.find((c) => c.id === item.categoryId)?.name ||
+                    "Other";
                   if (!itemsByCategory[catName]) {
                     itemsByCategory[catName] = [];
                   }
@@ -190,7 +218,7 @@ function MenuPageContent({
 
               // rotate each category list by 1 when showing all
               if (showAllCategories) {
-                Object.keys(itemsByCategory).forEach(cat => {
+                Object.keys(itemsByCategory).forEach((cat) => {
                   const arr = itemsByCategory[cat];
                   if (arr.length > 1) {
                     itemsByCategory[cat] = [...arr.slice(1), arr[0]];
@@ -198,92 +226,133 @@ function MenuPageContent({
                 });
               }
 
-              return Object.entries(itemsByCategory).map(([categoryName, items]) => (
-                <div key={categoryName}>
-                  {/* Category separator - only show when viewing all categories */}
-                  {showAllCategories && (
-                    <div className="flex items-center gap-4 mb-4">
-                      <h2 className="text-lg sm:text-xl font-bold text-gray-800 whitespace-nowrap">{categoryName}</h2>
-                      <div className="flex-1 h-px bg-gray-300"></div>
-                      <span className="text-sm text-gray-500">{items.length} items</span>
-                    </div>
-                  )}
-                  
-                  {/* Items grid for this category */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-                    {items.map(item => {
-                      const quantity = getCartItemQuantity(item.id);
-                      
-                      return (
-                        <div key={item.id} className="bg-white rounded-lg shadow-md overflow-hidden menu-item-card">
-                          <div className="p-3 sm:p-4">
-                            <div className="flex gap-3 sm:gap-4">
-                              {/* Left side - Text content */}
-                              <div className="flex-1 min-w-0">
-                                {/* Dietary tags */}
-                                <div className="flex items-center gap-2 mb-2 text-xs">
-                                  <span className={`h-2 w-2 rounded-full ${item.isVeg ? 'bg-green-600' : 'bg-red-600'}`}></span>
-                                  <span>{item.preparationTime} min</span>
-                                </div>
-                                
-                                <h3 className="text-sm sm:text-base font-semibold text-gray-800 line-clamp-1 mb-1">{item.name || 'Unknown Item'}</h3>
-                                <p className="text-gray-600 text-xs sm:text-sm line-clamp-2 mb-2">{item.description || ''}</p>
-                                
-                                <div className="flex items-center gap-2 mb-2">
-                                  <span className="text-sm sm:text-base font-bold text-orange-600">{formatInr(item.pricePaise)}</span>
-                                  <span className="text-[10px] sm:text-xs text-gray-500 uppercase tracking-wide bg-gray-100 px-1.5 sm:px-2 py-0.5 rounded">
-                                    {getSpiceLevelDisplay(item.spiceLevel)}
-                                  </span>
-                                </div>
-                              </div>
-                              
-                              {/* Right side - Image and Add button */}
-                              <div className="flex flex-col items-center gap-2">
-                                {/* Item image (fallback to placeholder if missing) */}
-                                <Image
-                                  src={encodeURI(item.image || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=600')}
-                                  alt={item.name || ''}
-                                  width={80}
-                                  height={80}
-                                  loading="lazy"
-                                  unoptimized
-                                  className="w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-lg"
-                                />
-                                
-                                {/* Add button / Quantity controls */}
-                                {quantity === 0 ? (
-                                  <button
-                                    onClick={() => handleAddToCart(item)}
-                                    className="w-16 sm:w-20 bg-orange-600 text-white px-2 py-1.5 rounded-lg hover:bg-orange-700 transition-colors text-xs sm:text-sm font-medium"
-                                  >
-                                    Add
-                                  </button>
-                                ) : (
-                                  <div className="flex items-center border border-gray-300 rounded-lg w-16 sm:w-20 justify-center">
-                                    <button
-                                      onClick={() => handleUpdateQuantity(item, quantity - 1)}
-                                      className="p-1 sm:p-1.5 text-gray-600 hover:bg-gray-100"
-                                    >
-                                      <Minus className="h-3 w-3 sm:h-4 sm:w-4" />
-                                    </button>
-                                    <span className="px-1 sm:px-2 py-0.5 text-xs sm:text-sm font-medium min-w-[1rem] text-center">{quantity}</span>
-                                    <button
-                                      onClick={() => handleUpdateQuantity(item, quantity + 1)}
-                                      className="p-1 sm:p-1.5 text-gray-600 hover:bg-gray-100"
-                                    >
-                                      <Plus className="h-3 w-3 sm:h-4 sm:w-4" />
-                                    </button>
+              return Object.entries(itemsByCategory).map(
+                ([categoryName, items]) => (
+                  <div key={categoryName}>
+                    {/* Category separator - only show when viewing all categories */}
+                    {showAllCategories && (
+                      <div className="flex items-center gap-4 mb-4">
+                        <h2 className="text-lg sm:text-xl font-bold text-gray-800 whitespace-nowrap">
+                          {categoryName}
+                        </h2>
+                        <div className="flex-1 h-px bg-gray-300"></div>
+                        <span className="text-sm text-gray-500">
+                          {items.length} items
+                        </span>
+                      </div>
+                    )}
+
+                    {/* Items grid for this category */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                      {items.map((item) => {
+                        const quantity = getCartItemQuantity(item.id);
+
+                        return (
+                          <div
+                            key={item.id}
+                            className="bg-white rounded-lg shadow-md overflow-hidden menu-item-card"
+                          >
+                            <div className="p-3 sm:p-4">
+                              <div className="flex gap-3 sm:gap-4">
+                                {/* Left side - Text content */}
+                                <div className="flex-1 min-w-0">
+                                  {/* Dietary tags */}
+                                  <div className="flex items-center gap-2 mb-2 text-xs">
+                                    <span
+                                      className={`h-2 w-2 rounded-full ${item.isVeg ? "bg-green-600" : "bg-red-600"}`}
+                                    ></span>
+                                    <span>{item.preparationTime} min</span>
                                   </div>
-                                )}
+
+                                  <h3 className="text-sm sm:text-base font-semibold text-gray-800 line-clamp-1 mb-1">
+                                    {item.name || "Unknown Item"}
+                                  </h3>
+                                  <p className="text-gray-600 text-xs sm:text-sm line-clamp-2 mb-2">
+                                    {item.description || ""}
+                                  </p>
+
+                                  <div className="flex items-center gap-3 mb-3">
+                                    {/* Price - Slightly larger and bolder */}
+                                    <span className="text-base sm:text-lg font-extrabold text-orange-600 tracking-tight">
+                                      {formatInr(item.pricePaise)}
+                                    </span>
+
+                                    {/* Vertical Divider */}
+                                    <div className="w-[1px] h-4 bg-gray-200" />
+
+                                    {/* Spice Level Badge */}
+                                    <div className="flex items-center gap-1.5 bg-orange-50 border border-orange-100 px-2 py-1 rounded-md">
+                                      <span className="text-xs">🌶️</span>
+                                      <span className="text-[10px] sm:text-xs font-semibold text-orange-700 uppercase tracking-wider">
+                                        {getSpiceLevelDisplay(item.spiceLevel)}
+                                      </span>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                {/* Right side - Image and Add button */}
+                                <div className="flex flex-col items-center gap-2">
+                                  {/* Item image (fallback to placeholder if missing) */}
+                                  <Image
+                                    src={encodeURI(
+                                      item.image ||
+                                        "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=600",
+                                    )}
+                                    alt={item.name || ""}
+                                    width={80}
+                                    height={80}
+                                    loading="lazy"
+                                    unoptimized
+                                    className="w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-lg"
+                                  />
+
+                                  {/* Add button / Quantity controls */}
+                                  {quantity === 0 ? (
+                                    <button
+                                      onClick={() => handleAddToCart(item)}
+                                      className="w-16 sm:w-20 bg-orange-600 text-white px-2 py-1.5 rounded-lg hover:bg-orange-700 transition-colors text-xs sm:text-sm font-medium"
+                                    >
+                                      Add
+                                    </button>
+                                  ) : (
+                                    <div className="flex items-center border border-gray-300 rounded-lg w-16 sm:w-20 justify-center">
+                                      <button
+                                        onClick={() =>
+                                          handleUpdateQuantity(
+                                            item,
+                                            quantity - 1,
+                                          )
+                                        }
+                                        className="p-1 sm:p-1.5 text-gray-600 hover:bg-gray-100"
+                                      >
+                                        <Minus className="h-3 w-3 sm:h-4 sm:w-4" />
+                                      </button>
+                                      <span className="px-1 sm:px-2 py-0.5 text-xs sm:text-sm font-medium min-w-[1rem] text-center">
+                                        {quantity}
+                                      </span>
+                                      <button
+                                        onClick={() =>
+                                          handleUpdateQuantity(
+                                            item,
+                                            quantity + 1,
+                                          )
+                                        }
+                                        className="p-1 sm:p-1.5 text-gray-600 hover:bg-gray-100"
+                                      >
+                                        <Plus className="h-3 w-3 sm:h-4 sm:w-4" />
+                                      </button>
+                                    </div>
+                                  )}
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                      );
-                    })}
+                        );
+                      })}
+                    </div>
                   </div>
-                </div>
-              ));
+                ),
+              );
             })()
           )}
         </div>
@@ -298,13 +367,13 @@ function MenuPageContent({
               <div className="max-h-64 overflow-y-auto">
                 <button
                   onClick={() => {
-                    setSelectedCategory('all');
+                    setSelectedCategory("all");
                     setShowCategoriesPanel(false);
                   }}
                   className={`w-full text-left px-4 py-2.5 text-sm transition-colors ${
-                    selectedCategory === 'all'
-                      ? 'bg-orange-500/20 text-orange-700 font-medium'
-                      : 'text-gray-700 hover:bg-white/50'
+                    selectedCategory === "all"
+                      ? "bg-orange-500/20 text-orange-700 font-medium"
+                      : "text-gray-700 hover:bg-white/50"
                   }`}
                 >
                   All Items
@@ -318,8 +387,8 @@ function MenuPageContent({
                     }}
                     className={`w-full text-left px-4 py-2.5 text-sm transition-colors ${
                       selectedCategory === category.id
-                        ? 'bg-orange-500/20 text-orange-700 font-medium'
-                        : 'text-gray-700 hover:bg-white/50'
+                        ? "bg-orange-500/20 text-orange-700 font-medium"
+                        : "text-gray-700 hover:bg-white/50"
                     }`}
                   >
                     {category.name}
@@ -335,11 +404,12 @@ function MenuPageContent({
           onClick={() => setShowCategoriesPanel(!showCategoriesPanel)}
           className={`w-14 h-14 rounded-full backdrop-blur-xl shadow-2xl flex items-center justify-center transition-all duration-300 ${
             showCategoriesPanel
-              ? 'bg-orange-500/90 border-2 border-white/50 text-white rotate-90'
-              : 'bg-white/80 border-2 border-white/50 text-gray-700 hover:bg-white/90'
+              ? "bg-orange-500/90 border-2 border-white/50 text-white rotate-90"
+              : "bg-white/80 border-2 border-white/50 text-gray-700 hover:bg-white/90"
           }`}
           style={{
-            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2), inset 0 2px 4px rgba(255, 255, 255, 0.3)',
+            boxShadow:
+              "0 8px 32px rgba(0, 0, 0, 0.2), inset 0 2px 4px rgba(255, 255, 255, 0.3)",
           }}
         >
           {showCategoriesPanel ? (

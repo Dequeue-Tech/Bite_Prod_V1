@@ -57,7 +57,7 @@ export default function RestaurantLandingClient({ restaurant }: { restaurant: La
   const [currentDealIndex, setCurrentDealIndex] = useState(0);
 
   // sample offer backgrounds used for dynamic section image
-  const offerImages = ['/images.jpeg', '/images(1).jpeg', '/download.jpeg'];
+  const offerImages = ['/images.jpeg', 'https://restaurantindia.s3.ap-south-1.amazonaws.com/s3fs-public/2025-03/BeFunky-collage.1%20%2852%29.jpg', '/download.jpeg'];
 
   // public fallback assets (logo first image, background second)
   const defaultBg = '/WhatsApp Image 2026-02-20 at 2.26.12 PM.jpeg';
@@ -124,7 +124,7 @@ export default function RestaurantLandingClient({ restaurant }: { restaurant: La
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-4 sm:py-8">
+    <div className="min-h-screen mb-10 bg-gray-50 py-4 sm:py-8">
       <div className="max-w-5xl mx-auto px-3 sm:px-4">
         <section className="relative rounded-2xl border border-orange-200 overflow-hidden mb-4 sm:mb-6">
           {/* Background Image */}

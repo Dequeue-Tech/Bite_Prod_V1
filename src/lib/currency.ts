@@ -3,7 +3,7 @@ export const formatInr = (paise: number): string => {
   return new Intl.NumberFormat('en-IN', {
     style: 'currency',
     currency: 'INR',
-    currencyDisplay: 'code',
+    currencyDisplay: 'symbol',
     maximumFractionDigits: 2,
   }).format(amount);
 };
