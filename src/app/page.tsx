@@ -8,6 +8,12 @@ async function getLandingRestaurant(): Promise<LandingRestaurant> {
     categories: [],
     menuItems: [],
     googleReviewUrl: null,
+    // optional extras
+    subdomain: null,
+    backgroundImage: null,
+    logo: null,
+    paymentCollectionTiming: undefined,
+    cashPaymentEnabled: false,
   };
 
   try {
@@ -50,6 +56,12 @@ async function getLandingRestaurant(): Promise<LandingRestaurant> {
       categories: restaurant.categories || [],
       menuItems: restaurant.menuItems || [],
       googleReviewUrl: restaurant.googleReviewUrl || null,
+      // optional extras not stored in schema currently
+      subdomain: restaurant.subdomain || null,
+      backgroundImage: (restaurant as any).backgroundImage || null,
+      logo: (restaurant as any).logo || null,
+      paymentCollectionTiming: (restaurant as any).paymentCollectionTiming,
+      cashPaymentEnabled: (restaurant as any).cashPaymentEnabled || false,
     };
   } catch {
     return fallback;

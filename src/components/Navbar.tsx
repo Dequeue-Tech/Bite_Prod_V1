@@ -41,6 +41,16 @@ const Navbar = () => {
               </Link>
             </div>
 
+            {/* Mobile Rate Us button (visible only on small screens) */}
+            <div className="flex items-center md:hidden">
+              <button
+                onClick={() => window.open('https://www.google.com/maps', '_blank')}
+                className="text-sm px-2 py-1 rounded-lg border border-orange-600 text-orange-600 hover:bg-orange-50 transition-colors font-medium"
+              >
+                 Rate Us
+              </button>
+            </div>
+
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-6 lg:space-x-8">
               {desktopNavLinks.map((link) => (
@@ -56,6 +66,14 @@ const Navbar = () => {
                   {link.name}
                 </Link>
               ))}
+
+            
+              <button
+                onClick={() => window.open('https://www.google.com/maps', '_blank')}
+                className="text-sm lg:text-base px-3 lg:px-4 py-1.5 lg:py-2 rounded-lg border border-orange-600 text-orange-600 hover:bg-orange-50 transition-colors font-medium"
+              >
+                 Rate Us
+              </button>
 
               {/* Cart icon for authenticated users */}
               {(

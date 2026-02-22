@@ -1,10 +1,22 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { ArrowRight, Percent, ChevronLeft, ChevronRight } from 'lucide-react';
+import {
+  ArrowRight,
+  CircleDollarSign,
+  HandCoins,
+  Percent,
+  Utensils,
+  ChevronLeft,
+  ChevronRight,
+} from 'lucide-react';
 import { formatInr } from '@/lib/currency';
+import toast from 'react-hot-toast';
 import Image from 'next/image';
+
+// types
 
 type RestaurantCategory = {
   id: string;
@@ -29,18 +41,69 @@ export type LandingRestaurant = {
   categories: RestaurantCategory[];
   menuItems: LandingMenuItem[];
   googleReviewUrl?: string | null;
+
+  // optional extras for UI
+  subdomain?: string | null;
+  backgroundImage?: string | null;
+  logo?: string | null;
+  paymentCollectionTiming?: 'BEFORE_MEAL' | 'AFTER_MEAL';
+  cashPaymentEnabled?: boolean;
 };
+
+// component
 
 export default function RestaurantLandingClient({ restaurant }: { restaurant: LandingRestaurant }) {
   const router = useRouter();
   const [currentDealIndex, setCurrentDealIndex] = useState(0);
 
+  // sample offer backgrounds used for dynamic section image
+  const offerImages = ['/images.jpeg', '/images(1).jpeg', '/download.jpeg'];
+
+  // public fallback assets (logo first image, background second)
+  const defaultBg = '/WhatsApp Image 2026-02-20 at 2.26.12 PM.jpeg';
+  const defaultLogo = '/WhatsApp Image 2026-02-20 at 2.25.28 PM.jpeg';
+
+  const selectAndOpen = () => {
+    if (!restaurant?.subdomain) return;
+    try {
+      localStorage.setItem('selectedRestaurant', restaurant.subdomain);
+    } catch {}
+    toast.success(`${restaurant.name} selected`);
+    router.push('/menu');
+  };
+
+  const getInitials = (name: string) =>
+    name
+      .split(' ')
+      .filter(Boolean)
+      .slice(0, 2)
+      .map((word: string) => word[0]?.toUpperCase() || '')
+      .join('');
+
   const buildDeals = () => {
+    if (!restaurant) return [];
+    const topPrice = Math.max(...(restaurant.menuItems || []).map((item) => item.pricePaise), 0);
     return [
       {
         title: 'Welcome Deal',
         detail: 'Get 15% OFF on your first order above ' + formatInr(39900),
         icon: Percent,
+      },
+      {
+        title: 'Chef Special Combo',
+        detail:
+          topPrice > 0
+            ? `Trending combo starts from ${formatInr(Math.max(topPrice - 10000, 12900))}`
+            : 'Ask for today’s chef special combo at the counter.',
+        icon: Utensils,
+      },
+      {
+        title: 'Flexible Payment',
+        detail:
+          restaurant.paymentCollectionTiming === 'BEFORE_MEAL'
+            ? `Payment before meal${restaurant.cashPaymentEnabled ? ' with cash option available.' : '.'}`
+            : `Pay after meal${restaurant.cashPaymentEnabled ? ' with cash option available.' : '.'}`,
+        icon: restaurant.cashPaymentEnabled ? HandCoins : CircleDollarSign,
       },
     ];
   };
@@ -49,112 +112,139 @@ export default function RestaurantLandingClient({ restaurant }: { restaurant: La
     restaurant.googleReviewUrl ||
     `https://www.google.com/search?q=${encodeURIComponent(`${restaurant.name} reviews`)}`;
 
+  if (!restaurant) {
+    return (
+      <div className="min-h-screen bg-gray-50 p-8">
+        <p className="text-gray-700">Restaurant not found.</p>
+        <Link href="/" className="text-orange-600">
+          Back to Home
+        </Link>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 py-4 sm:py-8">
       <div className="max-w-5xl mx-auto px-3 sm:px-4">
-        <section className="rounded-2xl border border-orange-200 bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50 p-4 sm:p-6 md:p-8 mb-4 sm:mb-6">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-5">
-            <div className="flex items-center gap-3 sm:gap-4">
-              <div className="h-14 w-14 sm:h-20 sm:w-20 rounded-xl sm:rounded-2xl bg-orange-600 text-white flex items-center justify-center text-xl sm:text-2xl font-bold shadow-sm flex-shrink-0">
-                Haveli Dhabba
-              </div>
-              <div className="min-w-0 flex-1">
-                <p className="text-xs sm:text-sm font-medium text-orange-700">Restaurant Landing</p>
-                <h1 className="text-xl sm:text-3xl font-bold text-gray-900 truncate">{restaurant.name}</h1>
-                <p className="text-gray-600 mt-0.5 sm:mt-1 text-xs sm:text-sm truncate">{restaurant.address}</p>
-              </div>
-            </div>
-            <button
-              onClick={() => router.push('/menu')}
-              className="inline-flex items-center justify-center bg-orange-600 text-white px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl hover:bg-orange-700 font-medium text-sm sm:text-base"
-            >
-              View Menu
-              <ArrowRight className="h-4 w-4 ml-2" />
-            </button>
-          </div>
-        </section>
+        <section className="relative rounded-2xl border border-orange-200 overflow-hidden mb-4 sm:mb-6">
+          {/* Background Image */}
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{
+              backgroundImage: `url(${encodeURI(restaurant.backgroundImage || defaultBg)})`,
+              filter: 'blur(2px) brightness(0.7)',
+            }}
+          />
 
-        <section className="bg-white rounded-xl border border-gray-200 p-4 sm:p-5 mb-4 sm:mb-6">
-          <div className="flex items-center justify-between mb-3 sm:mb-4">
-            <h2 className="text-lg sm:text-xl font-semibold text-gray-900">Offers & Deals</h2>
-            <div className="flex items-center gap-1">
-              <button
-                onClick={() => setCurrentDealIndex((prev) => (prev === 0 ? buildDeals().length - 1 : prev - 1))}
-                className="p-1.5 sm:p-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 transition-colors"
-                aria-label="Previous deal"
-              >
-                <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5" />
-              </button>
-              <button
-                onClick={() => setCurrentDealIndex((prev) => (prev === buildDeals().length - 1 ? 0 : prev + 1))}
-                className="p-1.5 sm:p-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 transition-colors"
-                aria-label="Next deal"
-              >
-                <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5" />
-              </button>
-            </div>
-          </div>
-
-          <div className="relative overflow-hidden">
-            <div
-              className="flex transition-transform duration-300 ease-in-out"
-              style={{ transform: `translateX(-${currentDealIndex * 100}%)` }}
-            >
-              {buildDeals().map((deal: any) => (
-                <div
-                  key={deal.title}
-                  className="w-full flex-shrink-0 rounded-lg border border-orange-100 bg-orange-50/60 p-4 sm:p-5"
-                >
-                  <div className="flex items-start gap-3 sm:gap-4">
-                    <div className="flex-shrink-0 p-2 sm:p-3 bg-orange-100 rounded-lg">
-                      <deal.icon className="h-5 w-5 sm:h-6 sm:w-6 text-orange-600" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="font-semibold text-gray-900 text-base sm:text-lg">{deal.title}</p>
-                      <p className="text-sm sm:text-base text-gray-700 mt-1">{deal.detail}</p>
-                    </div>
-                  </div>
+          {/* Content */}
+          <div className="relative z-10 p-4 sm:p-6 md:p-8">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-5">
+              <div className="flex items-center gap-3 sm:gap-4">
+                {/* Logo */}
+                <img
+                  src={restaurant.logo || defaultLogo}
+                  alt={restaurant.name}
+                  className="h-14 w-14 sm:h-20 sm:w-20 rounded-xl sm:rounded-2xl object-cover shadow-lg flex-shrink-0 bg-white"
+                />
+                <div className="min-w-0 flex-1">
+                  <p className="text-xs sm:text-sm font-medium text-orange-200">Restaurant Landing</p>
+                  <h1 className="text-xl sm:text-3xl font-bold text-white truncate drop-shadow-lg">
+                    {restaurant.name}
+                  </h1>
+                  <p className="text-gray-200 mt-0.5 sm:mt-1 text-xs sm:text-sm truncate drop-shadow-md">
+                    {restaurant.address || 'Address not provided'}
+                  </p>
                 </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="flex justify-center gap-2 mt-3 sm:mt-4">
-            {buildDeals().map((deal: any, index: number) => (
+              </div>
               <button
-                key={deal.title}
-                onClick={() => setCurrentDealIndex(index)}
-                className={`w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full transition-colors ${
-                  index === currentDealIndex ? 'bg-orange-600' : 'bg-gray-300 hover:bg-gray-400'
-                }`}
-                aria-label={`Go to deal ${index + 1}`}
-              />
-            ))}
+                onClick={selectAndOpen}
+                className="inline-flex items-center justify-center bg-orange-600 text-white px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl hover:bg-orange-700 font-medium text-sm sm:text-base shadow-lg"
+              >
+                View Menu
+                <ArrowRight className="h-4 w-4 ml-2" />
+              </button>
+            </div>
           </div>
         </section>
 
-        <div className="bg-white rounded-xl border border-gray-200 p-4 sm:p-5 mb-4 sm:mb-6">
-          <h2 className="font-semibold text-gray-900 mb-2 text-sm sm:text-base">Quick Actions</h2>
-          <div className="flex flex-wrap gap-2 sm:gap-3">
-            <button
-              onClick={() => router.push('/menu')}
-              className="bg-orange-600 text-white px-3 sm:px-4 py-2 rounded-lg hover:bg-orange-700 text-sm"
-            >
-              Open Menu
-            </button>
-            <a
-              href={googleReviewLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-white text-orange-700 border border-orange-200 px-3 sm:px-4 py-2 rounded-lg hover:bg-orange-50 text-sm"
-            >
-              Google Reviews
-            </a>
-          </div>
-        </div>
+{/* offers&amp;deals container with dynamic background */}
+          <section
+            className="bg-white rounded-xl border border-gray-200 p-4 sm:p-5 mb-4 sm:mb-6 relative overflow-hidden"
+            style={{
+              backgroundImage: `url(${offerImages[currentDealIndex % offerImages.length] || offerImages[0]})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            }}
+          >
+            {/* dark overlay for readability */}
+            <div className="absolute inset-0 bg-black/30 pointer-events-none" />
+
+            <div className="relative z-10">
+              <div className="flex items-center justify-between mb-3 sm:mb-4">
+                <h2 className="text-lg sm:text-xl font-semibold text-white">Offers & Deals</h2>
+                <div className="flex items-center gap-1">
+                  <button
+                    onClick={() => setCurrentDealIndex((prev) => (prev === 0 ? buildDeals().length - 1 : prev - 1))}
+                    className="p-1.5 sm:p-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 transition-colors"
+                    aria-label="Previous deal"
+                  >
+                    <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5" />
+                  </button>
+                  <button
+                    onClick={() => setCurrentDealIndex((prev) => (prev === buildDeals().length - 1 ? 0 : prev + 1))}
+                    className="p-1.5 sm:p-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 transition-colors"
+                    aria-label="Next deal"
+                  >
+                    <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5" />
+                  </button>
+                </div>
+              </div>
+
+              <div className="relative overflow-hidden">
+                <div
+                  className="flex transition-transform duration-300 ease-in-out"
+                  style={{ transform: `translateX(-${currentDealIndex * 100}%)` }}
+                >
+                  {buildDeals().map((deal: any, index: number) => {
+                    return (
+                      <div
+                        key={deal.title}
+                        className="w-full flex-shrink-0 rounded-lg border border-orange-100 p-4 sm:p-5 relative overflow-hidden bg-white/30 backdrop-blur-md"
+                      >
+                        {/* Content */}
+                        <div className="relative z-10 flex items-start gap-3 sm:gap-4">
+                          <div className="flex-shrink-0 p-2 sm:p-3 bg-orange-100/90 rounded-lg">
+                            <deal.icon className="h-5 w-5 sm:h-6 sm:w-6 text-orange-600" />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <p className="font-semibold text-gray-900 text-base sm:text-lg">{deal.title}</p>
+                            <p className="text-sm sm:text-base text-gray-700 mt-1">{deal.detail}</p>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="flex justify-center gap-2 mt-3 sm:mt-4">
+                {buildDeals().map((deal: any, index: number) => (
+                  <button
+                    key={deal.title}
+                    onClick={() => setCurrentDealIndex(index)}
+                    className={`w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full transition-colors ${
+                      index === currentDealIndex ? 'bg-orange-600' : 'bg-gray-300 hover:bg-gray-400'
+                    }`}
+                    aria-label={`Go to deal ${index + 1}`}
+                  />
+                ))}
+              </div>
+            </div>
+          </section>
+
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 pb-4 sm:pb-6">
-          <div className="bg-white rounded-xl border border-gray-200 p-4 sm:p-5">
+          <div className="bg-white rounded-xl border border-gray-200 p-4 sm:p-5 mb-4 sm:mb-6">
             <h2 className="font-semibold text-gray-900 mb-2 sm:mb-3 text-sm sm:text-base">Categories</h2>
             <div className="flex flex-wrap gap-1.5 sm:gap-2">
               {(restaurant.categories || []).map((cat) => (
@@ -192,3 +282,5 @@ export default function RestaurantLandingClient({ restaurant }: { restaurant: La
     </div>
   );
 }
+
+              
