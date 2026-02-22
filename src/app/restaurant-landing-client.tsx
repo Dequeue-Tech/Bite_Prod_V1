@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ArrowRight, Percent, ChevronLeft, ChevronRight } from 'lucide-react';
 import { formatInr } from '@/lib/currency';
+import Image from 'next/image';
 
 type RestaurantCategory = {
   id: string;
@@ -14,6 +15,7 @@ type LandingMenuItem = {
   id: string;
   name: string;
   pricePaise: number;
+  image?: string | null;
   category?: {
     id: string;
     name: string;
@@ -168,6 +170,14 @@ export default function RestaurantLandingClient({ restaurant }: { restaurant: La
             <div className="space-y-1.5 sm:space-y-2">
               {(restaurant.menuItems || []).slice(0, 6).map((item) => (
                 <div key={item.id} className="flex items-center justify-between border border-gray-100 rounded p-1.5 sm:p-2 gap-2">
+                  <div className="relative h-12 w-12 sm:h-14 sm:w-14 flex-shrink-0 overflow-hidden rounded bg-gray-100">
+                    <Image
+                      src={item.image || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=600'}
+                      alt={item.name}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
                   <div className="min-w-0 flex-1">
                     <p className="font-medium text-gray-900 text-sm truncate">{item.name}</p>
                     <p className="text-xs text-gray-500 truncate">{item.category?.name}</p>

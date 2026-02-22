@@ -217,15 +217,13 @@ export default function MenuPageClient({
               return (
                 <div key={item.id} className="bg-white rounded-lg shadow-md overflow-hidden menu-item-card">
                   <div className="relative">
-                    {item.image && (
-                      <Image
-                        src={item.image}
-                        alt={item.name || ''}
-                        width={300}
-                        height={200}
-                        className="w-full h-40 sm:h-48 object-cover"
-                      />
-                    )}
+                    <Image
+                      src={item.image || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=1000'}
+                      alt={item.name || ''}
+                      width={300}
+                      height={200}
+                      className="w-full h-40 sm:h-48 object-cover"
+                    />
 
                     <div className="absolute top-2 left-2 flex space-x-1">
                       {item.isVeg && <span className="bg-green-600 text-white text-xs px-2 py-1 rounded">Veg</span>}
