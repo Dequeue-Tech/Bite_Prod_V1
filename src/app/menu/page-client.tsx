@@ -1,8 +1,8 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { ChefHat, Plus, Minus, Search } from 'lucide-react';
+import { useSearchParams } from 'next/navigation';
+import { ChefHat, Plus, Minus, Search, Menu, X } from 'lucide-react';
 import { useCartStore, CartItem } from '@/store/cart';
 import { formatInr } from '@/lib/currency';
 import toast from 'react-hot-toast';
@@ -49,14 +49,15 @@ export default function MenuPageClient({
   initialCategories,
   selectedSubdomain,
 }: MenuPageClientProps) {
-  const router = useRouter();
+  const API_ORIGIN = (process.env.NEXT_PUBLIC_API_URL || '').replace(/\/api\/?$/, '');
+  const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=1000';
   const searchParams = useSearchParams();
   const { items, addItem, removeItem, updateQuantity, setActiveOrderId } = useCartStore();
 
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchTerm, setSearchTerm] = useState('');
+  const [isCategoryMenuOpen, setIsCategoryMenuOpen] = useState(false);
 
-  // Filters
   const [filters, setFilters] = useState({
     isVeg: false,
     isVegan: false,
@@ -89,13 +90,49 @@ export default function MenuPageClient({
     [initialMenuItems, selectedCategory, searchTerm, filters]
   );
 
-  const handleAddToCart = (item: MenuPageItem) => {
-    // if (!isAuthenticated) {
-    //   toast.error('Please sign in to add items to cart');
-    //   router.push('/auth/signin');
-    //   return;
-    // }
+  const groupedItems = useMemo(() => {
+    const itemsByCategory = new Map<string, MenuPageItem[]>();
 
+    filteredItems.forEach((item) => {
+      const key = item.categoryId || 'uncategorized';
+      const existing = itemsByCategory.get(key) || [];
+      existing.push(item);
+      itemsByCategory.set(key, existing);
+    });
+
+    const visibleCategoryIds =
+      selectedCategory === 'all' ? initialCategories.map((category) => category.id) : [selectedCategory];
+
+    const groups = visibleCategoryIds
+      .map((categoryId) => {
+        const category = initialCategories.find((c) => c.id === categoryId);
+        const items = itemsByCategory.get(categoryId) || [];
+
+        if (!category || items.length === 0) {
+          return null;
+        }
+
+        return {
+          id: category.id,
+          name: category.name,
+          items,
+        };
+      })
+      .filter((group): group is { id: string; name: string; items: MenuPageItem[] } => Boolean(group));
+
+    const uncategorizedItems = itemsByCategory.get('uncategorized') || [];
+    if (uncategorizedItems.length > 0) {
+      groups.push({
+        id: 'uncategorized',
+        name: 'Uncategorized',
+        items: uncategorizedItems,
+      });
+    }
+
+    return groups;
+  }, [filteredItems, initialCategories, selectedCategory]);
+
+  const handleAddToCart = (item: MenuPageItem) => {
     try {
       addItem({
         id: item.id,
@@ -125,12 +162,6 @@ export default function MenuPageClient({
   };
 
   const handleUpdateQuantity = (item: MenuPageItem, newQuantity: number) => {
-    // if (!isAuthenticated) {
-    //   toast.error('Please sign in to update cart items');
-    //   router.push('/auth/signin');
-    //   return;
-    // }
-
     try {
       if (newQuantity <= 0) {
         removeItem(item.id);
@@ -161,23 +192,41 @@ export default function MenuPageClient({
     return spiceMap[level as keyof typeof spiceMap] || '';
   };
 
+  const resolveImageSrc = (image?: string) => {
+    if (!image) {
+      return FALLBACK_IMAGE;
+    }
+
+    if (image.startsWith('http://') || image.startsWith('https://') || image.startsWith('data:')) {
+      return image;
+    }
+
+    if (!API_ORIGIN) {
+      return FALLBACK_IMAGE;
+    }
+
+    if (image.startsWith('/')) {
+      return `${API_ORIGIN}${image}`;
+    }
+
+    return `${API_ORIGIN}/${image}`;
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto px-3 sm:px-4 py-4 sm:py-8">
-        <div className="mb-4 sm:mb-8">
-          <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2 sm:mb-4">Our Menu</h2>
+      <div className="max-w-7xl mx-auto px-4 py-8">
+        <div className="mb-8">
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">Our Menu</h2>
           {selectedSubdomain ? (
-            <p className="text-xs sm:text-sm text-gray-600 mb-1 sm:mb-2">Restaurant context: @{selectedSubdomain}</p>
+            <p className="text-sm text-gray-600 mb-2">Restaurant context: @{selectedSubdomain}</p>
           ) : (
-            <p className="text-xs sm:text-sm text-orange-700 mb-1 sm:mb-2">
-              No restaurant selected. Go to Home and select a restaurant first.
-            </p>
+            <p className="text-sm text-orange-700 mb-2">No restaurant selected. Go to Home and select a restaurant first.</p>
           )}
           {searchParams.get('orderId') && (
-            <p className="text-xs sm:text-sm text-green-700 mb-1 sm:mb-2">You are adding dishes to an ongoing meal.</p>
+            <p className="text-sm text-green-700 mb-2">You are adding dishes to an ongoing meal.</p>
           )}
 
-          <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 mb-4 sm:mb-6">
+          <div className="flex flex-col md:flex-row gap-4 mb-6">
             <div className="relative flex-grow">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
               <input
@@ -185,100 +234,136 @@ export default function MenuPageClient({
                 placeholder="Search menu items..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-orange-500 focus:border-orange-500 text-sm sm:text-base"
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-orange-500 focus:border-orange-500"
               />
             </div>
-
-            <select
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-              className="px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-orange-500 focus:border-orange-500 text-sm sm:text-base"
-            >
-              <option value="all">All Categories</option>
-              {initialCategories.map((category) => (
-                <option key={category.id} value={category.id}>
-                  {category.name}
-                </option>
-              ))}
-            </select>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-          {filteredItems.length === 0 ? (
-            <div className="col-span-full text-center py-8 sm:py-12">
-              <ChefHat className="h-12 w-12 sm:h-16 sm:w-16 text-gray-400 mx-auto mb-3 sm:mb-4" />
-              <p className="text-gray-600 text-base sm:text-lg">No items found matching your criteria</p>
-            </div>
-          ) : (
-            filteredItems.map((item) => {
-              const quantity = getCartItemQuantity(item.id);
+        {filteredItems.length === 0 ? (
+          <div className="text-center py-12">
+            <ChefHat className="h-16 w-16 text-gray-400 mx-auto mb-4" />
+            <p className="text-gray-600 text-lg">No items found matching your criteria</p>
+          </div>
+        ) : (
+          <div className="space-y-10">
+            {groupedItems.map((group) => (
+              <section key={group.id}>
+                <h3 className="text-xl font-semibold text-gray-800 mb-4">{group.name}</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {group.items.map((item) => {
+                    const quantity = getCartItemQuantity(item.id);
 
-              return (
-                <div key={item.id} className="bg-white rounded-lg shadow-md overflow-hidden menu-item-card">
-                  <div className="relative">
-                    <Image
-                      src={item.image || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=1000'}
-                      alt={item.name || ''}
-                      width={300}
-                      height={200}
-                      className="w-full h-40 sm:h-48 object-cover"
-                    />
+                    return (
+                      <div key={item.id} className="bg-white rounded-lg shadow-md relative">
+                        <div className="absolute top-3 right-3 w-16 h-16 rounded-md overflow-hidden border border-gray-200 bg-gray-100">
+                          <Image
+                            src={resolveImageSrc(item.image)}
+                            alt={item.name || ''}
+                            width={64}
+                            height={64}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
 
-                    <div className="absolute top-2 left-2 flex space-x-1">
-                      {item.isVeg && <span className="bg-green-600 text-white text-xs px-2 py-1 rounded">Veg</span>}
-                      {item.isVegan && <span className="bg-green-600 text-white text-xs px-2 py-1 rounded">Vegan</span>}
-                    </div>
-                  </div>
-
-                  <div className="p-3 sm:p-4">
-                    <div className="flex justify-between items-start mb-2 gap-2">
-                      <h3 className="text-base sm:text-lg font-semibold text-gray-800 line-clamp-1">
-                        {item.name || 'Unknown Item'}
-                      </h3>
-                      <span className="text-base sm:text-lg font-bold text-orange-600 whitespace-nowrap">{formatInr(item.pricePaise)}</span>
-                    </div>
-
-                    <p className="text-gray-600 mb-3 sm:mb-4 text-xs sm:text-sm line-clamp-2">{item.description || ''}</p>
-
-                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 sm:gap-0 mb-3 sm:mb-4">
-                      <span className="text-xs text-gray-500 uppercase tracking-wide bg-gray-100 px-2 py-1 rounded">
-                        {getSpiceLevelDisplay(item.spiceLevel)}
-                      </span>
-
-                      <div className="flex items-center w-full sm:w-auto">
-                        {quantity === 0 ? (
-                          <button
-                            onClick={() => handleAddToCart(item)}
-                            className="w-full sm:w-auto bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 transition-colors text-sm"
-                          >
-                            Add to Cart
-                          </button>
-                        ) : (
-                          <div className="flex items-center border border-gray-300 rounded-lg w-full sm:w-auto justify-center sm:justify-start">
-                            <button
-                              onClick={() => handleUpdateQuantity(item, quantity - 1)}
-                              className="p-2 text-gray-600 hover:bg-gray-100 flex-1 sm:flex-none"
-                            >
-                              <Minus className="h-4 w-4 mx-auto" />
-                            </button>
-                            <span className="px-3 py-1 font-medium min-w-[2rem] text-center">{quantity}</span>
-                            <button
-                              onClick={() => handleUpdateQuantity(item, quantity + 1)}
-                              className="p-2 text-gray-600 hover:bg-gray-100 flex-1 sm:flex-none"
-                            >
-                              <Plus className="h-4 w-4 mx-auto" />
-                            </button>
+                        <div className="p-4">
+                          <div className="flex justify-between items-start mb-2 pr-20">
+                            <h3 className="text-lg font-semibold text-gray-800">{item.name || 'Unknown Item'}</h3>
+                            <span className="text-lg font-bold text-orange-600">{formatInr(item.pricePaise)}</span>
                           </div>
-                        )}
+
+                          <p className="text-gray-600 mb-4 text-sm">{item.description || ''}</p>
+
+                          <div className="flex gap-1 mb-3">
+                            {item.isVeg && <span className="bg-green-600 text-white text-xs px-2 py-1 rounded">Veg</span>}
+                            {item.isVegan && <span className="bg-green-600 text-white text-xs px-2 py-1 rounded">Vegan</span>}
+                          </div>
+
+                          <div className="flex justify-between items-center mb-4">
+                            <span className="text-xs text-gray-500 uppercase tracking-wide bg-gray-100 px-2 py-1 rounded">
+                              {getSpiceLevelDisplay(item.spiceLevel)}
+                            </span>
+
+                            <div className="flex items-center">
+                              {quantity === 0 ? (
+                                <button
+                                  onClick={() => handleAddToCart(item)}
+                                  className="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 transition-colors"
+                                >
+                                  Add to Cart
+                                </button>
+                              ) : (
+                                <div className="flex items-center border border-gray-300 rounded-lg">
+                                  <button
+                                    onClick={() => handleUpdateQuantity(item, quantity - 1)}
+                                    className="p-2 text-gray-600 hover:bg-gray-100"
+                                  >
+                                    <Minus className="h-4 w-4" />
+                                  </button>
+                                  <span className="px-3 py-1 font-medium">{quantity}</span>
+                                  <button
+                                    onClick={() => handleUpdateQuantity(item, quantity + 1)}
+                                    className="p-2 text-gray-600 hover:bg-gray-100"
+                                  >
+                                    <Plus className="h-4 w-4" />
+                                  </button>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
+                    );
+                  })}
                 </div>
-              );
-            })
-          )}
-        </div>
+              </section>
+            ))}
+          </div>
+        )}
+      </div>
+
+      <div className="fixed right-4 bottom-20 z-40">
+        {isCategoryMenuOpen && (
+          <div className="mb-3 w-64 max-h-80 overflow-y-auto bg-white border border-gray-200 rounded-xl shadow-xl p-3">
+            <p className="text-sm font-semibold text-gray-700 mb-2">Switch Category</p>
+            <button
+              type="button"
+              onClick={() => {
+                setSelectedCategory('all');
+                setIsCategoryMenuOpen(false);
+              }}
+              className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
+                selectedCategory === 'all' ? 'bg-orange-100 text-orange-800' : 'hover:bg-gray-100 text-gray-700'
+              }`}
+            >
+              All Categories
+            </button>
+            {initialCategories.map((category) => (
+              <button
+                key={category.id}
+                type="button"
+                onClick={() => {
+                  setSelectedCategory(category.id);
+                  setIsCategoryMenuOpen(false);
+                }}
+                className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
+                  selectedCategory === category.id ? 'bg-orange-100 text-orange-800' : 'hover:bg-gray-100 text-gray-700'
+                }`}
+              >
+                {category.name}
+              </button>
+            ))}
+          </div>
+        )}
+
+        <button
+          type="button"
+          aria-label="Toggle category switcher"
+          onClick={() => setIsCategoryMenuOpen((prev) => !prev)}
+          className="h-14 w-14 rounded-full bg-orange-600 text-white shadow-lg hover:bg-orange-700 transition-colors flex items-center justify-center"
+        >
+          {isCategoryMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+        </button>
       </div>
     </div>
   );
