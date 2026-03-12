@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { MenuItem, Category } from "@/lib/api-client";
 import {
   ChefHat,
@@ -26,26 +26,30 @@ export type MenuPageItem = MenuItem;
 interface MenuPageProps {
   initialMenuItems: MenuPageItem[];
   initialCategories: MenuPageCategory[];
-  selectedSubdomain: string | null;
+  restaurantSlug: string;
 }
 
 function MenuPageContent({
   initialMenuItems,
   initialCategories,
-  selectedSubdomain: initialSubdomain,
+  restaurantSlug,
 }: MenuPageProps) {
-  const router = useRouter();
   const searchParams = useSearchParams();
-  const { items, addItem, removeItem, updateQuantity, setActiveOrderId } =
-    useCartStore();
+  const {
+    items,
+    addItem,
+    removeItem,
+    updateQuantity,
+    setActiveOrderId,
+    activeRestaurantSlug,
+    setActiveRestaurantSlug,
+    clearCart,
+  } = useCartStore();
 
   const [menuItems, setMenuItems] = useState<MenuItem[]>(initialMenuItems);
   const [categories, setCategories] = useState<Category[]>(initialCategories);
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedSubdomain, setSelectedSubdomain] = useState<string | null>(
-    initialSubdomain,
-  );
 
   // Filters
   const [filters, setFilters] = useState({
@@ -60,6 +64,19 @@ function MenuPageContent({
   useEffect(() => {
     setActiveOrderId(searchParams.get("orderId"));
   }, [searchParams, setActiveOrderId]);
+
+  useEffect(() => {
+    if (!restaurantSlug) return;
+    if (activeRestaurantSlug && activeRestaurantSlug !== restaurantSlug) {
+      clearCart();
+    }
+    setActiveRestaurantSlug(restaurantSlug);
+  }, [
+    restaurantSlug,
+    activeRestaurantSlug,
+    setActiveRestaurantSlug,
+    clearCart,
+  ]);
 
   const filteredItems = menuItems.filter((item) => {
     // Category filter
@@ -158,11 +175,6 @@ function MenuPageContent({
           <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2 sm:mb-4">
             Our Menu
           </h2>
-          {!selectedSubdomain && (
-            <p className="text-xs sm:text-sm text-orange-700 mb-1 sm:mb-2">
-              No restaurant selected. Go to Home and select a restaurant first.
-            </p>
-          )}
           {searchParams.get("orderId") && (
             <p className="text-xs sm:text-sm text-green-700 mb-1 sm:mb-2">
               You are adding dishes to an ongoing meal.

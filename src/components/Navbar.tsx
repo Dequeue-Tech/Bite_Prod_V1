@@ -1,34 +1,77 @@
 "use client";
 
-import { useEffect } from "react";
-import { useRouter, usePathname } from "next/navigation";
+import { useEffect, useMemo, useState } from "react";
+import { usePathname, useParams } from "next/navigation";
 import Link from "next/link";
 import {
   ChefHat,
   ShoppingCart,
   Home,
   UtensilsCrossed,
-  ClipboardList,
 } from "lucide-react";
 import { useCartStore } from "@/store/cart";
 
 const Navbar = () => {
-  const router = useRouter();
   const pathname = usePathname();
+  const params = useParams();
+  const restaurantSlug =
+    typeof params?.restaurantSlug === "string" ? params.restaurantSlug : null;
+  const basePath = restaurantSlug ? `/${restaurantSlug}` : "";
   const { getTotalItems } = useCartStore();
   const cartItemsCount = getTotalItems();
+  const [reviewUrl, setReviewUrl] = useState<string | null>(null);
+  const [reviewName, setReviewName] = useState<string | null>(null);
+
+  useEffect(() => {
+    let active = true;
+    const controller = new AbortController();
+
+    const loadReviewUrl = async () => {
+      if (!restaurantSlug) {
+        setReviewUrl(null);
+        setReviewName(null);
+        return;
+      }
+
+      try {
+        const res = await fetch(`/api/restaurants/${restaurantSlug}/review-url`, {
+          signal: controller.signal,
+        });
+        if (!res.ok) return;
+        const data = await res.json();
+        if (!active) return;
+        setReviewUrl(typeof data.googleReviewUrl === "string" ? data.googleReviewUrl : null);
+        setReviewName(typeof data.name === "string" ? data.name : null);
+      } catch (error) {
+        if ((error as any)?.name === "AbortError") return;
+      }
+    };
+
+    loadReviewUrl();
+
+    return () => {
+      active = false;
+      controller.abort();
+    };
+  }, [restaurantSlug]);
+
+  const reviewLink = useMemo(() => {
+    if (reviewUrl) return reviewUrl;
+    const querySource = reviewName || (restaurantSlug ? restaurantSlug.replace(/-/g, " ") : "restaurant");
+    return `https://www.google.com/search?q=${encodeURIComponent(`${querySource} reviews`)}`;
+  }, [reviewName, reviewUrl, restaurantSlug]);
 
   // Desktop navigation links
   const desktopNavLinks = [
-    { name: "Home", href: "/" },
-    { name: "Menu", href: "/menu" },
+    { name: "Home", href: basePath || "/" },
+    { name: "Menu", href: `${basePath}/menu` },
   ];
 
   // Mobile bottom navigation links (max 4 items, profile is in top nav)
   const mobileNavLinks = [
-    { name: "Home", href: "/", icon: Home },
-    { name: "Menu", href: "/menu", icon: UtensilsCrossed },
-    { name: "Cart", href: "/cart", icon: ShoppingCart, badge: cartItemsCount },
+    { name: "Home", href: basePath || "/", icon: Home },
+    { name: "Menu", href: `${basePath}/menu`, icon: UtensilsCrossed },
+    { name: "Cart", href: `${basePath}/cart`, icon: ShoppingCart, badge: cartItemsCount },
   ];
 
   const isActive = (href: string) => pathname === href;
@@ -48,7 +91,10 @@ const Navbar = () => {
                   </div>
                   <div className="flex flex-col">
                     <h2 className="text-l sm:text-xl font-black text-gray-900 uppercase tracking-normal leading-none">
-                      Haveli <span className="text-orange-600">Dhaba</span>
+                      {restaurantSlug
+                        ? restaurantSlug.replace(/-/g, " ")
+                        : "Bite"}{" "}
+                      <span className="text-orange-600">Menu</span>
                     </h2>
                   </div>
                 </div>
@@ -59,7 +105,7 @@ const Navbar = () => {
             <div className="flex items-center md:hidden">
               <button
                 onClick={() =>
-                  window.open("https://www.google.com/maps", "_blank")
+                  window.open(reviewLink, "_blank")
                 }
                 className="text-sm px-2 py-1 rounded-lg border border-orange-600 text-orange-600 hover:bg-orange-50 transition-colors font-medium"
               >
@@ -85,7 +131,7 @@ const Navbar = () => {
 
               <button
                 onClick={() =>
-                  window.open("https://www.google.com/maps", "_blank")
+                  window.open(reviewLink, "_blank")
                 }
                 className="text-sm lg:text-base px-3 lg:px-4 py-1.5 lg:py-2 rounded-lg border border-orange-600 text-orange-600 hover:bg-orange-50 transition-colors font-medium"
               >
@@ -94,7 +140,7 @@ const Navbar = () => {
 
               {/* Cart icon for authenticated users */}
               {
-                <Link href="/cart" className="relative p-2 -m-2">
+                <Link href={`${basePath}/cart`} className="relative p-2 -m-2">
                   <ShoppingCart className="h-5 w-5 lg:h-6 lg:w-6 text-gray-600 hover:text-orange-600 transition-colors" />
                   {cartItemsCount > 0 && (
                     <span className="absolute top-0 right-0 bg-red-500 text-white text-xs font-bold rounded-full h-4 w-4 sm:h-5 sm:w-5 flex items-center justify-center text-[10px] sm:text-xs">

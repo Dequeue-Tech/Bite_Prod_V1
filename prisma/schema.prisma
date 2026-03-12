@@ -15,59 +15,164 @@ enum SpiceLevel {
   EXTRA_HOT
 }
 
-model Restaurant {
-  id              String     @id @default(cuid())
-  name            String
-  subdomain       String     @unique
-  address         String?
-  googleReviewUrl String?
-  createdAt       DateTime   @default(now())
-  updatedAt       DateTime   @updatedAt
-  categories      Category[]
-  menuItems       MenuItem[]
+enum OfferType {
+  PERCENTAGE
+  FIXED_AMOUNT
+  BUY_X_GET_Y
+  FREE_DELIVERY
+}
 
+enum OnboardingStatus {
+  PENDING_APPROVAL
+  APPROVED
+  SUSPENDED
+}
+
+enum CouponType {
+  PERCENT
+  FIXED
+}
+
+model Restaurant {
+  id                      String                  @id @default(cuid())
+  name                    String
+  slug                    String                  @unique
+  subdomain               String                  @unique
+  status                  OnboardingStatus        @default(PENDING_APPROVAL)
+  suspendedReason         String?
+  email                   String?
+  phone                   String?
+  address                 String?
+  city                    String?
+  state                   String?
+  country                 String?
+  cuisine                 String?
+  cuisineTypes            String[]                @default([])
+  logoUrl                 String?
+  bannerUrl               String?
+  googleReviewUrl         String?
+  approvedAt              DateTime?
+  approvedByUserId        String?
+  onboardingStatus        OnboardingStatus        @default(PENDING_APPROVAL)
+  active                  Boolean                 @default(true)
+  createdAt               DateTime                @default(now())
+  updatedAt               DateTime                @updatedAt
+  categories              Category[]
+  coupons                 Coupon[]
+  menuItems               MenuItem[]
+  popularDishes           PopularDish[]
+  offers                  Offer[]
+  
   @@map("restaurants")
 }
 
 model Category {
-  id           String      @id @default(cuid())
-  restaurantId String
-  restaurant   Restaurant  @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  id           String     @id @default(cuid())
   name         String
   description  String?
   image        String?
-  active       Boolean     @default(true)
-  sortOrder    Int         @default(0)
-  createdAt    DateTime    @default(now())
-  updatedAt    DateTime    @updatedAt
+  active       Boolean    @default(true)
+  sortOrder    Int        @default(0)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  restaurantId String
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   menuItems    MenuItem[]
 
-  @@index([restaurantId])
+  @@unique([restaurantId, name])
   @@map("categories")
 }
 
 model MenuItem {
-  id             String      @id @default(cuid())
-  restaurantId   String
-  restaurant     Restaurant  @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
-  categoryId     String
-  category       Category    @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  name           String
-  description    String?
-  pricePaise     Int
-  image          String?
-  available      Boolean     @default(true)
-  preparationTime Int        @default(15)
-  ingredients    String[]    @default([])
-  allergens      String[]    @default([])
-  isVeg          Boolean     @default(true)
-  isVegan        Boolean     @default(false)
-  isGlutenFree   Boolean     @default(false)
-  spiceLevel     SpiceLevel  @default(MILD)
-  createdAt      DateTime    @default(now())
-  updatedAt      DateTime    @updatedAt
+  id              String      @id @default(cuid())
+  name            String
+  description     String?
+  image           String?
+  categoryId      String
+  available       Boolean     @default(true)
+  preparationTime Int         @default(15)
+  ingredients     String[]    @default([])
+  allergens       String[]    @default([])
+  isVeg           Boolean     @default(true)
+  isVegan         Boolean     @default(false)
+  isGlutenFree    Boolean     @default(false)
+  spiceLevel      SpiceLevel  @default(MILD)
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  pricePaise      Int
+  restaurantId    String
+  category        Category    @relation(fields: [categoryId], references: [id])
+  restaurant      Restaurant  @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  popularDishes   PopularDish[]
 
-  @@index([restaurantId])
-  @@index([categoryId])
   @@map("menu_items")
+}
+
+model PopularDish {
+  id           String     @id @default(cuid())
+  restaurantId String
+  menuItemId   String
+  rank         Int        @default(0)
+  featured     Boolean    @default(true)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  menuItem     MenuItem   @relation(fields: [menuItemId], references: [id], onDelete: Cascade)
+
+  @@unique([restaurantId, menuItemId])
+  @@index([restaurantId, rank])
+  @@map("popular_dishes")
+}
+
+model Coupon {
+  id               String     @id @default(cuid())
+  code             String
+  description      String?
+  type             CouponType
+  value            Int
+  maxDiscountPaise Int?
+  minOrderPaise    Int?
+  usageLimit       Int?
+  usageCount       Int        @default(0)
+  startsAt         DateTime?
+  endsAt           DateTime?
+  active           Boolean    @default(true)
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+  restaurantId     String
+  restaurant       Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+
+  @@unique([restaurantId, code])
+  @@map("coupons")
+}
+
+model Offer {
+  id                   String     @id @default(cuid())
+  restaurantId         String
+  title                String?
+  name                 String?
+  code                 String?
+  description          String?
+  type                 OfferType?
+  discountType         String?
+  value                Float
+  minimumOrderValue    Int?
+  minOrderPaise        Int?
+  maximumDiscount      Int?
+  maxDiscountPaise     Int?
+  startDate            DateTime?
+  startsAt             DateTime?
+  endDate              DateTime?
+  endsAt               DateTime?
+  maxUses              Int?
+  currentUses          Int        @default(0)
+  isActive             Boolean    @default(true)
+  active               Boolean    @default(true)
+  applicableItems      String[]   @default([])
+  applicableCategories String[]   @default([])
+  createdAt            DateTime   @default(now())
+  updatedAt            DateTime   @updatedAt
+  restaurant           Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+
+  @@map("offers")
 }

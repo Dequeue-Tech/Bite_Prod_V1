@@ -1,74 +1,88 @@
+import Link from 'next/link';
 import { prisma } from '@/lib/prisma';
-import RestaurantLandingClient, { LandingRestaurant } from '@/app/restaurant-landing-client';
 
-async function getLandingRestaurant(): Promise<LandingRestaurant> {
-  const fallback: LandingRestaurant = {
-    name: 'Haveli Dhabba',
-    address: 'Address not provided',
-    categories: [],
-    menuItems: [],
-    googleReviewUrl: null,
-    // optional extras
-    subdomain: null,
-    backgroundImage: null,
-    logo: null,
-    paymentCollectionTiming: undefined,
-    cashPaymentEnabled: false,
-  };
+type RestaurantListItem = {
+  id: string;
+  name: string;
+  slug: string;
+  address: string | null;
+  logoUrl: string | null;
+};
 
-  try {
-    const restaurant = await prisma.restaurant.findFirst({
-      include: {
-        categories: {
-          select: {
-            id: true,
-            name: true,
-          },
-          orderBy: {
-            name: 'asc',
-          },
-        },
-        menuItems: {
-          where: {
-            available: true,
-          },
-          include: {
-            category: {
-              select: {
-                id: true,
-                name: true,
-              },
-            },
-          },
-          orderBy: {
-            createdAt: 'desc',
-          },
-        },
-      },
-    });
+async function getRestaurants(): Promise<RestaurantListItem[]> {
+  const restaurants = await prisma.restaurant.findMany({
+    where: { active: true },
+    select: {
+      id: true,
+      name: true,
+      slug: true,
+      address: true,
+      logoUrl: true,
+    },
+    orderBy: { createdAt: 'asc' },
+  });
 
-    if (!restaurant) return fallback;
-
-    return {
-      id: restaurant.id,
-      name: restaurant.name || fallback.name,
-      address: restaurant.address || fallback.address,
-      categories: restaurant.categories || [],
-      menuItems: restaurant.menuItems || [],
-      googleReviewUrl: restaurant.googleReviewUrl || null,
-      // optional extras not stored in schema currently
-      subdomain: restaurant.subdomain || null,
-      backgroundImage: (restaurant as any).backgroundImage || null,
-      logo: (restaurant as any).logo || null,
-      paymentCollectionTiming: (restaurant as any).paymentCollectionTiming,
-      cashPaymentEnabled: (restaurant as any).cashPaymentEnabled || false,
-    };
-  } catch {
-    return fallback;
-  }
+  return restaurants;
 }
 
-export default async function RestaurantLandingPage() {
-  const restaurant = await getLandingRestaurant();
-  return <RestaurantLandingClient restaurant={restaurant} />;
+export default async function HomePage() {
+  const restaurants = await getRestaurants();
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <div className="max-w-5xl mx-auto px-3 sm:px-4 py-6 sm:py-10">
+        <div className="mb-6 sm:mb-10">
+          <h1 className="text-2xl sm:text-3xl font-black text-gray-900">
+            Choose Your Restaurant
+          </h1>
+          <p className="text-sm sm:text-base text-gray-600 mt-2">
+            Each restaurant has its own menu and ordering flow.
+          </p>
+        </div>
+
+        {restaurants.length === 0 ? (
+          <div className="bg-white rounded-xl border border-gray-200 p-6 text-gray-700">
+            No restaurants available yet.
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+            {restaurants.map((restaurant) => (
+              <Link
+                key={restaurant.id}
+                href={`/${restaurant.slug}`}
+                className="group bg-white rounded-2xl border border-gray-200 p-4 sm:p-6 hover:border-orange-200 hover:shadow-lg transition-all"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="h-14 w-14 sm:h-16 sm:w-16 rounded-xl bg-orange-50 flex items-center justify-center overflow-hidden flex-shrink-0">
+                    {restaurant.logoUrl ? (
+                      <img
+                        src={restaurant.logoUrl}
+                        alt={restaurant.name}
+                        className="h-full w-full object-cover"
+                      />
+                    ) : (
+                      <span className="text-orange-600 font-bold text-lg">
+                        {restaurant.name.slice(0, 1).toUpperCase()}
+                      </span>
+                    )}
+                  </div>
+                  <div className="min-w-0">
+                    <h2 className="text-lg sm:text-xl font-semibold text-gray-900 truncate">
+                      {restaurant.name}
+                    </h2>
+                    <p className="text-xs sm:text-sm text-gray-600 truncate">
+                      {restaurant.address || 'Address not provided'}
+                    </p>
+                    <p className="text-xs text-orange-600 mt-2">
+                      View menu -
+                    </p>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }

@@ -41,6 +41,7 @@ export type LandingRestaurant = {
   categories: RestaurantCategory[];
   menuItems: LandingMenuItem[];
   googleReviewUrl?: string | null;
+  slug?: string | null;
 
   // optional extras for UI
   subdomain?: string | null;
@@ -64,12 +65,13 @@ export default function RestaurantLandingClient({ restaurant }: { restaurant: La
   const defaultLogo = '/WhatsApp Image 2026-02-20 at 2.25.28 PM.jpeg';
 
   const selectAndOpen = () => {
-    if (!restaurant?.subdomain) return;
+    const slug = restaurant?.slug;
+    if (!slug) return;
     try {
-      localStorage.setItem('selectedRestaurant', restaurant.subdomain);
+      localStorage.setItem('selectedRestaurantSlug', slug);
     } catch {}
     toast.success(`${restaurant.name} selected`);
-    router.push('/menu');
+    router.push(`/${slug}/menu`);
   };
 
   const getInitials = (name: string) =>
