@@ -1,21 +1,48 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { usePathname, useParams } from "next/navigation";
+import { usePathname, useParams, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import {
   ChefHat,
   ShoppingCart,
   Home,
   UtensilsCrossed,
+  Table,
 } from "lucide-react";
 import { useCartStore } from "@/store/cart";
+import { Users, Armchair, Coffee } from "lucide-react";
+
+// Custom Round Table Icon that matches Lucide's style perfectly
+const RoundTable = ({ size = 24, className = "", strokeWidth = 2, ...props }: any) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth={strokeWidth}
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={`lucide lucide-round-table ${className}`}
+    {...props}
+  >
+    <circle cx="12" cy="12" r="5" />
+    <path d="M9 4h6" />
+    <path d="M9 20h6" />
+    <path d="M4 9v6" />
+    <path d="M20 9v6" />
+  </svg>
+);
 
 const Navbar = () => {
   const pathname = usePathname();
   const params = useParams();
+  const searchParams = useSearchParams();
   const restaurantSlug =
     typeof params?.restaurantSlug === "string" ? params.restaurantSlug : null;
+  const tableNumber = searchParams.get("table");
   const basePath = restaurantSlug ? `/${restaurantSlug}` : "";
   const { getTotalItems } = useCartStore();
   const cartItemsCount = getTotalItems();
@@ -101,13 +128,18 @@ const Navbar = () => {
               </Link>
             </div>
 
-            {/* Mobile Rate Us button (visible only on small screens) */}
-            <div className="flex items-center md:hidden">
+            {/* Mobile Buttons (visible only on small screens) */}
+            {/* Mobile Buttons (visible only on small screens) */}
+            <div className="flex items-center gap-2 md:hidden">
+              {tableNumber && (
+                <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-orange-50 border border-orange-200 text-orange-700 text-xs font-bold">
+                  <Armchair className="h-4 w-4" strokeWidth={2.5} />
+                  <span>T{tableNumber}</span>
+                </div>
+              )}
               <button
-                onClick={() =>
-                  window.open(reviewLink, "_blank")
-                }
-                className="text-sm px-2 py-1 rounded-lg border border-orange-600 text-orange-600 hover:bg-orange-50 transition-colors font-medium"
+                onClick={() => window.open(reviewLink, "_blank")}
+                className="text-xs sm:text-sm px-2.5 py-1.5 rounded-lg border border-orange-600 text-orange-600 hover:bg-orange-50 transition-colors font-medium"
               >
                 Rate Us
               </button>
@@ -119,15 +151,25 @@ const Navbar = () => {
                 <Link
                   key={link.name}
                   href={link.href}
-                  className={`text-sm lg:text-base ${
-                    pathname === link.href
+                  className={`text-sm lg:text-base ${pathname === link.href
                       ? "text-orange-600 font-medium"
                       : "text-gray-600 hover:text-orange-600"
-                  } transition-colors`}
+                    } transition-colors`}
                 >
                   {link.name}
                 </Link>
               ))}
+
+              {tableNumber ? (
+                <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-orange-50 border border-orange-200 text-orange-700 text-sm font-medium">
+                  <Armchair className="h-4 w-4" />
+                  <span>T{tableNumber}</span>
+                </div>
+              ) : (
+                <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-gray-500 text-sm font-medium">
+                  <Armchair className="h-4 w-4" />
+                </div>
+              )}
 
               <button
                 onClick={() =>
@@ -138,7 +180,7 @@ const Navbar = () => {
                 Rate Us
               </button>
 
-              {/* Cart icon for authenticated users */}
+              {/* Cart icon */}
               {
                 <Link href={`${basePath}/cart`} className="relative p-2 -m-2">
                   <ShoppingCart className="h-5 w-5 lg:h-6 lg:w-6 text-gray-600 hover:text-orange-600 transition-colors" />
@@ -164,11 +206,10 @@ const Navbar = () => {
               <Link
                 key={link.name}
                 href={link.href}
-                className={`flex flex-col items-center justify-center flex-1 h-full min-w-0 ${
-                  active
+                className={`flex flex-col items-center justify-center flex-1 h-full min-w-0 ${active
                     ? "text-orange-600"
                     : "text-gray-500 hover:text-gray-700"
-                } transition-colors active:bg-gray-50`}
+                  } transition-colors active:bg-gray-50`}
               >
                 <div className="relative">
                   <Icon className="h-5 w-5 sm:h-6 sm:w-6" />

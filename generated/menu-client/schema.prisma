@@ -1,0 +1,70 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/menu-client"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("MENU_DATABASE_URL")
+}
+
+enum SpiceLevel {
+  NONE
+  MILD
+  MEDIUM
+  HOT
+  EXTRA_HOT
+}
+
+model Restaurant {
+  id         String     @id @default(cuid())
+  name       String
+  slug       String     @unique
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  categories Category[]
+  menuItems  MenuItem[]
+
+  @@map("restaurants")
+}
+
+model Category {
+  id           String     @id @default(cuid())
+  name         String
+  description  String?
+  image        String?
+  active       Boolean    @default(true)
+  sortOrder    Int        @default(0)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  restaurantId String
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  menuItems    MenuItem[]
+
+  @@unique([restaurantId, name])
+  @@map("categories")
+}
+
+model MenuItem {
+  id              String     @id @default(cuid())
+  name            String
+  description     String?
+  image           String?
+  categoryId      String
+  available       Boolean    @default(true)
+  preparationTime Int        @default(15)
+  ingredients     Json       @default("[]")
+  allergens       Json       @default("[]")
+  isVeg           Boolean    @default(true)
+  isVegan         Boolean    @default(false)
+  isGlutenFree    Boolean    @default(false)
+  spiceLevel      SpiceLevel @default(MILD)
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+  pricePaise      Int
+  restaurantId    String
+  category        Category   @relation(fields: [categoryId], references: [id])
+  restaurant      Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+
+  @@map("menu_items")
+}

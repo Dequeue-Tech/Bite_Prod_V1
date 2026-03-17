@@ -1,22 +1,21 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState, useRef, useMemo } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import {
   ArrowRight,
-  CircleDollarSign,
-  HandCoins,
-  Percent,
-  Utensils,
-  ChevronLeft,
-  ChevronRight,
+  Star,
+  MapPin,
+  Banknote,
+  Crown,
+  GlassWater
 } from 'lucide-react';
 import { formatInr } from '@/lib/currency';
 import toast from 'react-hot-toast';
-import Image from 'next/image';
 
-// types
+// --- Types ---
 
 type RestaurantCategory = {
   id: string;
@@ -42,8 +41,6 @@ export type LandingRestaurant = {
   menuItems: LandingMenuItem[];
   googleReviewUrl?: string | null;
   slug?: string | null;
-
-  // optional extras for UI
   subdomain?: string | null;
   backgroundImage?: string | null;
   logo?: string | null;
@@ -51,238 +48,321 @@ export type LandingRestaurant = {
   cashPaymentEnabled?: boolean;
 };
 
-// component
+// --- Component ---
 
 export default function RestaurantLandingClient({ restaurant }: { restaurant: LandingRestaurant }) {
   const router = useRouter();
-  const [currentDealIndex, setCurrentDealIndex] = useState(0);
+  const [currentOfferIndex, setCurrentOfferIndex] = useState(0);
+  const carouselRef = useRef<HTMLDivElement>(null);
 
-  // sample offer backgrounds used for dynamic section image
-  const offerImages = ['/images.jpeg', 'https://restaurantindia.s3.ap-south-1.amazonaws.com/s3fs-public/2025-03/BeFunky-collage.1%20%2852%29.jpg', '/download.jpeg'];
-
-  // public fallback assets (logo first image, background second)
   const defaultBg = '/WhatsApp Image 2026-02-20 at 2.26.12 PM.jpeg';
   const defaultLogo = '/WhatsApp Image 2026-02-20 at 2.25.28 PM.jpeg';
 
-  const selectAndOpen = () => {
-    const slug = restaurant?.slug;
-    if (!slug) return;
-    try {
-      localStorage.setItem('selectedRestaurantSlug', slug);
-    } catch {}
-    toast.success(`${restaurant.name} selected`);
-    router.push(`/${slug}/menu`);
-  };
-
-  const getInitials = (name: string) =>
-    name
-      .split(' ')
-      .filter(Boolean)
-      .slice(0, 2)
-      .map((word: string) => word[0]?.toUpperCase() || '')
-      .join('');
-
-  const buildDeals = () => {
+  // Format deals for the high-end UI Carousel
+  const deals = useMemo(() => {
     if (!restaurant) return [];
     const topPrice = Math.max(...(restaurant.menuItems || []).map((item) => item.pricePaise), 0);
     return [
       {
+        id: 'deal-1',
         title: 'Welcome Deal',
-        detail: 'Get 15% OFF on your first order above ' + formatInr(39900),
-        icon: Percent,
+        detail: '15% OFF above ' + formatInr(39900),
+        design: 'modern_cashback'
       },
       {
-        title: 'Chef Special Combo',
-        detail:
-          topPrice > 0
-            ? `Trending combo starts from ${formatInr(Math.max(topPrice - 10000, 12900))}`
-            : 'Ask for today’s chef special combo at the counter.',
-        icon: Utensils,
+        id: 'deal-2',
+        title: 'Chef Special',
+        detail: topPrice > 0 ? `Combos from ${formatInr(Math.max(topPrice - 10000, 12900))}` : 'Ask for today’s special',
+        design: 'premium_gold'
       },
       {
+        id: 'deal-3',
         title: 'Flexible Payment',
-        detail:
-          restaurant.paymentCollectionTiming === 'BEFORE_MEAL'
-            ? `Payment before meal${restaurant.cashPaymentEnabled ? ' with cash option available.' : '.'}`
-            : `Pay after meal${restaurant.cashPaymentEnabled ? ' with cash option available.' : '.'}`,
-        icon: restaurant.cashPaymentEnabled ? HandCoins : CircleDollarSign,
-      },
+        detail: restaurant.paymentCollectionTiming === 'BEFORE_MEAL' ? 'Pay before meal' : 'Pay after meal',
+        design: 'minimalist_glass'
+      }
     ];
+  }, [restaurant]);
+
+  // Helper to safely scroll to a specific offer card
+  const scrollToOffer = (index: number) => {
+    if (!carouselRef.current) return;
+    const container = carouselRef.current;
+    const card = container.children[index] as HTMLElement;
+    if (!card) return;
+
+    // Calculate exact position to center the card in the container safely
+    const scrollPos = card.getBoundingClientRect().left - container.getBoundingClientRect().left + container.scrollLeft - (container.clientWidth - card.clientWidth) / 2;
+
+    container.scrollTo({
+      left: scrollPos,
+      behavior: 'smooth'
+    });
+    setCurrentOfferIndex(index);
   };
 
-  const googleReviewLink =
-    restaurant.googleReviewUrl ||
-    `https://www.google.com/search?q=${encodeURIComponent(`${restaurant.name} reviews`)}`;
+  // Auto-rotate carousel (Decoupled from dependency arrays to avoid manual scroll fighting)
+  useEffect(() => {
+    if (deals.length <= 1) return;
+    const interval = setInterval(() => {
+      setCurrentOfferIndex((prev) => {
+        const next = (prev + 1) % deals.length;
+        if (carouselRef.current) {
+          const container = carouselRef.current;
+          const card = container.children[next] as HTMLElement;
+          if (card) {
+            const scrollPos = card.getBoundingClientRect().left - container.getBoundingClientRect().left + container.scrollLeft - (container.clientWidth - card.clientWidth) / 2;
+            container.scrollTo({ left: scrollPos, behavior: 'smooth' });
+          }
+        }
+        return next;
+      });
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [deals.length]);
+
+  const selectAndOpen = () => {
+    const slug = restaurant?.slug || restaurant?.subdomain || restaurant?.id;
+    if (!slug) return;
+    try {
+      localStorage.setItem('selectedRestaurantSlug', slug);
+    } catch { }
+    toast.success(`${restaurant.name} selected`);
+    router.push(`/${slug}/menu`);
+  };
+
+  const getPriceForTwo = () => {
+    if (!restaurant?.menuItems || restaurant.menuItems.length === 0) return '₹800';
+    const avgPrice = restaurant.menuItems.reduce((sum, item) => sum + item.pricePaise, 0) / restaurant.menuItems.length;
+    return formatInr(Math.round(avgPrice * 2));
+  };
+
+  const getCuisineTypes = () => {
+    if (!restaurant?.categories || restaurant.categories.length === 0) return 'Multi-cuisine';
+    return restaurant.categories.slice(0, 2).map(c => c.name).join(', ');
+  };
 
   if (!restaurant) {
     return (
-      <div className="min-h-screen bg-gray-50 p-8">
-        <p className="text-gray-700">Restaurant not found.</p>
-        <Link href="/" className="text-orange-600">
-          Back to Home
-        </Link>
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-8">
+        <div className="text-center">
+          <p className="text-gray-700 mb-4">Restaurant not found.</p>
+          <Link href="/" className="text-orange-600 font-bold hover:underline">Back to Home</Link>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen mb-10 bg-gray-50 py-4 sm:py-8">
-      <div className="max-w-5xl mx-auto px-3 sm:px-4">
-        <section className="relative rounded-2xl border border-orange-200 overflow-hidden mb-4 sm:mb-6">
-          {/* Background Image */}
-          <div
-            className="absolute inset-0 bg-cover bg-center"
-            style={{
-              backgroundImage: `url(${encodeURI(restaurant.backgroundImage || defaultBg)})`,
-              filter: 'blur(2px) brightness(0.7)',
-            }}
-          />
+    <div className="min-h-screen bg-[#FDFDFD] overflow-x-hidden pb-10">
+      {/* Hero Section with Dark Overlay */}
+      <div className="relative h-72 sm:h-96 w-full overflow-hidden bg-gray-900">
+        <Image
+          src={restaurant.backgroundImage || defaultBg}
+          alt={restaurant.name}
+          fill
+          className="object-cover opacity-70"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-transparent" />
+      </div>
 
-          {/* Content */}
-          <div className="relative z-10 p-4 sm:p-6 md:p-8">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-5">
-              <div className="flex items-center gap-3 sm:gap-4">
-                {/* Logo */}
-                <img
-                  src={restaurant.logo || defaultLogo}
-                  alt={restaurant.name}
-                  className="h-14 w-14 sm:h-20 sm:w-20 rounded-xl sm:rounded-2xl object-cover shadow-lg flex-shrink-0 bg-white"
-                />
-                <div className="min-w-0 flex-1">
-                  <p className="text-xs sm:text-sm font-medium text-orange-200">Restaurant Landing</p>
-                  <h1 className="text-xl sm:text-3xl font-bold text-white truncate drop-shadow-lg">
+      {/* Floating Card overlapping hero image */}
+      <div className="relative -mt-12 sm:-mt-16 z-10 px-4 sm:px-6 max-w-3xl mx-auto">
+        <div className="bg-white rounded-[32px] shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-gray-100 overflow-hidden">
+
+          <div className="p-6 sm:p-8">
+            {/* Header: Logo, Title, Rating */}
+            <div className="flex items-start justify-between gap-4 mb-4">
+              <div className="flex items-center gap-4">
+                <div className="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl overflow-hidden shadow-md shrink-0 border border-gray-100 bg-white relative">
+                  <Image
+                    src={restaurant.logo || defaultLogo}
+                    alt={restaurant.name}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div>
+                  <h1 className="text-2xl sm:text-3xl font-black text-gray-900 tracking-tight leading-tight">
                     {restaurant.name}
                   </h1>
-                  <p className="text-gray-200 mt-0.5 sm:mt-1 text-xs sm:text-sm truncate drop-shadow-md">
+                  <p className="text-sm font-medium text-gray-500 mt-1 flex items-center gap-1.5">
+                    <MapPin className="h-3.5 w-3.5" />
                     {restaurant.address || 'Address not provided'}
                   </p>
                 </div>
               </div>
-              <button
-                onClick={selectAndOpen}
-                className="inline-flex items-center justify-center bg-orange-600 text-white px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl hover:bg-orange-700 font-medium text-sm sm:text-base shadow-lg"
-              >
-                View Menu
-                <ArrowRight className="h-4 w-4 ml-2" />
-              </button>
+
+              {/* Static Premium Rating Badge */}
+              <div className="flex items-center gap-1 bg-green-900 text-white px-3 py-1.5 rounded-xl shadow-sm shrink-0">
+                <Star className="h-3.5 w-3.5 fill-current" />
+                <span className="text-sm font-bold">4.5</span>
+              </div>
             </div>
-          </div>
-        </section>
 
-{/* offers&amp;deals container with dynamic background */}
-          <section
-            className="bg-white rounded-xl border border-gray-200 p-4 sm:p-5 mb-4 sm:mb-6 relative overflow-hidden"
-            style={{
-              backgroundImage: `url(${offerImages[currentDealIndex % offerImages.length] || offerImages[0]})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-            }}
-          >
-            {/* dark overlay for readability */}
-            <div className="absolute inset-0 bg-black/30 pointer-events-none" />
+            {/* Cuisine & Price Row */}
+            <div className="flex items-center gap-3 text-gray-600 text-sm font-medium mb-6 bg-gray-50 p-3 rounded-2xl border border-gray-100">
+              {/* <span>{getCuisineTypes()}</span> */}
+              <span>North Indian, Chinese</span>
+              <span className="w-1.5 h-1.5 bg-gray-300 rounded-full" />
+              <span>{getPriceForTwo()} for two</span>
+              <span className="w-1.5 h-1.5 bg-gray-300 rounded-full" />
+              <span className="text-green-600">Open Now</span>
+            </div>
 
-            <div className="relative z-10">
-              <div className="flex items-center justify-between mb-3 sm:mb-4">
-                <h2 className="text-lg sm:text-xl font-semibold text-white">Offers & Deals</h2>
-                <div className="flex items-center gap-1">
-                  <button
-                    onClick={() => setCurrentDealIndex((prev) => (prev === 0 ? buildDeals().length - 1 : prev - 1))}
-                    className="p-1.5 sm:p-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 transition-colors"
-                    aria-label="Previous deal"
-                  >
-                    <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5" />
-                  </button>
-                  <button
-                    onClick={() => setCurrentDealIndex((prev) => (prev === buildDeals().length - 1 ? 0 : prev + 1))}
-                    className="p-1.5 sm:p-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 transition-colors"
-                    aria-label="Next deal"
-                  >
-                    <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5" />
-                  </button>
-                </div>
-              </div>
+            {/* Multi-Variant Offer Carousel */}
+            {deals.length > 0 && (
+              <div className="mb-8">
+                <h2 className="text-lg font-black text-gray-900 mb-4">Offers for you</h2>
 
-              <div className="relative overflow-hidden">
                 <div
-                  className="flex transition-transform duration-300 ease-in-out"
-                  style={{ transform: `translateX(-${currentDealIndex * 100}%)` }}
+                  ref={carouselRef}
+                  className="relative flex overflow-x-scroll gap-4 snap-x snap-mandatory no-scrollbar"
+                  style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                  onScroll={(e) => {
+                    const container = e.currentTarget;
+                    const center = container.scrollLeft + container.clientWidth / 2;
+                    let closestIndex = 0;
+                    let minDistance = Infinity;
+
+                    // Accurately find the physical center card based on bounding box
+                    Array.from(container.children).forEach((child, index) => {
+                      const card = child as HTMLElement;
+                      const cardCenter = card.getBoundingClientRect().left - container.getBoundingClientRect().left + container.scrollLeft + card.clientWidth / 2;
+                      const distance = Math.abs(cardCenter - center);
+                      if (distance < minDistance) {
+                        minDistance = distance;
+                        closestIndex = index;
+                      }
+                    });
+
+                    if (closestIndex !== currentOfferIndex) {
+                      setCurrentOfferIndex(closestIndex);
+                    }
+                  }}
                 >
-                  {buildDeals().map((deal: any, index: number) => {
-                    return (
-                      <div
-                        key={deal.title}
-                        className="w-full flex-shrink-0 rounded-lg border border-orange-100 p-4 sm:p-5 relative overflow-hidden bg-white/30 backdrop-blur-md"
-                      >
-                        {/* Content */}
-                        <div className="relative z-10 flex items-start gap-3 sm:gap-4">
-                          <div className="flex-shrink-0 p-2 sm:p-3 bg-orange-100/90 rounded-lg">
-                            <deal.icon className="h-5 w-5 sm:h-6 sm:w-6 text-orange-600" />
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <p className="font-semibold text-gray-900 text-base sm:text-lg">{deal.title}</p>
-                            <p className="text-sm sm:text-base text-gray-700 mt-1">{deal.detail}</p>
-                          </div>
+                  {/* Hide Scrollbar CSS */}
+                  <style jsx global>{`
+                    .no-scrollbar::-webkit-scrollbar { display: none; }
+                    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+                  `}</style>
+
+                  {deals.map((deal) => (
+                    <div
+                      key={deal.id}
+                      className="snap-center shrink-0 w-full sm:w-80 h-36 rounded-3xl p-5 relative overflow-hidden transition-all duration-500 border border-gray-100 shadow-sm"
+                    >
+                      {/* Style 1: Modern Cashback */}
+                      {deal.design === 'modern_cashback' && (
+                        <div className="absolute inset-0 bg-gradient-to-br from-emerald-900 to-emerald-600">
+                          <div className="absolute top-0 right-2 text-8xl font-black text-white/5 select-none">%</div>
+                          <Banknote className="absolute top-6 left-6 h-6 w-6 text-white/10 rotate-12" />
+                          <Banknote className="absolute bottom-6 right-10 h-5 w-5 text-white/10 -rotate-6" />
                         </div>
+                      )}
+
+                      {/* Style 2: Candy Stripes */}
+                      {deal.design === 'premium_gold' && (
+                        <div className="absolute inset-0 bg-rose-400">
+                          {/* CSS Diagonal Stripes */}
+                          <div className="absolute inset-0 opacity-[0.15]" style={{ backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 10px, #000 10px, #000 20px)' }} />
+                          {/* Bottom gradient to ensure text readability */}
+                          <div className="absolute inset-0 bg-gradient-to-t from-rose-600/80 to-transparent" />
+                          {/* Requires importing Star from lucide-react */}
+                          <Star className="absolute top-3 right-4 h-8 w-8 text-yellow-300 fill-yellow-300 rotate-12 drop-shadow-md hover:scale-110 transition-transform" />
+                        </div>
+                      )}
+
+                      {/* Style 3: Minimalist Glass */}
+                      {deal.design === 'minimalist_glass' && (
+                        <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-white border border-blue-100">
+                          <GlassWater className="absolute bottom-2 right-2 h-16 w-16 text-blue-500/10" />
+                        </div>
+                      )}
+
+                      {/* Card Content */}
+                      <div className="relative z-10 h-full flex flex-col justify-center">
+                        <h3 className={`text-xl sm:text-2xl font-black mb-1 ${deal.design === 'minimalist_glass' ? 'text-blue-900' : 'text-white'}`}>
+                          {deal.title}
+                        </h3>
+                        <p className={`text-xs sm:text-sm font-medium ${deal.design === 'minimalist_glass' ? 'text-blue-600' : 'text-white/80'}`}>
+                          {deal.detail}
+                        </p>
                       </div>
-                    );
-                  })}
+                    </div>
+                  ))}
+                </div>
+
+                {/* Carousel Indicators */}
+                <div className="flex justify-center gap-2 mt-4">
+                  {deals.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => scrollToOffer(index)}
+                      className={`h-1.5 rounded-full transition-all duration-300 ${index === currentOfferIndex ? 'w-6 bg-orange-600' : 'w-1.5 bg-gray-300'
+                        }`}
+                      aria-label={`Go to offer ${index + 1}`}
+                    />
+                  ))}
                 </div>
               </div>
+            )}
 
-              <div className="flex justify-center gap-2 mt-3 sm:mt-4">
-                {buildDeals().map((deal: any, index: number) => (
+            {/* Pre-booking Offers Section */}
+            <div className="mb-8">
+              <h3 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-3">More deals</h3>
+              <div className="flex flex-wrap gap-2">
+                {['Pre-booking offers', 'Early bird discount', 'Weekend special', 'Flat ₹100 OFF'].map((badge) => (
                   <button
-                    key={deal.title}
-                    onClick={() => setCurrentDealIndex(index)}
-                    className={`w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full transition-colors ${
-                      index === currentDealIndex ? 'bg-orange-600' : 'bg-gray-300 hover:bg-gray-400'
-                    }`}
-                    aria-label={`Go to deal ${index + 1}`}
-                  />
+                    key={badge}
+                    className="px-4 py-2 bg-gray-50 border border-gray-100 hover:border-orange-200 hover:bg-orange-50 text-gray-700 text-xs font-bold rounded-xl transition-colors"
+                  >
+                    {badge}
+                  </button>
                 ))}
               </div>
             </div>
-          </section>
 
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 pb-4 sm:pb-6">
-          <div className="bg-white rounded-xl border border-gray-200 p-4 sm:p-5 mb-4 sm:mb-6">
-            <h2 className="font-semibold text-gray-900 mb-2 sm:mb-3 text-sm sm:text-base">Categories</h2>
-            <div className="flex flex-wrap gap-1.5 sm:gap-2">
-              {(restaurant.categories || []).map((cat) => (
-                <span key={cat.id} className="text-xs sm:text-sm bg-orange-100 text-orange-700 px-2 py-1 rounded">
-                  {cat.name}
-                </span>
-              ))}
-            </div>
+            {/* CTA Button */}
+            <button
+              onClick={selectAndOpen}
+              className="w-full bg-orange-600 text-white py-4 sm:py-5 rounded-2xl hover:bg-orange-700 active:scale-[0.98] transition-all shadow-xl shadow-orange-500/20 font-black text-lg flex items-center justify-center gap-2"
+            >
+              View Menu & Order
+              <ArrowRight className="h-5 w-5" />
+            </button>
           </div>
+        </div>
+      </div>
 
-          <div className="bg-white rounded-xl border border-gray-200 p-4 sm:p-5">
-            <h2 className="font-semibold text-gray-900 mb-2 sm:mb-3 text-sm sm:text-base">Popular Dishes</h2>
-            <div className="space-y-1.5 sm:space-y-2">
-              {(restaurant.menuItems || []).slice(0, 6).map((item) => (
-                <div key={item.id} className="flex items-center justify-between border border-gray-100 rounded p-1.5 sm:p-2 gap-2">
-                  <div className="relative h-12 w-12 sm:h-14 sm:w-14 flex-shrink-0 overflow-hidden rounded bg-gray-100">
-                    <Image
-                      src={item.image || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=600'}
-                      alt={item.name}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <p className="font-medium text-gray-900 text-sm truncate">{item.name}</p>
-                    <p className="text-xs text-gray-500 truncate">{item.category?.name}</p>
-                  </div>
-                  <span className="font-semibold text-orange-700 text-sm whitespace-nowrap">{formatInr(item.pricePaise)}</span>
-                </div>
-              ))}
+      {/* Footer Branding */}
+      <div className="max-w-3xl mx-auto px-4 mt-8 mb-16">
+        <div className="relative rounded-[32px] border border-gray-200/50 bg-white p-6 sm:p-8 shadow-sm overflow-hidden">
+          <div className="absolute -top-10 -right-10 h-32 w-32 rounded-full bg-orange-500/10 blur-3xl pointer-events-none" />
+
+          <div className="relative flex flex-col items-center text-center">
+            <h1 className="text-2xl font-black tracking-tighter text-gray-900 sm:text-3xl">
+              <span className="text-orange-600">#</span>Bite
+            </h1>
+
+            <div className="my-3 flex items-center gap-3">
+              <div className="h-[1px] w-8 bg-gray-200" />
+              <h2 className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">
+                Product of Dequeue
+              </h2>
+              <div className="h-[1px] w-8 bg-gray-200" />
             </div>
+
+            <h3 className="max-w-[250px] text-[10px] leading-relaxed text-gray-400">
+              Terms and conditions applied <br />
+              <span className="font-bold text-gray-500">
+                Dequeue Retail Technologies Pvt Ltd.
+              </span>
+            </h3>
           </div>
         </div>
       </div>
     </div>
   );
 }
-
-              
