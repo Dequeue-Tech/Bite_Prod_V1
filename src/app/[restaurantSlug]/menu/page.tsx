@@ -2,6 +2,7 @@ import { Suspense, cache } from 'react';
 import { notFound } from 'next/navigation';
 import { ChefHat } from 'lucide-react';
 import { menuPrisma } from '@/lib/menu-prisma';
+import { getFromCache, setInCache, CACHE_KEYS, CACHE_TTL } from '@/lib/cache';
 // Make sure this path is correct for your project
 import MenuPageClient, { MenuPageCategory, MenuPageItem } from '@/app/menu/page-client';
 
@@ -16,6 +17,16 @@ type MenuPageData = {
 };
 
 const getMenuPageData = cache(async (slug: string): Promise<MenuPageData | null> => {
+  const cacheKey = CACHE_KEYS.MENU_BY_SLUG(slug);
+  
+  // Try cache first
+  const cached = await getFromCache<MenuPageData>(cacheKey);
+  if (cached) {
+    return cached;
+  }
+
+  console.log(`🔄 Fetching menu for ${slug} from database...`);
+  
   const restaurant = await menuPrisma.restaurant.findUnique({
     where: { slug },
     include: {
@@ -41,7 +52,7 @@ const getMenuPageData = cache(async (slug: string): Promise<MenuPageData | null>
 
   if (!restaurant) return null;
 
-  return {
+  const result = {
     restaurantSlug: restaurant.slug,
     categories: restaurant.categories.map((category: any) => ({
       id: category.id,
@@ -69,6 +80,11 @@ const getMenuPageData = cache(async (slug: string): Promise<MenuPageData | null>
       category: item.category,
     })),
   };
+  
+  // Store in cache
+  await setInCache(cacheKey, result, CACHE_TTL.MENU);
+  
+  return result;
 }); // <--- ADDED missing `);` HERE
 
 export default async function MenuPage({ params }: PageProps) {

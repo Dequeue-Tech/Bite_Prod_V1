@@ -1,12 +1,23 @@
 import { notFound } from 'next/navigation';
 import { prisma } from '@/lib/prisma';
 import RestaurantLandingClient, { LandingRestaurant } from '@/app/restaurant-landing-client';
+import { getFromCache, setInCache, CACHE_KEYS, CACHE_TTL } from '@/lib/cache';
 
 type PageProps = {
   params: Promise<{ restaurantSlug: string }>;
 };
 
 async function getLandingRestaurant(slug: string): Promise<LandingRestaurant | null> {
+  const cacheKey = CACHE_KEYS.RESTAURANT_BY_SLUG(slug);
+  
+  // Try cache first
+  const cached = await getFromCache<LandingRestaurant>(cacheKey);
+  if (cached) {
+    return cached;
+  }
+
+  console.log(`🔄 Fetching restaurant ${slug} from database...`);
+  
   const restaurant = await prisma.restaurant.findUnique({
     where: { slug },
     include: {
@@ -53,7 +64,7 @@ async function getLandingRestaurant(slug: string): Promise<LandingRestaurant | n
 
   if (!restaurant) return null;
 
-  return {
+  const result = {
     id: restaurant.id,
     name: restaurant.name || 'Restaurant',
     address: restaurant.address || 'Address not provided',
@@ -70,6 +81,11 @@ async function getLandingRestaurant(slug: string): Promise<LandingRestaurant | n
     paymentCollectionTiming: (restaurant as any).paymentCollectionTiming,
     cashPaymentEnabled: (restaurant as any).cashPaymentEnabled || false,
   };
+  
+  // Store in cache
+  await setInCache(cacheKey, result, CACHE_TTL.RESTAURANTS);
+  
+  return result;
 }
 
 export default async function RestaurantLandingPage({ params }: PageProps) {

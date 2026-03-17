@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import { Toaster } from 'react-hot-toast'
 import Navbar from '@/components/Navbar'
+import { testRedisConnection } from '@/lib/redis-test'
 
 export const metadata: Metadata = {
   title: 'Restaurant Online Ordering',
@@ -22,6 +23,11 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  // Test Redis connection on server startup
+  if (typeof window === 'undefined') {
+    testRedisConnection();
+  }
+  
   return (
     <html lang="en">
       <head>

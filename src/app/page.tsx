@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { prisma } from '@/lib/prisma';
+import { getFromCache, setInCache, CACHE_KEYS, CACHE_TTL } from '@/lib/cache';
 
 type RestaurantListItem = {
   id: string;
@@ -10,6 +11,15 @@ type RestaurantListItem = {
 };
 
 async function getRestaurants(): Promise<RestaurantListItem[]> {
+  // Try cache first
+  const cached = await getFromCache<RestaurantListItem[]>(CACHE_KEYS.RESTAURANTS);
+  if (cached) {
+    return cached;
+  }
+
+  console.log('🔄 Fetching restaurants from database...');
+  
+  // Cache miss - fetch from database
   const restaurants = await prisma.restaurant.findMany({
     where: { active: true },
     select: {
@@ -22,6 +32,9 @@ async function getRestaurants(): Promise<RestaurantListItem[]> {
     orderBy: { createdAt: 'asc' },
   });
 
+  // Store in cache
+  await setInCache(CACHE_KEYS.RESTAURANTS, restaurants, CACHE_TTL.RESTAURANTS);
+  
   return restaurants;
 }
 
