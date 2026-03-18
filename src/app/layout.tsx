@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import { Toaster } from 'react-hot-toast'
 import Navbar from '@/components/Navbar'
+import { Suspense } from 'react' // 1. Import Suspense
 
 export const metadata: Metadata = {
   title: 'Restaurant Online Ordering',
@@ -29,7 +30,12 @@ export default function RootLayout({
       </head>
       <body className="antialiased">
         <div id="root" className="min-h-screen flex flex-col pb-20 md:pb-0 safe-area-pb">
-          <Navbar />
+          
+          {/* 2. Wrap Navbar in Suspense */}
+          <Suspense fallback={<div className="h-16 bg-white" />}>
+            <Navbar />
+          </Suspense>
+
           {/* main content area now flexes; padding applied on root to push pages up above fixed nav */}
           <main className="flex-1">
             {children}

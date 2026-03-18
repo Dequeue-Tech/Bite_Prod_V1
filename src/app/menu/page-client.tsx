@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { Suspense } from 'react';
 import { useSearchParams } from "next/navigation";
 import { MenuItem, Category } from "@/lib/api-client";
 import {
@@ -430,5 +431,16 @@ function MenuPageContent({
 }
 
 export default function MenuPage(props: MenuPageProps) {
-  return <MenuPageContent {...props} />;
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <ChefHat className="h-12 w-12 text-orange-600 mx-auto mb-4 animate-spin" />
+          <p className="text-gray-600">Loading menu...</p>
+        </div>
+      </div>
+    }>
+      <MenuPageContent {...props} />
+    </Suspense>
+  );
 }
