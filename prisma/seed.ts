@@ -211,26 +211,26 @@ async function main() {
         { name: "Veg Mix Chowmein", price: 259, desc: "A blend of noodles and crunchy assorted veggies in savory spices.", prep: 15, ingredients: ["Noodles", "Mix Veg", "Soy Sauce", "MSG-free spice"], allergens: ["Gluten", "Soy"], image: "" },
         { name: "Mushroom Chowmein", price: 209, desc: "Earthy mushrooms and noodles tossed in a high-flame wok.", prep: 15, ingredients: ["Noodles", "Button Mushrooms", "Garlic", "Onion"], allergens: ["Gluten", "Soy"], image: "https://www.vegrecipesofindia.com/wp-content/uploads/2021/08/mushroom-noodles-3.jpg" },
         { name: "Schezwan Hakka Noodles", price: 215, desc: "Veggie noodles tossed in a fiery, homemade Schezwan sauce.", prep: 15, ingredients: ["Noodles", "Dried Chilli", "Garlic", "Bell Pepper"], allergens: ["Gluten", "Soy"], image: "https://www.cookwithmanali.com/wp-content/uploads/2021/08/Schezwan-Noodles-500x500.jpg" },
-        { name: "Garlic Hakka Noodles", price: 219, desc: "Noodles featuring a heavy punch of roasted golden garlic.", prep: 12, ingredients: ["Noodles", "Garlic", "Celery", "Spring Onion"], allergens: ["Gluten", "Soy"], image: "https://images.unsplash.com/photo-1623341214825-9f4f963727da?q=80&w=1000" },
-        { name: "Shanghai Noodles", price: 201, desc: "Veggies and noodles cooked in a sweet-savory traditional style.", prep: 15, ingredients: ["Noodles", "Dark Soy", "Cabbage", "Vinegar"], allergens: ["Gluten", "Soy"], image: "https://images.unsplash.com/photo-1558985250-27a406d64cb3?q=80&w=1000" },
-        { name: "Veg Manchurian", price: 269, desc: "Vegetable dumplings in a spicy, ginger-garlic soy-based gravy.", prep: 20, ingredients: ["Mix Veg Balls", "Soy Sauce", "Ginger", "Garlic"], allergens: ["Gluten", "Soy"], image: "https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=1000" },
-        { name: "Veg Chilli Dry", price: 259, desc: "Stir-fried assorted veggies tossed in a spicy green chilli glaze.", prep: 18, ingredients: ["Mix Veg", "Capsicum", "Soy", "Green Chilli"], allergens: ["Soy", "Gluten"], image: "https://images.unsplash.com/photo-1631515233349-29906561f84c?q=80&w=1000" },
-        { name: "Corn Salt & Pepper", price: 289, desc: "Crispy fried corn kernels seasoned with simple salt and pepper.", prep: 15, ingredients: ["Sweet Corn", "Black Pepper", "Corn Flour"], allergens: ["Corn"], image: "https://images.unsplash.com/photo-1565557623262-b51c2513a641?q=80&w=1000" },
-        { name: "Mushroom Salt & Pepper", price: 279, desc: "Lightly battered mushrooms seasoned with cracked peppercorns.", prep: 15, ingredients: ["Mushrooms", "Black Pepper", "Flour"], allergens: ["Gluten"], image: "https://images.unsplash.com/photo-1642971813134-22d4f5c90d56?q=80&w=1000" },
-        { name: "Mushroom Chilli", price: 289, desc: "Mushrooms sautéed with capsicum and spicy chilli sauce.", prep: 18, ingredients: ["Mushrooms", "Onion", "Capsicum", "Chilli"], allergens: ["Soy", "Gluten"], image: "https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?q=80&w=1000" },
-        { name: "Paneer Chilli", price: 285, desc: "Fresh cottage cheese cubes tossed in a hot and tangy chilli base.", prep: 18, ingredients: ["Paneer", "Capsicum", "Soy Sauce", "Chillies"], allergens: ["Dairy", "Soy", "Gluten"], image: "https://images.unsplash.com/photo-1626074353765-517a681e40be?q=80&w=1000" },
-        { name: "Paneer Salt & Pepper", price: 299, desc: "Crispy paneer cubes seasoned with salt and freshly ground pepper.", prep: 15, ingredients: ["Paneer", "Pepper", "Corn Starch"], allergens: ["Dairy", "Gluten"], image: "https://images.unsplash.com/photo-1610057099431-d73a1c9d2f2f?q=80&w=1000" },
-        { name: "Paneer Schezwan Dry", price: 259, desc: "Paneer chunks prepared in a hot and pungent Schezwan base.", prep: 18, ingredients: ["Paneer", "Schezwan Pepper", "Garlic"], allergens: ["Dairy", "Soy", "Gluten"], image: "https://images.unsplash.com/photo-1525755662778-989d0524087e?q=80&w=1000" },
-        { name: "Potato Chilli", price: 259, desc: "Crispy potato wedges tossed with onions and spicy chilli sauce.", prep: 15, ingredients: ["Potato", "Onion", "Soy Sauce", "Green Chilli"], allergens: ["Soy", "Gluten"], image: "https://images.unsplash.com/photo-1574894709920-11b28e7367e3?q=80&w=1000" },
-        { name: "Honey Chilli Potato", price: 269, desc: "Crispy potatoes glazed with a sweet and spicy honey chilli sauce.", prep: 15, ingredients: ["Potato", "Honey", "Chilli Flakes", "Sesame"], allergens: ["Soy", "Gluten", "Sesame"], image: "https://images.unsplash.com/photo-1518013391915-e4db7454218a?q=80&w=1000" },
-        { name: "French Fry", price: 210, desc: "Classic golden deep-fried salted potato strips.", prep: 10, ingredients: ["Potato", "Salt", "Oil"], allergens: [], image: "https://images.unsplash.com/photo-1576107232684-1279f390859f?q=80&w=1000" },
-        { name: "Chana Chilli", price: 279, desc: "Boiled chickpeas sautéed with spices and a spicy chilli glaze.", prep: 15, ingredients: ["Chickpeas", "Soy Sauce", "Onion", "Chilli"], allergens: ["Soy", "Gluten"], image: "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?q=80&w=1000" },
-        { name: "Paneer 65", price: 309, desc: "Spicy deep-fried paneer bites tempered with fresh curry leaves.", prep: 18, ingredients: ["Paneer", "Rice Flour", "Spices", "Curry Leaves"], allergens: ["Dairy", "Gluten"], image: "https://images.unsplash.com/photo-1633945274405-b6c80a2047cb?q=80&w=1000" },
-        { name: "Cheese Chilli (Haveli Dhaba Special)", price: 399, desc: "Signature rich dish of melted cheese and spicy green chillies.", prep: 20, ingredients: ["Processed Cheese", "Paneer", "Green Chilli", "Garlic"], allergens: ["Dairy", "Soy", "Gluten"], image: "https://images.unsplash.com/photo-1512058564366-18510be2db19?q=80&w=1000" },
-        { name: "Baby Corn Chilli", price: 299, desc: "Crunchy baby corn tossed in a hot and tangy chilli soy sauce.", prep: 15, ingredients: ["Baby Corn", "Capsicum", "Onion", "Soy"], allergens: ["Soy", "Gluten"], image: "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?q=80&w=1000" },
-        { name: "Baby Corn Salt & Pepper", price: 289, desc: "Fried baby corn pieces seasoned with sea salt and cracked pepper.", prep: 15, ingredients: ["Baby Corn", "Black Pepper", "Flour"], allergens: ["Gluten"], image: "https://images.unsplash.com/photo-1603894584134-f1746b3f309a?q=80&w=1000" },
-        { name: "Pan Fry Noodles", price: 280, desc: "Noodles pan-fried until crispy, served with a light veggie sauce.", prep: 20, ingredients: ["Noodles", "Mix Veg", "Soy Sauce"], allergens: ["Gluten", "Soy"], image: "https://images.unsplash.com/photo-1552611052-33e04de081de?q=80&w=1000" },
-        { name: "Veg Spring Roll", price: 281, desc: "Crispy rolls filled with shredded seasonal vegetables and spices.", prep: 15, ingredients: ["Flour Sheet", "Cabbage", "Carrot", "Capsicum"], allergens: ["Gluten", "Soy"], image: "https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1000" },
+        { name: "Garlic Hakka Noodles", price: 219, desc: "Noodles featuring a heavy punch of roasted golden garlic.", prep: 12, ingredients: ["Noodles", "Garlic", "Celery", "Spring Onion"], allergens: ["Gluten", "Soy"], image: "" },
+        { name: "Shanghai Noodles", price: 201, desc: "Veggies and noodles cooked in a sweet-savory traditional style.", prep: 15, ingredients: ["Noodles", "Dark Soy", "Cabbage", "Vinegar"], allergens: ["Gluten", "Soy"], image: "" },
+        { name: "Veg Manchurian", price: 269, desc: "Vegetable dumplings in a spicy, ginger-garlic soy-based gravy.", prep: 20, ingredients: ["Mix Veg Balls", "Soy Sauce", "Ginger", "Garlic"], allergens: ["Gluten", "Soy"], image: "https://holycowvegan.net/wp-content/uploads/2020/03/veg-manchurian-7.jpg" },
+        { name: "Veg Chilli Dry", price: 259, desc: "Stir-fried assorted veggies tossed in a spicy green chilli glaze.", prep: 18, ingredients: ["Mix Veg", "Capsicum", "Soy", "Green Chilli"], allergens: ["Soy", "Gluten"], image: "" },
+        { name: "Corn Salt & Pepper", price: 289, desc: "Crispy fried corn kernels seasoned with simple salt and pepper.", prep: 15, ingredients: ["Sweet Corn", "Black Pepper", "Corn Flour"], allergens: ["Corn"], image: "https://www.kolkataweb.com/wp-content/uploads/2023/02/CHOWMAN18American-Corn-Pepper-Salt.jpg" },
+        { name: "Mushroom Salt & Pepper", price: 279, desc: "Lightly battered mushrooms seasoned with cracked peppercorns.", prep: 15, ingredients: ["Mushrooms", "Black Pepper", "Flour"], allergens: ["Gluten"], image: "" },
+        { name: "Mushroom Chilli", price: 289, desc: "Mushrooms sautéed with capsicum and spicy chilli sauce.", prep: 18, ingredients: ["Mushrooms", "Onion", "Capsicum", "Chilli"], allergens: ["Soy", "Gluten"], image: "https://www.foodsala.com/wp-content/uploads/2024/01/chilli-mushroom-dry-or-gravy-1-e1646051565586.jpeg" },
+        { name: "Paneer Chilli", price: 285, desc: "Fresh cottage cheese cubes tossed in a hot and tangy chilli base.", prep: 18, ingredients: ["Paneer", "Capsicum", "Soy Sauce", "Chillies"], allergens: ["Dairy", "Soy", "Gluten"], image: "https://www.funfoodfrolic.com/wp-content/uploads/2020/04/Chilli-Paneer-Thumbnail.jpg" },
+        { name: "Paneer Salt & Pepper", price: 299, desc: "Crispy paneer cubes seasoned with salt and freshly ground pepper.", prep: 15, ingredients: ["Paneer", "Pepper", "Corn Starch"], allergens: ["Dairy", "Gluten"], image: "" },
+        { name: "Paneer Schezwan Dry", price: 259, desc: "Paneer chunks prepared in a hot and pungent Schezwan base.", prep: 18, ingredients: ["Paneer", "Schezwan Pepper", "Garlic"], allergens: ["Dairy", "Soy", "Gluten"], image: "" },
+        { name: "Potato Chilli", price: 259, desc: "Crispy potato wedges tossed with onions and spicy chilli sauce.", prep: 15, ingredients: ["Potato", "Onion", "Soy Sauce", "Green Chilli"], allergens: ["Soy", "Gluten"], image: "" },
+        { name: "Honey Chilli Potato", price: 269, desc: "Crispy potatoes glazed with a sweet and spicy honey chilli sauce.", prep: 15, ingredients: ["Potato", "Honey", "Chilli Flakes", "Sesame"], allergens: ["Soy", "Gluten", "Sesame"], image: "https://static.toiimg.com/thumb/52532656.cms?imgsize=498654&width=800&height=800" },
+        { name: "French Fry", price: 210, desc: "Classic golden deep-fried salted potato strips.", prep: 10, ingredients: ["Potato", "Salt", "Oil"], allergens: [], image: "https://www.awesomecuisine.com/wp-content/uploads/2009/05/french-fries.jpg" },
+        { name: "Chana Chilli", price: 279, desc: "Boiled chickpeas sautéed with spices and a spicy chilli glaze.", prep: 15, ingredients: ["Chickpeas", "Soy Sauce", "Onion", "Chilli"], allergens: ["Soy", "Gluten"], image: "" },
+        { name: "Paneer 65", price: 309, desc: "Spicy deep-fried paneer bites tempered with fresh curry leaves.", prep: 18, ingredients: ["Paneer", "Rice Flour", "Spices", "Curry Leaves"], allergens: ["Dairy", "Gluten"], image: "" },
+        { name: "Cheese Chilli (Haveli Dhaba Special)", price: 399, desc: "Signature rich dish of melted cheese and spicy green chillies.", prep: 20, ingredients: ["Processed Cheese", "Paneer", "Green Chilli", "Garlic"], allergens: ["Dairy", "Soy", "Gluten"], image: "" },
+        { name: "Baby Corn Chilli", price: 299, desc: "Crunchy baby corn tossed in a hot and tangy chilli soy sauce.", prep: 15, ingredients: ["Baby Corn", "Capsicum", "Onion", "Soy"], allergens: ["Soy", "Gluten"], image: "https://foodmahal.in/wp-content/uploads/2024/10/22-scaled.jpg" },
+        { name: "Baby Corn Salt & Pepper", price: 289, desc: "Fried baby corn pieces seasoned with sea salt and cracked pepper.", prep: 15, ingredients: ["Baby Corn", "Black Pepper", "Flour"], allergens: ["Gluten"], image: "" },
+        { name: "Pan Fry Noodles", price: 280, desc: "Noodles pan-fried until crispy, served with a light veggie sauce.", prep: 20, ingredients: ["Noodles", "Mix Veg", "Soy Sauce"], allergens: ["Gluten", "Soy"], image: "" },
+        { name: "Veg Spring Roll", price: 281, desc: "Crispy rolls filled with shredded seasonal vegetables and spices.", prep: 15, ingredients: ["Flour Sheet", "Cabbage", "Carrot", "Capsicum"], allergens: ["Gluten", "Soy"], image: "https://www.kitchensanctuary.com/wp-content/uploads/2023/10/Vegetable-Spring-Rolls-square-FS.jpg" },
       ]
     },
     {
@@ -245,7 +245,7 @@ async function main() {
           prep: 20,
           ingredients: ["Paneer", "Yogurt", "Ginger-Garlic", "Spices"],
           allergens: ["Dairy"],
-          image: "https://images.unsplash.com/photo-1599487488170-d11ec9c175f0?q=80&w=1000"
+          image: "https://b.zmtcdn.com/data/dish_photos/477/fd34d2df6530fc486e19ef5f617de477.jpg"
         },
         {
           name: "Veg Hara Bhara Kabab",
@@ -254,7 +254,7 @@ async function main() {
           prep: 15,
           ingredients: ["Spinach", "Green Peas", "Potato", "Breadcrumbs"],
           allergens: ["Gluten", "Dairy"],
-          image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?q=80&w=1000"
+          image: "https://www.cookclickndevour.com/wp-content/uploads/2016/05/hara-bhara-kabab-recipe-1-480x270.jpg"
         },
         {
           name: "Mushroom Tikka",
@@ -263,7 +263,7 @@ async function main() {
           prep: 15,
           ingredients: ["Mushrooms", "Yogurt", "Tandoori Masala"],
           allergens: ["Dairy"],
-          image: "https://images.unsplash.com/photo-1628294895911-067645f7c32b?q=80&w=1000"
+          image: ""
         },
         {
           name: "Veg Seek Kabab",
@@ -272,7 +272,7 @@ async function main() {
           prep: 18,
           ingredients: ["Minced Veg", "Potatoes", "Spices"],
           allergens: ["Dairy"],
-          image: "https://images.unsplash.com/photo-1589647363585-f4a7d3877b10?q=80&w=1000"
+          image: ""
         },
         {
           name: "Paneer Malai Tikka",
@@ -281,7 +281,7 @@ async function main() {
           prep: 22,
           ingredients: ["Paneer", "Fresh Cream", "Cheese", "Cardamom"],
           allergens: ["Dairy", "Nuts"],
-          image: "https://images.unsplash.com/photo-1610057099431-d73a1c9d2f2f?q=80&w=1000"
+          image: ""
         },
         {
           name: "Veg Platter",
@@ -290,7 +290,7 @@ async function main() {
           prep: 25,
           ingredients: ["Paneer", "Mushroom", "Veg Kabab", "Soya"],
           allergens: ["Dairy", "Gluten", "Soy"],
-          image: "https://images.unsplash.com/photo-1541529086526-db283c563270?q=80&w=1000"
+          image: ""
         },
         {
           name: "Baby Corn Tikka",
@@ -299,7 +299,7 @@ async function main() {
           prep: 15,
           ingredients: ["Baby Corn", "Yogurt", "Besan", "Spices"],
           allergens: ["Dairy"],
-          image: "https://images.unsplash.com/photo-1563379091339-03b21bc4a4f8?q=80&w=1000"
+          image: ""
         },
         {
           name: "Paneer Aachari Tikka",
@@ -308,7 +308,7 @@ async function main() {
           prep: 20,
           ingredients: ["Paneer", "Pickle Spices", "Mustard Oil", "Yogurt"],
           allergens: ["Dairy", "Mustard"],
-          image: "https://images.unsplash.com/photo-1626074353765-517a681e40be?q=80&w=1000"
+          image: "https://b.zmtcdn.com/data/dish_photos/9ed/7db4e2aa85d9f7f41b872cc7840749ed.jpg"
         },
         {
           name: "Paneer Haryali Tikka",
@@ -317,7 +317,7 @@ async function main() {
           prep: 20,
           ingredients: ["Paneer", "Mint", "Coriander", "Green Chilli"],
           allergens: ["Dairy"],
-          image: "https://images.unsplash.com/photo-1505253304412-1f37e4293f06?q=80&w=1000"
+          image: "https://media-cdn.tripadvisor.com/media/photo-s/13/2b/00/57/hariyali-paneer-tikka.jpg"
         },
         {
           name: "Paneer Mushroom Tikka",
@@ -326,7 +326,7 @@ async function main() {
           prep: 20,
           ingredients: ["Paneer", "Mushrooms", "Yogurt", "Spices"],
           allergens: ["Dairy"],
-          image: "https://images.unsplash.com/photo-1593504049359-74330189a345?q=80&w=1000"
+          image: ""
         },
         {
           name: "Soya Afghani Chap",
@@ -335,7 +335,7 @@ async function main() {
           prep: 20,
           ingredients: ["Soya Chap", "Cream", "Cashew Paste", "Yogurt"],
           allergens: ["Dairy", "Soy", "Nuts"],
-          image: "https://images.unsplash.com/photo-1619216083420-6e54b895f730?q=80&w=1000"
+          image: "https://images.herzindagi.info/image/2024/Jun/best-afghani-chaap-recipe.jpg"
         },
         {
           name: "Soya Aachari Chap",
@@ -344,7 +344,7 @@ async function main() {
           prep: 20,
           ingredients: ["Soya Chap", "Pickle Paste", "Mustard Oil"],
           allergens: ["Dairy", "Soy", "Mustard"],
-          image: "https://images.unsplash.com/photo-1585932231552-198d75175b22?q=80&w=1000"
+          image: "https://5.imimg.com/data5/SELLER/Default/2023/8/339786032/GB/BP/VE/164404726/screenshot-2023-08-31-at-23-23-13.png"
         },
         {
           name: "Soya Malai Chap",
@@ -353,7 +353,7 @@ async function main() {
           prep: 22,
           ingredients: ["Soya Chap", "Malai", "Cheese", "Cardamom"],
           allergens: ["Dairy", "Soy"],
-          image: "https://images.unsplash.com/photo-1606471191009-63994c53433b?q=80&w=1000"
+          image: ""
         }
       ]
     },
@@ -369,7 +369,7 @@ async function main() {
           prep: 30,
           ingredients: ["Whole Chicken", "Yogurt", "Kashmiri Chilli", "Lemon"],
           allergens: ["Dairy"],
-          image: "https://images.unsplash.com/photo-1599487488170-d11ec9c175f0?q=80&w=1000"
+          image: "https://b.zmtcdn.com/data/dish_photos/ec5/9b050bea8aadce56bbf0b25bc4048ec5.jpg"
         },
         {
           name: "Chicken Tikka (10 ps)",
@@ -378,7 +378,7 @@ async function main() {
           prep: 20,
           ingredients: ["Chicken Boneless", "Yogurt", "Mustard Oil", "Spices"],
           allergens: ["Dairy", "Mustard"],
-          image: "https://images.unsplash.com/photo-1633945274405-b6c8069047b0?q=80&w=1000"
+          image: "https://i.ytimg.com/vi/pt2Q5Wbz1dU/maxresdefault.jpg"
         },
         {
           name: "Chicken Malai Tikka (10 ps)",
@@ -387,7 +387,7 @@ async function main() {
           prep: 22,
           ingredients: ["Chicken", "Cream", "Cheese", "Cardamom"],
           allergens: ["Dairy", "Nuts"],
-          image: "https://images.unsplash.com/photo-1610057099431-d73a1c9d2f2f?q=80&w=1000"
+          image: "https://www.awesomecuisine.com/wp-content/uploads/2012/11/Chicken-Malai-Tikka.jpg"
         },
         {
           name: "Chicken Seek Kabab (8 ps)",
@@ -396,7 +396,7 @@ async function main() {
           prep: 18,
           ingredients: ["Minced Chicken", "Coriander", "Ginger-Garlic", "Spices"],
           allergens: ["Dairy"],
-          image: "https://images.unsplash.com/photo-1628294895911-067645f7c32b?q=80&w=1000"
+          image: "https://derafarms.com/cdn/shop/files/deraproducts-2024-06-12T110804.251.png?v=1719207183"
         },
         {
           name: "Chicken Lahsuni Tikka (10 ps)",
@@ -405,7 +405,7 @@ async function main() {
           prep: 20,
           ingredients: ["Chicken", "Roasted Garlic", "Yogurt", "Spices"],
           allergens: ["Dairy"],
-          image: "https://images.unsplash.com/photo-1585932231552-198d75175b22?q=80&w=1000"
+          image: ""
         },
         {
           name: "Chicken Kali Mirch Tikka (10 ps)",
@@ -414,7 +414,7 @@ async function main() {
           prep: 20,
           ingredients: ["Chicken", "Black Pepper", "Yogurt", "Cream"],
           allergens: ["Dairy"],
-          image: "https://images.unsplash.com/photo-1619216083420-6e54b895f730?q=80&w=1000"
+          image: ""
         },
         {
           name: "Chicken Boti Kabab (10 ps)",
@@ -423,7 +423,7 @@ async function main() {
           prep: 20,
           ingredients: ["Chicken Boti", "Yogurt", "Dhaba Masala"],
           allergens: ["Dairy"],
-          image: "https://images.unsplash.com/photo-1606471191009-63994c53433b?q=80&w=1000"
+          image: ""
         },
         {
           name: "Pahadi Kabab (10 ps)",
@@ -432,7 +432,7 @@ async function main() {
           prep: 20,
           ingredients: ["Chicken", "Mint Paste", "Coriander", "Yogurt"],
           allergens: ["Dairy"],
-          image: "https://images.unsplash.com/photo-1505253304412-1f37e4293f06?q=80&w=1000"
+          image: ""
         },
         {
           name: "Chicken Haryali Kabab (10 ps)",
@@ -441,7 +441,7 @@ async function main() {
           prep: 20,
           ingredients: ["Chicken", "Spinach", "Mint", "Yogurt"],
           allergens: ["Dairy"],
-          image: "https://images.unsplash.com/photo-1589647363585-f4a7d3877b10?q=80&w=1000"
+          image: "https://www.lekhafoods.com/media/202086/chicken-hariyali-kebab.jpg"
         },
         {
           name: "Chicken Reshmi Kabab (8 ps)",
@@ -450,7 +450,7 @@ async function main() {
           prep: 22,
           ingredients: ["Chicken", "Egg White", "Cream", "Spices"],
           allergens: ["Dairy", "Egg"],
-          image: "https://images.unsplash.com/photo-1632778149975-400460ca417e?q=80&w=1000"
+          image: ""
         },
         {
           name: "Chicken Afghani Kabab (Bone 8 ps/4 ps)",
@@ -459,7 +459,7 @@ async function main() {
           prep: 30,
           ingredients: ["Chicken", "Cashew Paste", "Cream", "Melon Seeds"],
           allergens: ["Dairy", "Nuts"],
-          image: "https://images.unsplash.com/photo-1563379091339-03b21bc4a4f8?q=80&w=1000"
+          image: "https://socialchefpriyanka.com/wp-content/uploads/2019/10/afghani-chicken-cooktube.jpg"
         },
         {
           name: "Chicken Platter",
@@ -468,7 +468,7 @@ async function main() {
           prep: 35,
           ingredients: ["Chicken Tikka", "Malai Tikka", "Seek Kabab", "Haryali"],
           allergens: ["Dairy", "Nuts", "Egg"],
-          image: "https://images.unsplash.com/photo-1541529086526-db283c563270?q=80&w=1000"
+          image: ""
         },
         {
           name: "Kali Mirch Tandoori with Bone (8 ps/4 ps)",
@@ -477,7 +477,7 @@ async function main() {
           prep: 30,
           ingredients: ["Chicken", "Crushed Pepper", "Yogurt", "Ghee"],
           allergens: ["Dairy"],
-          image: "https://images.unsplash.com/photo-1593504049359-74330189a345?q=80&w=1000"
+          image: ""
         },
         {
           name: "Haveli Dhaba Special Kabab (Bone Less 10 ps)",
@@ -486,7 +486,7 @@ async function main() {
           prep: 25,
           ingredients: ["Chicken", "Secret Dhaba Spices", "Lemon", "Ginger"],
           allergens: ["Dairy"],
-          image: "https://images.unsplash.com/photo-1615557960916-5f4791effe9d?q=80&w=1000"
+          image: ""
         },
         {
           name: "Haveli Dhaba Special Kabab (Bone 8 ps)",
@@ -495,7 +495,7 @@ async function main() {
           prep: 30,
           ingredients: ["Chicken", "Traditional Dhaba Spices", "Mustard Oil"],
           allergens: ["Dairy", "Mustard"],
-          image: "https://images.unsplash.com/photo-1534939561122-3d5177b061d8?q=80&w=1000"
+          image: ""
         }
       ]
     },
@@ -511,7 +511,7 @@ async function main() {
           prep: 8,
           ingredients: ["Whole Wheat Flour", "Water"],
           allergens: ["Gluten"],
-          image: "https://images.unsplash.com/photo-1589647363585-f4a7d3877b10?q=80&w=1000"
+          image: "https://inredberry.com/wp-content/uploads/2023/10/Tandoori-Roti.png"
         },
         {
           name: "Tandoori Roti Butter",
@@ -520,7 +520,7 @@ async function main() {
           prep: 8,
           ingredients: ["Whole Wheat Flour", "Butter"],
           allergens: ["Gluten", "Dairy"],
-          image: "https://images.unsplash.com/photo-1626074353765-517a681e40be?q=80&w=1000"
+          image: "https://mughaldarbar.in/upload/pro/product-featured-90.jpg"
         },
         {
           name: "Tawa Roti Plain",
@@ -529,7 +529,7 @@ async function main() {
           prep: 5,
           ingredients: ["Whole Wheat Flour"],
           allergens: ["Gluten"],
-          image: "https://images.unsplash.com/photo-1610057099431-d73a1c9d2f2f?q=80&w=1000"
+          image: ""
         },
         {
           name: "Tawa Roti Butter",
@@ -538,7 +538,7 @@ async function main() {
           prep: 5,
           ingredients: ["Whole Wheat Flour", "Butter"],
           allergens: ["Gluten", "Dairy"],
-          image: "https://images.unsplash.com/photo-1565557623262-b51c2513a641?q=80&w=1000"
+          image: ""
         },
         {
           name: "Plain Naan",
@@ -547,7 +547,7 @@ async function main() {
           prep: 10,
           ingredients: ["Refined Flour", "Yeast", "Milk"],
           allergens: ["Gluten", "Dairy"],
-          image: "https://images.unsplash.com/photo-1533777857889-4be7c70b33f7?q=80&w=1000"
+          image: ""
         },
         {
           name: "Butter Naan",
@@ -556,7 +556,7 @@ async function main() {
           prep: 10,
           ingredients: ["Refined Flour", "Butter", "Milk"],
           allergens: ["Gluten", "Dairy"],
-          image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?q=80&w=1000"
+          image: "https://foodess.com/wp-content/uploads/2023/02/Butter-Naan-2.jpg"
         },
         {
           name: "Masala Kulcha",
@@ -565,7 +565,7 @@ async function main() {
           prep: 12,
           ingredients: ["Flour", "Potato", "Onion", "Amchur"],
           allergens: ["Gluten", "Dairy"],
-          image: "https://images.unsplash.com/photo-1628294895911-067645f7c32b?q=80&w=1000"
+          image: "https://www.faskitchen.com/wp-content/uploads/2016/03/Masala-Kulcha-recipe-how-to-make-masala-kulcha.jpg"
         },
         {
           name: "Garlic Naan",
@@ -574,7 +574,7 @@ async function main() {
           prep: 12,
           ingredients: ["Flour", "Minced Garlic", "Coriander", "Butter"],
           allergens: ["Gluten", "Dairy"],
-          image: "https://images.unsplash.com/photo-1573140247632-f8fd74997d5c?q=80&w=1000"
+          image: "https://www.pachakam.com/wp-content/uploads/2009/05/new-butter-naan-500x500.jpg"
         },
         {
           name: "Missi Roti",
@@ -583,7 +583,7 @@ async function main() {
           prep: 10,
           ingredients: ["Besan", "Wheat Flour", "Fenugreek", "Cumin"],
           allergens: ["Gluten"],
-          image: "https://images.unsplash.com/photo-1626132646534-7546741762c9?q=80&w=1000"
+          image: "https://i0.wp.com/spicechronicles.com/wp-content/uploads/2012/02/Missy_1.jpg?resize=640%2C640&ssl=1"
         },
         {
           name: "Aloo Paratha",
@@ -592,7 +592,7 @@ async function main() {
           prep: 15,
           ingredients: ["Wheat Flour", "Potato", "Green Chilli", "Ghee"],
           allergens: ["Gluten", "Dairy"],
-          image: "https://images.unsplash.com/photo-1606471191009-63994c53433b?q=80&w=1000"
+          image: ""
         },
         {
           name: "Paneer Kulcha",
@@ -601,7 +601,7 @@ async function main() {
           prep: 15,
           ingredients: ["Flour", "Paneer", "Spices", "Coriander"],
           allergens: ["Gluten", "Dairy"],
-          image: "https://images.unsplash.com/photo-1619216083420-6e54b895f730?q=80&w=1000"
+          image: ""
         },
         {
           name: "Shahi Naan",
@@ -610,7 +610,7 @@ async function main() {
           prep: 15,
           ingredients: ["Flour", "Cashews", "Raisins", "Butter"],
           allergens: ["Gluten", "Dairy", "Nuts"],
-          image: "https://images.unsplash.com/photo-1541529086526-db283c563270?q=80&w=1000"
+          image: ""
         },
         {
           name: "Plain Kulcha",
@@ -619,7 +619,7 @@ async function main() {
           prep: 10,
           ingredients: ["Flour", "Milk", "Yeast"],
           allergens: ["Gluten", "Dairy"],
-          image: "https://images.unsplash.com/photo-1505253304412-1f37e4293f06?q=80&w=1000"
+          image: "https://www.yummytummyaarthi.com/wp-content/uploads/2014/10/1-30.jpg"
         },
         {
           name: "Cheese Naan",
@@ -628,7 +628,7 @@ async function main() {
           prep: 15,
           ingredients: ["Flour", "Processed Cheese", "Butter"],
           allergens: ["Gluten", "Dairy"],
-          image: "https://images.unsplash.com/photo-1633945274405-b6c80a2047cb?q=80&w=1000"
+          image: ""
         }
       ]
     },
@@ -644,7 +644,7 @@ async function main() {
           prep: 12,
           ingredients: ["Vegetable Broth", "Cabbage", "Soy", "Crispy Noodles"],
           allergens: ["Soy", "Gluten"],
-          image: "https://images.unsplash.com/photo-1617093727343-374698b1b08d?q=80&w=1000"
+          image: "https://i0.wp.com/aartimadan.com/wp-content/uploads/2021/01/Veg-Manchow-Soup.jpg?fit=1000%2C561&ssl=1"
         },
         {
           name: "Veg Hot & Sour Soup",
@@ -653,7 +653,7 @@ async function main() {
           prep: 12,
           ingredients: ["Mix Veg", "Vinegar", "Chilli Sauce", "Soy"],
           allergens: ["Soy"],
-          image: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?q=80&w=1000"
+          image: "https://skydecklounge.in/wp-content/uploads/2022/01/Hot-and-Sour-Veg-Soup.jpg"
         },
         {
           name: "Lemon Garlic Veg Soup",
@@ -662,7 +662,7 @@ async function main() {
           prep: 10,
           ingredients: ["Clear Broth", "Lemon Juice", "Garlic", "Coriander"],
           allergens: [],
-          image: "https://images.unsplash.com/photo-1552611052-33e04de081de?q=80&w=1000"
+          image: ""
         },
         {
           name: "Veg Coriander Soup",
@@ -671,7 +671,7 @@ async function main() {
           prep: 10,
           ingredients: ["Veg Stock", "Coriander", "Ginger", "Lemon"],
           allergens: [],
-          image: "https://images.unsplash.com/photo-1623341214825-9f4f963727da?q=80&w=1000"
+          image: ""
         },
         {
           name: "Sweet Corn Soup",
@@ -680,7 +680,7 @@ async function main() {
           prep: 12,
           ingredients: ["Sweet Corn", "Cream", "Veg Stock"],
           allergens: ["Corn"],
-          image: "https://images.unsplash.com/photo-1512058564366-18510be2db19?q=80&w=1000"
+          image: "https://media.sailusfood.com/wp-content/uploads/2012/02/sweet-corn-soup.jpg"
         },
         {
           name: "Veg Clear Soup",
@@ -689,7 +689,7 @@ async function main() {
           prep: 10,
           ingredients: ["Water", "Carrot", "Beans", "Salt"],
           allergens: [],
-          image: "https://images.unsplash.com/photo-1631515233349-29906561f84c?q=80&w=1000"
+          image: ""
         },
         {
           name: "Tomato Soup",
@@ -698,7 +698,7 @@ async function main() {
           prep: 10,
           ingredients: ["Tomato", "Cream", "Herbs"],
           allergens: ["Dairy"],
-          image: "https://images.unsplash.com/photo-1547592166-73f8a5730d1a?q=80&w=1000"
+          image: "https://www.tasteofhome.com/wp-content/uploads/2025/03/EXPS_TOHVP24_132607_MF_08_27_1.jpg"
         },
         {
           name: "Cream of Tomato Soup",
@@ -707,7 +707,7 @@ async function main() {
           prep: 12,
           ingredients: ["Tomato", "Fresh Cream", "Butter"],
           allergens: ["Dairy"],
-          image: "https://images.unsplash.com/photo-1583524505974-6facd53f4597?q=80&w=1000"
+          image: ""
         },
         {
           name: "Cream of Musroom Soup",
@@ -716,7 +716,7 @@ async function main() {
           prep: 15,
           ingredients: ["Mushrooms", "Cream", "Butter", "Black Pepper"],
           allergens: ["Dairy"],
-          image: "https://images.unsplash.com/photo-1533777324565-101758c9429f?q=80&w=1000"
+          image: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRlgWcWz8yboR2IDLVhZXqEFvCIVmrCNlGHh0Nbb1fFnAnHie0UipWKfxThezQW"
         }
       ]
     },
@@ -732,7 +732,7 @@ async function main() {
           prep: 15,
           ingredients: ["Chicken Stock", "Chicken Bits", "Soy Sauce", "Noodles"],
           allergens: ["Soy", "Gluten", "Egg"],
-          image: "https://images.unsplash.com/photo-1607528971899-2e89e6c0ec69?q=80&w=1000"
+          image: ""
         },
         {
           name: "Chicken Hot & Soup Sour",
@@ -741,7 +741,7 @@ async function main() {
           prep: 15,
           ingredients: ["Chicken", "Egg", "Soy", "Chilli Sauce"],
           allergens: ["Soy", "Egg"],
-          image: "https://images.unsplash.com/photo-1560684352-8497838a2229?q=80&w=1000"
+          image: ""
         },
         {
           name: "Chicken Lemon Garlic Soup",
@@ -750,7 +750,7 @@ async function main() {
           prep: 12,
           ingredients: ["Chicken Stock", "Garlic", "Lemon", "Chicken pieces"],
           allergens: [],
-          image: "https://images.unsplash.com/photo-1588566165024-4f5145785055?q=80&w=1000"
+          image: ""
         },
         {
           name: "Chicken Soup Coriander",
@@ -759,7 +759,7 @@ async function main() {
           prep: 12,
           ingredients: ["Chicken Stock", "Coriander", "Ginger"],
           allergens: [],
-          image: "https://images.unsplash.com/photo-1582819509237-45b754223abd?q=80&w=1000"
+          image: ""
         },
         {
           name: "Chicken Sweet Corn Soup",
@@ -768,7 +768,7 @@ async function main() {
           prep: 15,
           ingredients: ["Chicken", "Sweet Corn", "Cream"],
           allergens: ["Corn"],
-          image: "https://images.unsplash.com/photo-1476718406336-bb5a9690ee2a?q=80&w=1000"
+          image: ""
         },
         {
           name: "Chicken Clear Soup",
@@ -777,7 +777,7 @@ async function main() {
           prep: 12,
           ingredients: ["Chicken", "Onion", "Black Pepper"],
           allergens: [],
-          image: "https://images.unsplash.com/photo-1594759077772-21d1de16e33f?q=80&w=1000"
+          image: "https://sugarfreelondoner.com/wp-content/uploads/2023/11/clear-chicken-soup-in-bowl.jpg"
         }
       ]
     },
@@ -786,49 +786,49 @@ async function main() {
       isVeg: true,
       image: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?q=80&w=1000",
       items: [
-        { name: "Paneer Tikka Masala", price: 389, desc: "Grilled paneer tikka chunks simmered in a spiced masala gravy.", prep: 20, ingredients: ["Grilled Paneer", "Tomato", "Onion", "Cream"], allergens: ["Dairy"], image: "https://images.unsplash.com/photo-1567184109171-9661c3d1421c?q=80&w=1000" },
-        { name: "Paneer Tikka Butter Masala", price: 399, desc: "Smoky paneer tikka in a rich, buttery and creamy tomato sauce.", prep: 22, ingredients: ["Paneer Tikka", "Butter", "Cream", "Cashew Paste"], allergens: ["Dairy", "Nuts"], image: "https://images.unsplash.com/photo-1626074353765-517a681e40be?q=80&w=1000" },
-        { name: "Paneer Masala", price: 379, desc: "Paneer cooked in a traditional Indian spiced onion-tomato base.", prep: 18, ingredients: ["Paneer", "Onion", "Tomato", "Spices"], allergens: ["Dairy"], image: "https://images.unsplash.com/photo-1567337710282-00832b415979?q=80&w=1000" },
-        { name: "Paneer Butter Masala", price: 385, desc: "Soft paneer in a silky smooth, mildly sweet buttery gravy.", prep: 20, ingredients: ["Paneer", "Butter", "Cream", "Honey"], allergens: ["Dairy", "Nuts"], image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?q=80&w=1000" },
-        { name: "Kadhai Paneer", price: 378, desc: "Paneer tossed with capsicum and fresh ground spices in a wok.", prep: 20, ingredients: ["Paneer", "Bell Peppers", "Kadhai Masala"], allergens: ["Dairy"], image: "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?q=80&w=1000" },
-        { name: "Paneer Keema", price: 349, desc: "Minced paneer cooked with green peas and aromatic spices.", prep: 18, ingredients: ["Minced Paneer", "Green Peas", "Tomato", "Spices"], allergens: ["Dairy"], image: "https://images.unsplash.com/photo-1606471191009-63994c53433b?q=80&w=1000" },
-        { name: "Paneer Do Pyaza", price: 385, desc: "Paneer cooked with twice the amount of onions in a thick gravy.", prep: 20, ingredients: ["Paneer", "Diced Onions", "Fried Onions", "Tomato"], allergens: ["Dairy"], image: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?q=80&w=1000" },
-        { name: "Matar Paneer", price: 369, desc: "Homestyle curry made with cottage cheese and sweet green peas.", prep: 18, ingredients: ["Paneer", "Green Peas", "Indian Curry Base"], allergens: ["Dairy"], image: "https://images.unsplash.com/photo-1626132646534-7546741762c9?q=80&w=1000" },
-        { name: "Shahi Paneer", price: 399, desc: "Royal paneer dish prepared in a luscious white cashew gravy.", prep: 22, ingredients: ["Paneer", "Cashew Cream", "Cardamom", "Saffron"], allergens: ["Dairy", "Nuts"], image: "https://images.unsplash.com/photo-1510629954389-c1e0da47d414?q=80&w=1000" },
-        { name: "Paneer Methi Malai", price: 379, desc: "Paneer in a fragrant cream sauce flavored with fenugreek leaves.", prep: 22, ingredients: ["Paneer", "Fresh Fenugreek", "Cream", "Garlic"], allergens: ["Dairy"], image: "https://images.unsplash.com/photo-1505253304412-1f37e4293f06?q=80&w=1000" },
-        { name: "Paneer Mushroom Masala", price: 399, desc: "Hearty combination of paneer and mushrooms in a spicy gravy.", prep: 20, ingredients: ["Paneer", "Mushroom", "Onion-Tomato Masala"], allergens: ["Dairy"], image: "https://images.unsplash.com/photo-1593504049359-74330189a345?q=80&w=1000" },
-        { name: "Palak Paneer", price: 381, desc: "Healthy dish of paneer cubes in a smooth spinach puree.", prep: 18, ingredients: ["Paneer", "Spinach", "Cream", "Ginger"], allergens: ["Dairy"], image: "https://images.unsplash.com/photo-1603894584134-f1746b3f309a?q=80&w=1000" },
-        { name: "Palak Paneer Lehsuni", price: 369, desc: "Spinach paneer with a heavy tempering of roasted garlic.", prep: 20, ingredients: ["Paneer", "Spinach", "Garlic bits", "Ghee"], allergens: ["Dairy"], image: "https://images.unsplash.com/photo-1619216083420-6e54b895f730?q=80&w=1000" },
-        { name: "Paneer Chatpata", price: 380, desc: "Paneer cooked in a tangy, spicy and uniquely flavored sauce.", prep: 20, ingredients: ["Paneer", "Tamarind", "Chilli", "Jaggery"], allergens: ["Dairy"], image: "https://images.unsplash.com/photo-1628294895911-067645f7c32b?q=80&w=1000" },
-        { name: "Paneer Shahi Kofta", price: 390, desc: "Royal paneer dumplings served in a rich and velvety gravy.", prep: 25, ingredients: ["Paneer Balls", "Cream", "Cashew Sauce", "Butter"], allergens: ["Dairy", "Nuts", "Gluten"], image: "https://images.unsplash.com/photo-1610057099431-d73a1c9d2f2f?q=80&w=1000" },
-        { name: "Mushroom Chatpata", price: 349, desc: "Mushrooms sautéed in a tangy and spicy tomato-based sauce.", prep: 18, ingredients: ["Mushrooms", "Lemon Juice", "Chilli", "Coriander"], allergens: [], image: "https://images.unsplash.com/photo-1541529086526-db283c563270?q=80&w=1000" },
-        { name: "Mushroom Do Pyaza", price: 359, desc: "Mushrooms prepared with a double portion of sautéed onions.", prep: 18, ingredients: ["Mushrooms", "Onion Bulbs", "Spices"], allergens: [], image: "https://images.unsplash.com/photo-1585932231552-198d75175b22?q=80&w=1000" },
-        { name: "Mushroom Masala", price: 385, desc: "Fresh button mushrooms cooked in a thick spicy Indian gravy.", prep: 18, ingredients: ["Mushrooms", "Onion", "Tomato Masala"], allergens: [], image: "https://images.unsplash.com/photo-1633383718081-22ac93e3dbf1?q=80&w=1000" },
-        { name: "Mushroom Kadhai", price: 389, desc: "Mushrooms tossed with bell peppers and ground kadhai spices.", prep: 20, ingredients: ["Mushrooms", "Capsicum", "Spices"], allergens: [], image: "https://images.unsplash.com/photo-1563379091339-03b21bc4a4f8?q=80&w=1000" },
-        { name: "Corn Mushroom Masala", price: 379, desc: "Sweet corn and mushrooms in a rich and flavorful gravy.", prep: 20, ingredients: ["Sweet Corn", "Mushrooms", "Onion Base"], allergens: ["Corn"], image: "https://images.unsplash.com/photo-1589647363585-f4a7d3877b10?q=80&w=1000" },
-        { name: "Matar Mushroom", price: 369, desc: "Earthy mushrooms and green peas in a comforting curry.", prep: 18, ingredients: ["Mushrooms", "Peas", "Tomato Masala"], allergens: [], image: "https://images.unsplash.com/photo-1599487488170-d11ec9c175f0?q=80&w=1000" },
-        { name: "Mushroom Hyderabadi", price: 375, desc: "Mushrooms cooked in a spicy, spinach-based Hyderabadi style.", prep: 20, ingredients: ["Mushrooms", "Spinach", "Green Chilli"], allergens: [], image: "https://images.unsplash.com/photo-1633945274405-b6c80a2047cb?q=80&w=1000" },
-        { name: "Mix Veg", price: 299, desc: "Assorted seasonal vegetables cooked in a blend of Indian spices.", prep: 18, ingredients: ["Carrot", "Beans", "Peas", "Potato", "Paneer"], allergens: ["Dairy"], image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=1000" },
-        { name: "Veg Kadhai", price: 369, desc: "Mixed vegetables tossed with fresh spices in a traditional wok.", prep: 20, ingredients: ["Assorted Veg", "Kadhai Masala"], allergens: [], image: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?q=80&w=1000" },
-        { name: "Veg Do Pyaza", price: 379, desc: "Mixed vegetables prepared with plenty of caramelized onions.", prep: 20, ingredients: ["Mix Veg", "Onions", "Spices"], allergens: [], image: "https://images.unsplash.com/photo-1543353071-10c8ba85a902?q=80&w=1000" },
-        { name: "Tawa Veg", price: 359, desc: "Seasonal vegetables stir-fried on a flat griddle with spices.", prep: 15, ingredients: ["Veggies", "Griddle Spices"], allergens: [], image: "https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?q=80&w=1000" },
-        { name: "Aloo Gobi Matar", price: 269, desc: "Classic trio of potato, cauliflower, and green peas.", prep: 15, ingredients: ["Potato", "Cauliflower", "Peas"], allergens: [], image: "https://images.unsplash.com/photo-1596797038583-1c191cb39f50?q=80&w=1000" },
-        { name: "Aloo Dam Kashmiri", price: 259, desc: "Fried whole baby potatoes in a sweet-spicy Kashmiri gravy.", prep: 20, ingredients: ["Potato", "Saffron", "Dry Ginger", "Fennel"], allergens: [], image: "https://images.unsplash.com/photo-1593504049359-74330189a345?q=80&w=1000" },
-        { name: "Aloo Matar", price: 255, desc: "Simple homestyle potato and pea curry.", prep: 15, ingredients: ["Potato", "Green Peas", "Cumin"], allergens: [], image: "https://images.unsplash.com/photo-1589647363585-f4a7d3877b10?q=80&w=1000" },
-        { name: "Baby Corn Masala", price: 369, desc: "Tender baby corn pieces sautéed in a thick tomato-based sauce.", prep: 18, ingredients: ["Baby Corn", "Tomato", "Ginger-Garlic"], allergens: [], image: "https://images.unsplash.com/photo-1563379091339-03b21bc4a4f8?q=80&w=1000" },
-        { name: "Palak Corn Lehsuni", price: 295, desc: "Smooth spinach puree with sweet corn and heavy garlic tempering.", prep: 18, ingredients: ["Spinach", "Sweet Corn", "Fried Garlic"], allergens: ["Corn"], image: "https://images.unsplash.com/photo-1619216083420-6e54b895f730?q=80&w=1000" },
-        { name: "Soya Chap Masala", price: 349, desc: "Meaty soya chunks cooked in a thick and spicy masala gravy.", prep: 20, ingredients: ["Soya Chap", "Tomato", "Onion", "Ghee"], allergens: ["Soy", "Dairy"], image: "https://images.unsplash.com/photo-1606471191009-63994c53433b?q=80&w=1000" },
-        { name: "Paneer Pakoda", price: 349, desc: "Fresh cottage cheese fritters fried to a golden crisp.", prep: 15, ingredients: ["Paneer", "Gram Flour", "Chilli"], allergens: ["Dairy"], image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?q=80&w=1000" },
-        { name: "Onion Pakoda", price: 259, desc: "Spiced onion fritters, a perfect tea-time or starter snack.", prep: 15, ingredients: ["Onion", "Gram Flour", "Cumin"], allergens: [], image: "https://images.unsplash.com/photo-1603894584134-f1746b3f309a?q=80&w=1000" },
-        { name: "Navratan Korma", price: 289, desc: "Nine varieties of vegetables and fruits in a mild creamy sauce.", prep: 22, ingredients: ["Mix Veg", "Fruit bits", "Cream Sauce"], allergens: ["Dairy", "Nuts"], image: "https://images.unsplash.com/photo-1610057099431-d73a1c9d2f2f?q=80&w=1000" },
-        { name: "Kaju Kadhai", price: 449, desc: "Roasted cashews cooked in a spicy kadhai gravy with capsicum.", prep: 22, ingredients: ["Cashews", "Capsicum", "Tomato", "Spices"], allergens: ["Nuts", "Dairy"], image: "https://images.unsplash.com/photo-1541529086526-db283c563270?q=80&w=1000" },
-        { name: "Kaju Masala", price: 459, desc: "Whole cashews simmered in a rich and spicy tomato-onion base.", prep: 22, ingredients: ["Cashews", "Gravy Base", "Butter"], allergens: ["Nuts", "Dairy"], image: "https://images.unsplash.com/photo-1585932231552-198d75175b22?q=80&w=1000" },
-        { name: "Malai Kofta", price: 339, desc: "Paneer dumplings served in a silky smooth, nutty mild gravy.", prep: 25, ingredients: ["Paneer Balls", "Cream", "Cashew Gravy"], allergens: ["Dairy", "Nuts", "Gluten"], image: "https://images.unsplash.com/photo-1633383718081-22ac93e3dbf1?q=80&w=1000" },
-        { name: "Veg Kofta", price: 299, desc: "Mixed vegetable dumplings in a spicy Indian red gravy.", prep: 22, ingredients: ["Veg Balls", "Onion-Tomato Gravy"], allergens: ["Gluten"], image: "https://images.unsplash.com/photo-1563379091339-03b21bc4a4f8?q=80&w=1000" },
-        { name: "Nargis Kofta", price: 315, desc: "Vegetable dumplings stuffed with paneer in a rich gravy.", prep: 25, ingredients: ["Veg Shell", "Paneer Core", "Rich Sauce"], allergens: ["Dairy", "Gluten"], image: "https://images.unsplash.com/photo-1589647363585-f4a7d3877b10?q=80&w=1000" },
-        { name: "Veg Akbari", price: 295, desc: "Assorted vegetables cooked in a royal, yellow spicy gravy.", prep: 20, ingredients: ["Mix Veg", "Turmeric Sauce", "Cream"], allergens: ["Dairy"], image: "https://images.unsplash.com/photo-1599487488170-d11ec9c175f0?q=80&w=1000" },
-        { name: "Chana Masala", price: 289, desc: "Hearty chickpeas cooked in a robust blend of Indian spices.", prep: 15, ingredients: ["Chickpeas", "Tomato", "Coriander"], allergens: [], image: "https://images.unsplash.com/photo-1585238342024-78d387f4a707?q=80&w=1000" },
-        { name: "Punjabi Chana Masala", price: 295, desc: "Spicy dark chickpea curry prepared in traditional Punjabi style.", prep: 18, ingredients: ["Black Chana", "Tea leaves", "Ginger", "Amla"], allergens: [], image: "https://images.unsplash.com/photo-1542367592-8849f2a5dd02?q=80&w=1000" },
+        { name: "Paneer Tikka Masala", price: 389, desc: "Grilled paneer tikka chunks simmered in a spiced masala gravy.", prep: 20, ingredients: ["Grilled Paneer", "Tomato", "Onion", "Cream"], allergens: ["Dairy"], image: "" },
+        { name: "Paneer Tikka Butter Masala", price: 399, desc: "Smoky paneer tikka in a rich, buttery and creamy tomato sauce.", prep: 22, ingredients: ["Paneer Tikka", "Butter", "Cream", "Cashew Paste"], allergens: ["Dairy", "Nuts"], image: "https://static.toiimg.com/photo/54408184.cms" },
+        { name: "Paneer Masala", price: 379, desc: "Paneer cooked in a traditional Indian spiced onion-tomato base.", prep: 18, ingredients: ["Paneer", "Onion", "Tomato", "Spices"], allergens: ["Dairy"], image: "" },
+        { name: "Paneer Butter Masala", price: 385, desc: "Soft paneer in a silky smooth, mildly sweet buttery gravy.", prep: 20, ingredients: ["Paneer", "Butter", "Cream", "Honey"], allergens: ["Dairy", "Nuts"], image: "https://b.zmtcdn.com/data/dish_photos/c84/5b0c32090aa42a8a1f5adcde167a5c84.jpg" },
+        { name: "Kadhai Paneer", price: 378, desc: "Paneer tossed with capsicum and fresh ground spices in a wok.", prep: 20, ingredients: ["Paneer", "Bell Peppers", "Kadhai Masala"], allergens: ["Dairy"], image: "https://b.zmtcdn.com/data/dish_photos/822/7aee1bcbc2de150964f7da62354ee822.jpg" },
+        { name: "Paneer Keema", price: 349, desc: "Minced paneer cooked with green peas and aromatic spices.", prep: 18, ingredients: ["Minced Paneer", "Green Peas", "Tomato", "Spices"], allergens: ["Dairy"], image: "" },
+        { name: "Paneer Do Pyaza", price: 385, desc: "Paneer cooked with twice the amount of onions in a thick gravy.", prep: 20, ingredients: ["Paneer", "Diced Onions", "Fried Onions", "Tomato"], allergens: ["Dairy"], image: "https://b.zmtcdn.com/data/dish_photos/2ef/438179a189948a87fff17935c01532ef.jpg" },
+        { name: "Matar Paneer", price: 369, desc: "Homestyle curry made with cottage cheese and sweet green peas.", prep: 18, ingredients: ["Paneer", "Green Peas", "Indian Curry Base"], allergens: ["Dairy"], image: "" },
+        { name: "Shahi Paneer", price: 399, desc: "Royal paneer dish prepared in a luscious white cashew gravy.", prep: 22, ingredients: ["Paneer", "Cashew Cream", "Cardamom", "Saffron"], allergens: ["Dairy", "Nuts"], image: "https://madhurasrecipe.com/wp-content/uploads/2022/01/shahi_paneer_featured.jpg" },
+        { name: "Paneer Methi Malai", price: 379, desc: "Paneer in a fragrant cream sauce flavored with fenugreek leaves.", prep: 22, ingredients: ["Paneer", "Fresh Fenugreek", "Cream", "Garlic"], allergens: ["Dairy"], image: "" },
+        { name: "Paneer Mushroom Masala", price: 399, desc: "Hearty combination of paneer and mushrooms in a spicy gravy.", prep: 20, ingredients: ["Paneer", "Mushroom", "Onion-Tomato Masala"], allergens: ["Dairy"], image: "" },
+        { name: "Palak Paneer", price: 381, desc: "Healthy dish of paneer cubes in a smooth spinach puree.", prep: 18, ingredients: ["Paneer", "Spinach", "Cream", "Ginger"], allergens: ["Dairy"], image: "https://www.indianveggiedelight.com/wp-content/uploads/2017/10/palak-paneer-recipe-featured.jpg" },
+        { name: "Palak Paneer Lehsuni", price: 369, desc: "Spinach paneer with a heavy tempering of roasted garlic.", prep: 20, ingredients: ["Paneer", "Spinach", "Garlic bits", "Ghee"], allergens: ["Dairy"], image: "" },
+        { name: "Paneer Chatpata", price: 380, desc: "Paneer cooked in a tangy, spicy and uniquely flavored sauce.", prep: 20, ingredients: ["Paneer", "Tamarind", "Chilli", "Jaggery"], allergens: ["Dairy"], image: "" },
+        { name: "Paneer Shahi Kofta", price: 390, desc: "Royal paneer dumplings served in a rich and velvety gravy.", prep: 25, ingredients: ["Paneer Balls", "Cream", "Cashew Sauce", "Butter"], allergens: ["Dairy", "Nuts", "Gluten"], image: "" },
+        { name: "Mushroom Chatpata", price: 349, desc: "Mushrooms sautéed in a tangy and spicy tomato-based sauce.", prep: 18, ingredients: ["Mushrooms", "Lemon Juice", "Chilli", "Coriander"], allergens: [], image: "" },
+        { name: "Mushroom Do Pyaza", price: 359, desc: "Mushrooms prepared with a double portion of sautéed onions.", prep: 18, ingredients: ["Mushrooms", "Onion Bulbs", "Spices"], allergens: [], image: "https://b.zmtcdn.com/data/dish_photos/a87/15385d94ccb1425d53479873f7711a87.jpg" },
+        { name: "Mushroom Masala", price: 385, desc: "Fresh button mushrooms cooked in a thick spicy Indian gravy.", prep: 18, ingredients: ["Mushrooms", "Onion", "Tomato Masala"], allergens: [], image: "" },
+        { name: "Mushroom Kadhai", price: 389, desc: "Mushrooms tossed with bell peppers and ground kadhai spices.", prep: 20, ingredients: ["Mushrooms", "Capsicum", "Spices"], allergens: [], image: "https://b.zmtcdn.com/data/dish_photos/804/b5e2c5119ff166382119291c70f3b804.jpg" },
+        { name: "Corn Mushroom Masala", price: 379, desc: "Sweet corn and mushrooms in a rich and flavorful gravy.", prep: 20, ingredients: ["Sweet Corn", "Mushrooms", "Onion Base"], allergens: ["Corn"], image: "" },
+        { name: "Matar Mushroom", price: 369, desc: "Earthy mushrooms and green peas in a comforting curry.", prep: 18, ingredients: ["Mushrooms", "Peas", "Tomato Masala"], allergens: [], image: "" },
+        { name: "Mushroom Hyderabadi", price: 375, desc: "Mushrooms cooked in a spicy, spinach-based Hyderabadi style.", prep: 20, ingredients: ["Mushrooms", "Spinach", "Green Chilli"], allergens: [], image: "" },
+        { name: "Mix Veg", price: 299, desc: "Assorted seasonal vegetables cooked in a blend of Indian spices.", prep: 18, ingredients: ["Carrot", "Beans", "Peas", "Potato", "Paneer"], allergens: ["Dairy"], image: "https://b.zmtcdn.com/data/dish_photos/d2a/474ba243e33e7ee6cab44e2cc2d8dd2a.jpg" },
+        { name: "Veg Kadhai", price: 369, desc: "Mixed vegetables tossed with fresh spices in a traditional wok.", prep: 20, ingredients: ["Assorted Veg", "Kadhai Masala"], allergens: [], image: "" },
+        { name: "Veg Do Pyaza", price: 379, desc: "Mixed vegetables prepared with plenty of caramelized onions.", prep: 20, ingredients: ["Mix Veg", "Onions", "Spices"], allergens: [], image: "" },
+        { name: "Tawa Veg", price: 359, desc: "Seasonal vegetables stir-fried on a flat griddle with spices.", prep: 15, ingredients: ["Veggies", "Griddle Spices"], allergens: [], image: "" },
+        { name: "Aloo Gobi Matar", price: 269, desc: "Classic trio of potato, cauliflower, and green peas.", prep: 15, ingredients: ["Potato", "Cauliflower", "Peas"], allergens: [], image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScDnB07on_-UZs_Uov3iH-lXctePs91BUO8A&s" },
+        { name: "Aloo Dam Kashmiri", price: 259, desc: "Fried whole baby potatoes in a sweet-spicy Kashmiri gravy.", prep: 20, ingredients: ["Potato", "Saffron", "Dry Ginger", "Fennel"], allergens: [], image: "https://b.zmtcdn.com/data/dish_photos/3e9/7eea75ed4b34e2510235277ca46363e9.jpg" },
+        { name: "Aloo Matar", price: 255, desc: "Simple homestyle potato and pea curry.", prep: 15, ingredients: ["Potato", "Green Peas", "Cumin"], allergens: [], image: "" },
+        { name: "Baby Corn Masala", price: 369, desc: "Tender baby corn pieces sautéed in a thick tomato-based sauce.", prep: 18, ingredients: ["Baby Corn", "Tomato", "Ginger-Garlic"], allergens: [], image: "" },
+        { name: "Palak Corn Lehsuni", price: 295, desc: "Smooth spinach puree with sweet corn and heavy garlic tempering.", prep: 18, ingredients: ["Spinach", "Sweet Corn", "Fried Garlic"], allergens: ["Corn"], image: "" },
+        { name: "Soya Chap Masala", price: 349, desc: "Meaty soya chunks cooked in a thick and spicy masala gravy.", prep: 20, ingredients: ["Soya Chap", "Tomato", "Onion", "Ghee"], allergens: ["Soy", "Dairy"], image: "https://www.funfoodfrolic.com/wp-content/uploads/2022/08/Soya-Chaap-Blog.jpg" },
+        { name: "Paneer Pakoda", price: 349, desc: "Fresh cottage cheese fritters fried to a golden crisp.", prep: 15, ingredients: ["Paneer", "Gram Flour", "Chilli"], allergens: ["Dairy"], image: "" },
+        { name: "Onion Pakoda", price: 259, desc: "Spiced onion fritters, a perfect tea-time or starter snack.", prep: 15, ingredients: ["Onion", "Gram Flour", "Cumin"], allergens: [], image: "https://www.munatycooking.com/wp-content/uploads/2024/02/Onion-Pakora-4.jpg" },
+        { name: "Navratan Korma", price: 289, desc: "Nine varieties of vegetables and fruits in a mild creamy sauce.", prep: 22, ingredients: ["Mix Veg", "Fruit bits", "Cream Sauce"], allergens: ["Dairy", "Nuts"], image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMaWE4KCxxo_0dsTgy7G4Aurit0Lmom0E8SA&s" },
+        { name: "Kaju Kadhai", price: 449, desc: "Roasted cashews cooked in a spicy kadhai gravy with capsicum.", prep: 22, ingredients: ["Cashews", "Capsicum", "Tomato", "Spices"], allergens: ["Nuts", "Dairy"], image: "" },
+        { name: "Kaju Masala", price: 459, desc: "Whole cashews simmered in a rich and spicy tomato-onion base.", prep: 22, ingredients: ["Cashews", "Gravy Base", "Butter"], allergens: ["Nuts", "Dairy"], image: "" },
+        { name: "Malai Kofta", price: 339, desc: "Paneer dumplings served in a silky smooth, nutty mild gravy.", prep: 25, ingredients: ["Paneer Balls", "Cream", "Cashew Gravy"], allergens: ["Dairy", "Nuts", "Gluten"], image: "" },
+        { name: "Veg Kofta", price: 299, desc: "Mixed vegetable dumplings in a spicy Indian red gravy.", prep: 22, ingredients: ["Veg Balls", "Onion-Tomato Gravy"], allergens: ["Gluten"], image: "" },
+        { name: "Nargis Kofta", price: 315, desc: "Vegetable dumplings stuffed with paneer in a rich gravy.", prep: 25, ingredients: ["Veg Shell", "Paneer Core", "Rich Sauce"], allergens: ["Dairy", "Gluten"], image: "" },
+        { name: "Veg Akbari", price: 295, desc: "Assorted vegetables cooked in a royal, yellow spicy gravy.", prep: 20, ingredients: ["Mix Veg", "Turmeric Sauce", "Cream"], allergens: ["Dairy"], image: "" },
+        { name: "Chana Masala", price: 289, desc: "Hearty chickpeas cooked in a robust blend of Indian spices.", prep: 15, ingredients: ["Chickpeas", "Tomato", "Coriander"], allergens: [], image: "https://sixhungryfeet.com/wp-content/uploads/2023/06/Easy-Chana-Masala-Recipe-8.jpg" },
+        { name: "Punjabi Chana Masala", price: 295, desc: "Spicy dark chickpea curry prepared in traditional Punjabi style.", prep: 18, ingredients: ["Black Chana", "Tea leaves", "Ginger", "Amla"], allergens: [], image: "" },
       ]
     },
     {
@@ -843,7 +843,7 @@ async function main() {
           prep: 25,
           ingredients: ["Chicken", "Onion", "Tomato Stock"],
           allergens: [],
-          image: "https://images.unsplash.com/photo-1541529086526-db283c563270?q=80&w=1000"
+          image: "https://www.spicebangla.com/wp-content/uploads/2024/10/Chicken-Curry-Recipe0.webp"
         },
         {
           name: "Chicken Handi (4 P/2 P)",
@@ -852,7 +852,7 @@ async function main() {
           prep: 30,
           ingredients: ["Chicken", "Yogurt", "Clay Pot Spices"],
           allergens: ["Dairy"],
-          image: "https://images.unsplash.com/photo-1563379091339-03b21bc4a4f8?q=80&w=1000"
+          image: ""
         },
         {
           name: "Chicken Do Pyaza (4P)",
@@ -861,7 +861,7 @@ async function main() {
           prep: 25,
           ingredients: ["Chicken", "Caramelized Onions", "Tomato"],
           allergens: [],
-          image: "https://images.unsplash.com/photo-1589647363585-f4a7d3877b10?q=80&w=1000"
+          image: "https://b.zmtcdn.com/data/dish_photos/06e/1eb6f275fb449e9c01e3ba97cfc6d06e.jpg"
         },
         {
           name: "Chicken Kassa (4 Pis)",
@@ -870,7 +870,7 @@ async function main() {
           prep: 28,
           ingredients: ["Chicken", "Roasted Spices", "Mustard Oil"],
           allergens: ["Mustard"],
-          image: "https://images.unsplash.com/photo-1619216083420-6e54b895f730?q=80&w=1000"
+          image: ""
         },
         {
           name: "Chicken Butter Masala (4 P/2 P)",
@@ -879,7 +879,7 @@ async function main() {
           prep: 28,
           ingredients: ["Chicken Tikka", "Butter", "Tomato Cream Sauce"],
           allergens: ["Dairy", "Nuts"],
-          image: "https://images.unsplash.com/photo-1603894584134-f1746b3f309a?q=80&w=1000"
+          image: "https://b.zmtcdn.com/data/dish_photos/eb0/9e63fdf332b1f4171656fd9379c3deb0.jpg"
         },
         {
           name: "Chicken Masala (4 P)",
@@ -888,7 +888,7 @@ async function main() {
           prep: 25,
           ingredients: ["Chicken", "Garam Masala", "Ginger-Garlic"],
           allergens: [],
-          image: "https://images.unsplash.com/photo-1585932231552-198d75175b22?q=80&w=1000"
+          image: ""
         },
         {
           name: "Chicken Tikka Masala (8P)",
@@ -897,7 +897,7 @@ async function main() {
           prep: 28,
           ingredients: ["Chicken Tikka", "Spicy Gravy"],
           allergens: ["Dairy"],
-          image: "https://images.unsplash.com/photo-1633945274405-b6c80a2047cb?q=80&w=1000"
+          image: "https://staging2.glebekitchen.com/wp-content/uploads/2017/04/chickentikkamasalafront.jpg"
         },
         {
           name: "Chicken Tikka Butter Masala (8 P)",
@@ -906,7 +906,7 @@ async function main() {
           prep: 28,
           ingredients: ["Chicken Tikka", "Butter", "Cashew Sauce"],
           allergens: ["Dairy", "Nuts"],
-          image: "https://images.unsplash.com/photo-1610057099431-d73a1c9d2f2f?q=80&w=1000"
+          image: ""
         },
         {
           name: "Chicken Lawabdar (4P)",
@@ -915,7 +915,7 @@ async function main() {
           prep: 28,
           ingredients: ["Chicken", "Cream", "Melon Seeds"],
           allergens: ["Dairy", "Nuts"],
-          image: "https://images.unsplash.com/photo-1628294895911-067645f7c32b?q=80&w=1000"
+          image: ""
         },
         {
           name: "Chicken Lakhnawi (4 P)",
@@ -924,7 +924,7 @@ async function main() {
           prep: 30,
           ingredients: ["Chicken", "Rose Water", "Mace", "Cardamom"],
           allergens: [],
-          image: "https://images.unsplash.com/photo-1615557960916-5f4791effe9d?q=80&w=1000"
+          image: ""
         },
         {
           name: "Chicken Patiala Bone (4P)",
@@ -933,7 +933,7 @@ async function main() {
           prep: 30,
           ingredients: ["Chicken", "Omelette wrapper", "Spicy Sauce"],
           allergens: ["Egg"],
-          image: "https://images.unsplash.com/photo-1505253304412-1f37e4293f06?q=80&w=1000"
+          image: ""
         },
         {
           name: "Chicken Patiala Boneless (8P)",
@@ -942,7 +942,7 @@ async function main() {
           prep: 30,
           ingredients: ["Chicken Boneless", "Spices", "Egg garnish"],
           allergens: ["Egg"],
-          image: "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?q=80&w=1000"
+          image: ""
         },
         {
           name: "Chicken Kadhai (4P)",
@@ -951,7 +951,7 @@ async function main() {
           prep: 25,
           ingredients: ["Chicken", "Bell Peppers", "Kadhai Masala"],
           allergens: [],
-          image: "https://images.unsplash.com/photo-1534939561122-3d5177b061d8?q=80&w=1000"
+          image: "https://b.zmtcdn.com/data/dish_photos/64a/6a35fee9881db41860690ceeb5efc64a.jpg"
         },
         {
           name: "Chicken Kolhapuri (4 P)",
@@ -960,7 +960,7 @@ async function main() {
           prep: 28,
           ingredients: ["Chicken", "Kolhapuri Masala", "Dry Coconut"],
           allergens: [],
-          image: "https://images.unsplash.com/photo-1596797038583-1c191cb39f50?q=80&w=1000"
+          image: "https://theyummydelights.com/wp-content/uploads/2020/07/kolhapuri-chicken-curry-9.jpg"
         },
         {
           name: "Chicken Methi Malai (8 P)",
@@ -969,7 +969,7 @@ async function main() {
           prep: 30,
           ingredients: ["Chicken", "Fresh Fenugreek", "Cream", "Garlic"],
           allergens: ["Dairy"],
-          image: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?q=80&w=1000"
+          image: ""
         },
         {
           name: "Haveli Dhaba Special Chicken (8 P)",
@@ -978,7 +978,7 @@ async function main() {
           prep: 35,
           ingredients: ["Chicken", "House Spice Mix", "Ghee"],
           allergens: ["Dairy", "Nuts"],
-          image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?q=80&w=1000"
+          image: ""
         },
         {
           name: "Tawa Chicken (4P)",
@@ -987,7 +987,7 @@ async function main() {
           prep: 25,
           ingredients: ["Chicken", "Tomato", "Ginger", "Green Chilli"],
           allergens: [],
-          image: "https://images.unsplash.com/photo-1632778149975-400460ca417e?q=80&w=1000"
+          image: ""
         },
         {
           name: "Chicken Bhuna Gosht (4P)",
@@ -996,7 +996,7 @@ async function main() {
           prep: 30,
           ingredients: ["Chicken", "Roasted Onion Paste"],
           allergens: [],
-          image: "https://images.unsplash.com/photo-1593504049359-74330189a345?q=80&w=1000"
+          image: ""
         },
         {
           name: "Murg Masallam (8P/4P)",
@@ -1005,7 +1005,7 @@ async function main() {
           prep: 40,
           ingredients: ["Whole Chicken", "Boiled Egg", "Cashew Sauce"],
           allergens: ["Dairy", "Nuts", "Egg"],
-          image: "https://images.unsplash.com/photo-1599487488170-d11ec9c175f0?q=80&w=1000"
+          image: "https://cookwithfaiza.net/wp-content/uploads/2024/04/451545740_Murgh_Musallam_Masala.jpeg"
         },
         {
           name: "Chicken Dehati",
@@ -1014,7 +1014,7 @@ async function main() {
           prep: 35,
           ingredients: ["Chicken", "Whole Spices", "Mustard Oil"],
           allergens: ["Mustard"],
-          image: "https://images.unsplash.com/photo-1606471191009-63994c53433b?q=80&w=1000"
+          image: ""
         },
         {
           name: "Chicken Bharta",
@@ -1023,7 +1023,7 @@ async function main() {
           prep: 25,
           ingredients: ["Shredded Chicken", "Mashed Egg", "Cream"],
           allergens: ["Dairy", "Egg"],
-          image: "https://images.unsplash.com/photo-1607528971899-2e89e6c0ec69?q=80&w=1000"
+          image: "https://i0.wp.com/spicechronicles.com/wp-content/uploads/2017/04/Chicken-Bhartha_2_650.jpg?resize=640%2C640&ssl=1"
         },
         {
           name: "Egg Curry (2P)",
@@ -1032,7 +1032,7 @@ async function main() {
           prep: 15,
           ingredients: ["Boiled Egg", "Indian Sauce Base"],
           allergens: ["Egg"],
-          image: "https://images.unsplash.com/photo-1560684352-8497838a2229?q=80&w=1000"
+          image: "https://www.sharmispassions.com/wp-content/uploads/2013/02/EggMasala4-500x375.jpg"
         },
         {
           name: "Egg Masala (2P)",
@@ -1041,7 +1041,7 @@ async function main() {
           prep: 15,
           ingredients: ["Egg", "Onion-Tomato Masala"],
           allergens: ["Egg"],
-          image: "https://images.unsplash.com/photo-1588566165024-4f5145785055?q=80&w=1000"
+          image: ""
         },
         {
           name: "Egg Do Pyaza (2 P)",
@@ -1050,7 +1050,7 @@ async function main() {
           prep: 18,
           ingredients: ["Egg", "Diced Onions"],
           allergens: ["Egg"],
-          image: "https://images.unsplash.com/photo-1582819509237-45b754223abd?q=80&w=1000"
+          image: ""
         },
         {
           name: "Fish Curry (2P)",
@@ -1059,7 +1059,7 @@ async function main() {
           prep: 20,
           ingredients: ["Fish", "Mustard Paste", "Tamarind"],
           allergens: ["Fish", "Mustard"],
-          image: "https://images.unsplash.com/photo-1476718406336-bb5a9690ee2a?q=80&w=1000"
+          image: "https://vismaifood.com/storage/app/uploads/public/daa/96d/7bc/thumb__1200_0_0_0_auto.jpg"
         },
         {
           name: "Fish Masala (2P)",
@@ -1068,7 +1068,7 @@ async function main() {
           prep: 22,
           ingredients: ["Fish", "Onion", "Tomato", "Garlic"],
           allergens: ["Fish"],
-          image: "https://images.unsplash.com/photo-1594759077772-21d1de16e33f?q=80&w=1000"
+          image: ""
         },
         {
           name: "Fish Fry (2 P)",
@@ -1077,7 +1077,7 @@ async function main() {
           prep: 15,
           ingredients: ["Fish", "Gram Flour", "Chilli"],
           allergens: ["Fish"],
-          image: "https://images.unsplash.com/photo-1626074353765-517a681e40be?q=80&w=1000"
+          image: "https://motionsandemotions.com/wp-content/uploads/2024/06/Untitled-design-_63_-_1_.webp"
         },
         {
           name: "Fish Do Pyaza (2 P)",
@@ -1086,7 +1086,7 @@ async function main() {
           prep: 22,
           ingredients: ["Fish", "Onions", "Spices"],
           allergens: ["Fish"],
-          image: "https://images.unsplash.com/photo-1567184109171-9661c3d1421c?q=80&w=1000"
+          image: ""
         },
         {
           name: "Mutton Curry (4P)",
@@ -1095,7 +1095,7 @@ async function main() {
           prep: 35,
           ingredients: ["Mutton", "Curry base"],
           allergens: [],
-          image: "https://images.unsplash.com/photo-1567337710282-00832b415979?q=80&w=1000"
+          image: ""
         },
         {
           name: "Mutton Dehati (8 P/4P)",
@@ -1104,7 +1104,7 @@ async function main() {
           prep: 45,
           ingredients: ["Mutton", "Whole Garlic", "Mustard Oil"],
           allergens: ["Mustard"],
-          image: "https://images.unsplash.com/photo-1626132646534-7546741762c9?q=80&w=1000"
+          image: "https://b.zmtcdn.com/data/dish_photos/558/6f8ecc70488eb2dc61b3b82b33fac558.jpg"
         },
         {
           name: "Mutton Kassa (4 P)",
@@ -1113,7 +1113,7 @@ async function main() {
           prep: 40,
           ingredients: ["Mutton", "Roasted Onion", "Garam Masala"],
           allergens: [],
-          image: "https://images.unsplash.com/photo-1510629954389-c1e0da47d414?q=80&w=1000"
+          image: ""
         },
         {
           name: "Mutton Rogan Josh (4P)",
@@ -1122,7 +1122,7 @@ async function main() {
           prep: 40,
           ingredients: ["Mutton", "Ratan Jot", "Dry Ginger", "Fennel"],
           allergens: [],
-          image: "https://images.unsplash.com/photo-1633383718081-22ac93e3dbf1?q=80&w=1000"
+          image: "https://www.whiskaffair.com/wp-content/uploads/2019/02/Mutton-Rogan-Josh-2-3.jpg"
         }
       ]
     },
@@ -1132,13 +1132,13 @@ async function main() {
       image: "https://images.unsplash.com/photo-1563379091339-03b21bc4a6f8?q=80&w=1000",
       items: [
         {
-          name: "Steam Rice",
+          name: "Steamed Rice",
           price: 115,
           desc: "Classic long-grain steamed basmati rice.",
           prep: 10,
           ingredients: ["Basmati Rice"],
           allergens: [],
-          image: "https://images.unsplash.com/photo-1591814468924-caf88d1232e1?q=80&w=1000"
+          image: "https://media.soscuisine.com/images/recettes/large/2887.jpg"
         },
         {
           name: "Jeera Rice",
@@ -1147,34 +1147,34 @@ async function main() {
           prep: 12,
           ingredients: ["Rice", "Cumin", "Ghee"],
           allergens: ["Dairy"],
-          image: "https://images.unsplash.com/photo-1626074353765-517a681e40be?q=80&w=1000"
+          image: "https://www.cubesnjuliennes.com/wp-content/uploads/2019/04/Fried-Jeera-Rice-Recipe.jpg"
         },
         {
-          name: "Veg Mix Pulaw",
+          name: "Veg Mix Pulao",
           price: 199,
           desc: "Aromatic basmati rice cooked with assorted vegetables.",
           prep: 15,
           ingredients: ["Rice", "Mix Veg", "Whole Spices"],
           allergens: [],
-          image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=1000"
+          image: "https://www.indianveggiedelight.com/wp-content/uploads/2019/07/veg-pulao-featured-500x500.jpg"
         },
         {
-          name: "Pease Pulaw",
+          name: "Peas Pulao",
           price: 159,
           desc: "Basmati rice cooked with sweet green peas and mild spices.",
           prep: 15,
           ingredients: ["Rice", "Green Peas", "Cumin"],
           allergens: [],
-          image: "https://images.unsplash.com/photo-1596797038583-1c191cb39f50?q=80&w=1000"
+          image: ""
         },
         {
-          name: "Kashmiri Pulaw",
+          name: "Kashmiri Pulao",
           price: 209,
           desc: "Sweet and aromatic rice cooked with dry fruits and nuts.",
           prep: 18,
           ingredients: ["Rice", "Raisins", "Cashews", "Fruits"],
           allergens: ["Nuts"],
-          image: "https://images.unsplash.com/photo-1505253304412-1f37e4293f06?q=80&w=1000"
+          image: ""
         },
         {
           name: "Veg Biryani",
@@ -1183,7 +1183,7 @@ async function main() {
           prep: 25,
           ingredients: ["Rice", "Mix Veg", "Saffron", "Spices"],
           allergens: [],
-          image: "https://images.unsplash.com/photo-1563379091339-03b21bc4a4f8?q=80&w=1000"
+          image: "https://b.zmtcdn.com/data/dish_photos/4f5/a762a0f7008bdf1c1040fc443e4914f5.jpg"
         },
         {
           name: "Veg Hydrabadi Biryani",
@@ -1192,7 +1192,7 @@ async function main() {
           prep: 25,
           ingredients: ["Rice", "Spicy Veg", "Fried Onions"],
           allergens: [],
-          image: "https://images.unsplash.com/photo-1589647363585-f4a7d3877b10?q=80&w=1000"
+          image: "https://b.zmtcdn.com/data/dish_photos/1aa/923a0908713b01342cc5fab093be31aa.jpg"
         },
         {
           name: "Veg Kolhapuri Biryani",
@@ -1201,7 +1201,7 @@ async function main() {
           prep: 25,
           ingredients: ["Rice", "Kolhapuri Masala", "Veg"],
           allergens: [],
-          image: "https://images.unsplash.com/photo-1541529086526-db283c563270?q=80&w=1000"
+          image: "https://b.zmtcdn.com/data/dish_photos/89d/33d52d9126e482e52c8567de4cd8589d.jpg"
         },
         {
           name: "Paneer Biryani",
@@ -1210,7 +1210,7 @@ async function main() {
           prep: 25,
           ingredients: ["Rice", "Paneer", "Dum spices"],
           allergens: ["Dairy"],
-          image: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?q=80&w=1000"
+          image: "https://b.zmtcdn.com/data/dish_photos/019/165615c4bceb204f0e467eeabd7da019.jpg"
         },
         {
           name: "Egg Biryani",
@@ -1220,7 +1220,7 @@ async function main() {
           prep: 22,
           ingredients: ["Rice", "Boiled Eggs", "Biryani Masala"],
           allergens: ["Egg"],
-          image: "https://images.unsplash.com/photo-1560684352-8497838a2229?q=80&w=1000"
+          image: "https://www.chefkunalkapur.com/wp-content/uploads/2021/03/egg-biryani-1-1300x868.jpeg?v=1625193642"
         },
         {
           name: "Chicken Dum Biryani",
@@ -1230,7 +1230,7 @@ async function main() {
           prep: 30,
           ingredients: ["Rice", "Chicken", "Kesar", "Dum Spices"],
           allergens: ["Dairy"],
-          image: "https://images.unsplash.com/photo-1599487488170-d11ec9c175f0?q=80&w=1000"
+          image: "https://b.zmtcdn.com/data/dish_photos/3d0/fdf7c11867e101376407c6fe092703d0.jpg"
         },
         {
           name: "Chicken Hydrabadi Biryani",
@@ -1240,7 +1240,7 @@ async function main() {
           prep: 30,
           ingredients: ["Rice", "Spicy Chicken", "Hyderabadi Spices"],
           allergens: ["Dairy"],
-          image: "https://images.unsplash.com/photo-1633945274405-b6c80a2047cb?q=80&w=1000"
+          image: "https://b.zmtcdn.com/data/dish_photos/3d0/fdf7c11867e101376407c6fe092703d0.jpg"
         },
         {
           name: "Chicken Kolkata Dum Biryani",
@@ -1250,7 +1250,7 @@ async function main() {
           prep: 30,
           ingredients: ["Rice", "Chicken", "Potato", "Sweet Spices"],
           allergens: ["Dairy"],
-          image: "https://images.unsplash.com/photo-1610057099431-d73a1c9d2f2f?q=80&w=1000"
+          image: "https://b.zmtcdn.com/data/dish_photos/27a/1bc879c601d88457f2367db89d7c027a.jpg"
         },
         {
           name: "Mutton Dum Biryani",
@@ -1260,7 +1260,7 @@ async function main() {
           prep: 35,
           ingredients: ["Rice", "Mutton", "Nutmeg", "Saffron"],
           allergens: ["Dairy"],
-          image: "https://images.unsplash.com/photo-1628294895911-067645f7c32b?q=80&w=1000"
+          image: "https://b.zmtcdn.com/data/dish_photos/61f/776ed89331db48c5197ada7bd6ab061f.jpg"
         },
         {
           name: "Mutton Hydrabadi Biryani",
@@ -1270,7 +1270,7 @@ async function main() {
           prep: 35,
           ingredients: ["Rice", "Mutton", "Fried Onions", "Chilli"],
           allergens: ["Dairy"],
-          image: "https://images.unsplash.com/photo-1615557960916-5f4791effe9d?q=80&w=1000"
+          image: ""
         },
         {
           name: "Mutton Kolkata Dum Biryani",
@@ -1280,59 +1280,59 @@ async function main() {
           prep: 35,
           ingredients: ["Rice", "Mutton", "Potato", "Rose Water"],
           allergens: ["Dairy"],
-          image: "https://images.unsplash.com/photo-1506197061617-7f5c0b093236?q=80&w=1000"
+          image: ""
         }
       ]
     },
     {
-      name: "Daal",
+      name: "Dal",
       isVeg: true,
       image: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?q=80&w=1000",
       items: [
         {
-          name: "Daal Fry",
+          name: "Dal Fry",
           price: 199,
           desc: "Yellow lentils tempered with onions, tomatoes, and cumin.",
           prep: 12,
           ingredients: ["Tur Dal", "Cumin", "Onion", "Garlic"],
           allergens: [],
-          image: "https://images.unsplash.com/photo-1546833998-8d4b0752ff45?q=80&w=1000"
+          image: "https://www.spiceupthecurry.com/wp-content/uploads/2022/07/dal-fry-2.jpg"
         },
         {
-          name: "Daal Makhani",
+          name: "Dal Makhani",
           price: 239,
           desc: "Slow-cooked black lentils with cream and butter.",
           prep: 25,
           ingredients: ["Black Dal", "Kidney Beans", "Butter", "Cream"],
           allergens: ["Dairy"],
-          image: "https://images.unsplash.com/photo-1626500155537-883d63ba4243?q=80&w=1000"
+          image: "https://www.maggi.in//sites/default/files/srh_recipes/eb6c6566a4dc1e241ec7231984265d61.jpg"
         },
         {
-          name: "Daal Tadka",
+          name: "Dal Tadka",
           price: 249,
           desc: "Lentils with a vibrant tempering of dried chillies and garlic.",
           prep: 12,
           ingredients: ["Toor Dal", "Dried Chilli", "Fried Garlic"],
           allergens: [],
-          image: "https://images.unsplash.com/photo-1626132646534-7546741762c9?q=80&w=1000"
+          image: "https://vegecravings.com/wp-content/uploads/2018/01/Dal-Tadka-Recipe-Step-By-Step-Instructions.jpg"
         },
         {
-          name: "Daal Amritsari",
+          name: "Dal Amritsari",
           price: 259,
           desc: "Thick, split black gram lentils cooked in Amritsari style.",
           prep: 18,
           ingredients: ["Split Urad Dal", "Chana Dal", "Ginger"],
           allergens: ["Dairy"],
-          image: "https://images.unsplash.com/photo-1585932231552-198d75175b22?q=80&w=1000"
+          image: "https://www.foodie-trail.com/wp-content/uploads/2023/02/20230221_193437244_iOS-scaled.jpg"
         },
         {
-          name: "Daal Makkhan Wala",
+          name: "Dal Makkhan Wala",
           price: 255,
           desc: "Silky yellow lentils finished with a heavy hand of butter.",
           prep: 15,
           ingredients: ["Mixed Lentils", "Extra Butter"],
           allergens: ["Dairy"],
-          image: "https://images.unsplash.com/photo-1547928576-a4a33237ce35?q=80&w=1000"
+          image: ""
         },
         {
           name: "Dal Handi",
@@ -1341,26 +1341,26 @@ async function main() {
           prep: 20,
           ingredients: ["Lentils", "Handi Spices"],
           allergens: ["Dairy"],
-          image: "https://images.unsplash.com/photo-1567337710282-00832b415979?q=80&w=1000"
+          image: ""
         },
         {
-          name: "Egg Daal Tadka",
+          name: "Egg Dal Tadka",
           price: 265,
           isVeg: false,
           desc: "Spiced lentils with a unique tempering of scrambled eggs.",
           prep: 18,
           ingredients: ["Yellow Dal", "Egg", "Spices"],
           allergens: ["Egg"],
-          image: "https://images.unsplash.com/photo-1627308595229-7830a5c91f9f?q=80&w=1000"
+          image: "https://slurrp.club/wp-content/uploads/2020/03/DSC_1771-2.jpg"
         },
         {
-          name: "Daal Do Pyaza",
+          name: "Dal Do Pyaza",
           price: 249,
           desc: "Lentils cooked with a double portion of savory onions.",
           prep: 18,
           ingredients: ["Lentils", "Caramelized Onions"],
           allergens: [],
-          image: "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?q=80&w=1000"
+          image: ""
         }
       ]
     },
@@ -1370,99 +1370,99 @@ async function main() {
       image: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?q=80&w=1000",
       items: [
         {
-          name: "Egg Fry Rice",
+          name: "Egg Fried Rice",
           price: 229,
           isVeg: false,
           desc: "Indo-Chinese style fried rice with scrambled eggs.",
           prep: 12,
           ingredients: ["Rice", "Egg", "Soy Sauce"],
           allergens: ["Egg", "Soy"],
-          image: "https://images.unsplash.com/photo-1536304993881-ff6e9eefa2a6?q=80&w=1000"
+          image: "https://www.sharmispassions.com/wp-content/uploads/2013/04/EggFriedRice4-500x375.jpg"
         },
         {
-          name: "Chicken Fry Rice",
+          name: "Chicken Fried Rice",
           price: 259,
           isVeg: false,
           desc: "Wok-tossed fried rice with chicken bits and vegetables.",
           prep: 15,
           ingredients: ["Rice", "Chicken", "Soy Sauce"],
           allergens: ["Soy"],
-          image: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?q=80&w=1000"
+          image: "https://b.zmtcdn.com/data/dish_photos/932/9d0726d5a5b408045363df03b57e2932.jpg"
         },
         {
-          name: "Mix Fry Rice Non-Veg",
+          name: "Mix Fried Rice Non-Veg",
           price: 289,
           isVeg: false,
           desc: "Fried rice containing chicken, egg, and shrimp.",
           prep: 18,
           ingredients: ["Rice", "Chicken", "Egg", "Shrimp"],
           allergens: ["Egg", "Soy", "Shellfish"],
-          image: "https://images.unsplash.com/photo-1512058564366-18510be2db19?q=80&w=1000"
+          image: "https://b.zmtcdn.com/data/dish_photos/c40/6e56bece39ca0676c945a240e1b9bc40.jpg"
         },
         {
-          name: "Chicken Schezwan Fry Rice",
+          name: "Chicken Schezwan Fried Rice",
           price: 255,
           isVeg: false,
           desc: "Spicy fried rice with chicken in Schezwan sauce.",
           prep: 15,
           ingredients: ["Rice", "Chicken", "Schezwan Sauce"],
           allergens: ["Soy"],
-          image: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?q=80&w=1000"
+          image: ""
         },
         {
-          name: "Chicken Shanghai Fry Rice",
+          name: "Chicken Shanghai Fried Rice",
           price: 259,
           isVeg: false,
           desc: "Savory fried rice prepared with Shanghai style flavors.",
           prep: 18,
           ingredients: ["Rice", "Chicken", "Ginger", "Soy"],
           allergens: ["Soy"],
-          image: "https://images.unsplash.com/photo-1558985250-27a406d64cb3?q=80&w=1000"
+          image: ""
         },
         {
-          name: "Veg Fry Rice",
+          name: "Veg Fried Rice",
           price: 189,
           desc: "Simple and clean fried rice with garden vegetables.",
           prep: 12,
           ingredients: ["Rice", "Mix Veg", "Soy"],
           allergens: ["Soy"],
-          image: "https://images.unsplash.com/photo-1512058460702-42e8177853e2?q=80&w=1000"
+          image: "https://b.zmtcdn.com/data/dish_photos/6af/ac687b1ab84d2505a589e41e358ca6af.jpg"
         },
         {
-          name: "Mix Veg Fry Rice",
+          name: "Mixed Veg Fried Rice",
           price: 249,
           desc: "Wok-tossed rice with a heavy portion of assorted veggies.",
           prep: 15,
           ingredients: ["Rice", "Assorted Veg", "Soy"],
           allergens: ["Soy"],
-          image: "https://images.unsplash.com/photo-1626808642875-0aa545452fe8?q=80&w=1000"
+          image: "https://b.zmtcdn.com/data/dish_photos/b37/eae06fa35291e2b5d383680a1a1afb37.jpg"
         },
         {
-          name: "Schezwan Fry Rice",
+          name: "Schezwan Fried Rice",
           price: 199,
           desc: "Spicy vegetable fried rice in fiery Schezwan sauce.",
           prep: 15,
           ingredients: ["Rice", "Veg", "Red Chilli Paste"],
           allergens: ["Soy"],
-          image: "https://images.unsplash.com/photo-1617093727343-374698b1b08d?q=80&w=1000"
+          image: "https://www.whiskaffair.com/wp-content/uploads/2020/09/Schezwan-Fried-Rice-2-3.jpg"
         },
         {
-          name: "Shanghai Fry Rice",
+          name: "Shanghai Fried Rice",
           price: 219,
           desc: "Vegetable fried rice with traditional Shanghai seasonings.",
           prep: 15,
           ingredients: ["Rice", "Veggies", "Shanghai Sauce"],
           allergens: ["Soy"],
-          image: "https://images.unsplash.com/photo-1552611052-33e04de081de?q=80&w=1000"
+          image: ""
         },
         {
-          name: "Singapoori Fry Rice",
+          name: "Singapori Fried Rice",
           price: 229,
           desc: "Turmeric flavored rice with curry powder and veggies.",
           prep: 15,
           ingredients: ["Rice", "Curry Powder", "Veg"],
           allergens: ["Soy"],
-          image: "https://images.unsplash.com/photo-1536394482477-d0d9361a951c?q=80&w=1000"
+          image: ""
         }
       ]
     },
@@ -1478,7 +1478,7 @@ async function main() {
           prep: 5,
           ingredients: ["Cucumber", "Carrot", "Onion", "Tomato"],
           allergens: [],
-          image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=1000"
+          image: "https://b.zmtcdn.com/data/dish_photos/917/8f99696a88686446444035e22d393917.jpg"
         },
         {
           name: "Onion Salad",
@@ -1487,7 +1487,7 @@ async function main() {
           prep: 5,
           ingredients: ["Onion", "Lemon", "Chilli"],
           allergens: [],
-          image: "https://images.unsplash.com/photo-1580201092675-a0a6a6cafbb1?q=80&w=1000"
+          image: ""
         },
         {
           name: "Kachumber Salad",
@@ -1496,7 +1496,7 @@ async function main() {
           prep: 8,
           ingredients: ["Tomato", "Cucumber", "Onion", "Chaat Masala"],
           allergens: [],
-          image: "https://images.unsplash.com/photo-1626074353765-517a681e40be?q=80&w=1000"
+          image: ""
         },
         {
           name: "Peanut Salad",
@@ -1505,7 +1505,7 @@ async function main() {
           prep: 10,
           ingredients: ["Peanuts", "Onion", "Tomato", "Lemon"],
           allergens: ["Nuts"],
-          image: "https://images.unsplash.com/photo-1565557623262-b51c2513a641?q=80&w=1000"
+          image: "https://greenbowl2soul.com/wp-content/uploads/2020/03/Peanut-Salad.jpg"
         },
         {
           name: "Masala Papad",
@@ -1514,7 +1514,7 @@ async function main() {
           prep: 8,
           ingredients: ["Papad", "Onion", "Tomato", "Spices"],
           allergens: [],
-          image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?q=80&w=1000"
+          image: "https://bfoodale.com/uploads/2021/12/Fry-Papad-1.jpg"
         },
         {
           name: "Plain Curd",
@@ -1523,7 +1523,7 @@ async function main() {
           prep: 5,
           ingredients: ["Milk"],
           allergens: ["Dairy"],
-          image: "https://images.unsplash.com/photo-1488477181946-6428a0291777?q=80&w=1000"
+          image: ""
         },
         {
           name: "Mix Raita",
@@ -1532,7 +1532,7 @@ async function main() {
           prep: 8,
           ingredients: ["Yogurt", "Cucumber", "Onion", "Tomato"],
           allergens: ["Dairy"],
-          image: "https://images.unsplash.com/photo-1594759077772-21d1de16e33f?q=80&w=1000"
+          image: ""
         },
         {
           name: "Bundi Raita",
@@ -1541,7 +1541,7 @@ async function main() {
           prep: 8,
           ingredients: ["Yogurt", "Boondi"],
           allergens: ["Dairy"],
-          image: "https://images.unsplash.com/photo-1628294895911-067645f7c32b?q=80&w=1000"
+          image: "https://priyakitchenette.com/wp-content/uploads/2014/09/BOONDI-RAITA-500x500.jpg"
         },
         {
           name: "Pineapple Raita",
@@ -1550,7 +1550,7 @@ async function main() {
           prep: 10,
           ingredients: ["Yogurt", "Pineapple", "Sugar"],
           allergens: ["Dairy"],
-          image: "https://images.unsplash.com/photo-1549414595-31627993079b?q=80&w=1000"
+          image: "https://static.toiimg.com/thumb/58840660.cms?width=1200&height=900"
         }
       ]
     },
@@ -1566,10 +1566,10 @@ async function main() {
           prep: 5,
           ingredients: ["Khoya", "Sugar Syrup", "Cardamom"],
           allergens: ["Dairy", "Gluten"],
-          image: "https://images.unsplash.com/photo-1589119908995-c6800ffca83e?q=80&w=1000"
+          image: "https://static.toiimg.com/thumb/63799510.cms?imgsize=1091643&width=800&height=800"
         },
         {
-          name: "Hot Gulab Jamun with Ice-Creame",
+          name: "Hot Gulab Jamun with Ice-Cream",
           price: 139,
           desc: "Warm jamuns paired with a scoop of cold vanilla.",
           prep: 5,
@@ -1578,67 +1578,67 @@ async function main() {
           image: "https://images.unsplash.com/photo-1593504049359-74330189a345?q=80&w=1000"
         },
         {
-          name: "Mix Ice Creame",
+          name: "Mix Ice Cream",
           price: 169,
           desc: "Selection of various ice cream scoops.",
           prep: 5,
           ingredients: ["Assorted Ice Cream"],
           allergens: ["Dairy"],
-          image: "https://images.unsplash.com/photo-1501443762994-82bd5dace89a?q=80&w=1000"
+          image: ""
         },
         {
-          name: "Butter Scotch Ice Creame",
+          name: "Butter Scotch Ice Cream",
           price: 105,
           desc: "Creamy butterscotch flavored ice cream.",
           prep: 5,
           ingredients: ["Ice Cream", "Butterscotch bits"],
           allergens: ["Dairy"],
-          image: "https://images.unsplash.com/photo-1570197788417-0e82375c9371?q=80&w=1000"
+          image: "https://www.sidechef.com/recipe/a3b228d7-975f-4fda-a718-d20e6db3936a.jpeg?d=1408x1120"
         },
         {
-          name: "Kesar Pista Ice Creame",
+          name: "Kesar Pista Ice Cream",
           price: 119,
           desc: "Traditional saffron and pistachio flavored ice cream.",
           prep: 5,
           ingredients: ["Ice Cream", "Saffron", "Pistachio"],
           allergens: ["Dairy", "Nuts"],
-          image: "https://images.unsplash.com/photo-1516053351221-50e58844498a?q=80&w=1000"
+          image: ""
         },
         {
-          name: "Chocolate Ice Creame",
+          name: "Chocolate Ice Cream",
           price: 109,
           desc: "Rich chocolate flavored frozen dessert.",
           prep: 5,
           ingredients: ["Ice Cream", "Cocoa"],
           allergens: ["Dairy"],
-          image: "https://images.unsplash.com/photo-1563805042-7684c8a9e9ce?q=80&w=1000"
+          image: "https://cdn.loveandlemons.com/wp-content/uploads/2025/05/chocolate-ice-cream.jpg"
         },
         {
-          name: "Vanilla Ice Creame",
+          name: "Vanilla Ice Cream",
           price: 105,
           desc: "Classic smooth vanilla bean ice cream.",
           prep: 5,
           ingredients: ["Ice Cream", "Vanilla"],
           allergens: ["Dairy"],
-          image: "https://images.unsplash.com/photo-1533923058210-90040375a306?q=80&w=1000"
+          image: "https://www.sugarfree-india.com/wp-content/uploads/2025/12/vanilla-ice-cream-1.webp"
         },
         {
-          name: "Coldrinks",
+          name: "Assorted Soft Drinks",
           price: 55,
           desc: "Assorted chilled carbonated soft drinks.",
           prep: 2,
           ingredients: ["Soft Drink"],
           allergens: [],
-          image: "https://images.unsplash.com/photo-1527960471264-93ad936ca817?q=80&w=1000"
+          image: ""
         },
         {
-          name: "Masala Coldrinks",
+          name: "Masala Soft Drinks",
           price: 75,
           desc: "Soft drink with a spicy tang of chaat masala and lemon.",
           prep: 5,
           ingredients: ["Soft Drink", "Chaat Masala", "Lemon"],
           allergens: [],
-          image: "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?q=80&w=1000"
+          image: ""
         },
         {
           name: "Mineral Water",
@@ -1647,7 +1647,7 @@ async function main() {
           prep: 1,
           ingredients: ["Water"],
           allergens: [],
-          image: "https://images.unsplash.com/photo-1560344009-747976e33624?q=80&w=1000"
+          image: ""
         },
         {
           name: "Cold Coffee",
@@ -1656,7 +1656,7 @@ async function main() {
           prep: 8,
           ingredients: ["Coffee", "Milk", "Ice Cream"],
           allergens: ["Dairy"],
-          image: "https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?q=80&w=1000"
+          image: "https://poornatva.com/cdn/shop/files/20230519-DSC_4623-2.jpg?v=1685874201"
         },
         {
           name: "Vanilla Shake",
@@ -1665,7 +1665,7 @@ async function main() {
           prep: 10,
           ingredients: ["Milk", "Vanilla Ice Cream"],
           allergens: ["Dairy"],
-          image: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?q=80&w=1000"
+          image: ""
         },
         {
           name: "Chocolate Shake",
@@ -1674,7 +1674,7 @@ async function main() {
           prep: 10,
           ingredients: ["Milk", "Chocolate Sauce", "Ice Cream"],
           allergens: ["Dairy"],
-          image: "https://images.unsplash.com/photo-1571115177098-24ec42ed2bb4?q=80&w=1000"
+          image: ""
         },
         {
           name: "Coffee",
@@ -1683,7 +1683,7 @@ async function main() {
           prep: 8,
           ingredients: ["Milk", "Coffee beans"],
           allergens: ["Dairy"],
-          image: "https://images.unsplash.com/photo-1541167760496-1628856ab772?q=80&w=1000"
+          image: ""
         },
         {
           name: "Tea",
@@ -1692,7 +1692,7 @@ async function main() {
           prep: 8,
           ingredients: ["Tea leaves", "Milk", "Ginger"],
           allergens: ["Dairy"],
-          image: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?q=80&w=1000"
+          image: "https://cdn2.foodviva.com/static-content/food-images/tea-recipes/milk-tea-recipe/milk-tea-recipe.jpg"
         },
         {
           name: "Mojito",
@@ -1701,7 +1701,7 @@ async function main() {
           prep: 10,
           ingredients: ["Mint", "Lime", "Soda"],
           allergens: [],
-          image: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?q=80&w=1000"
+          image: "https://www.artofdrink.com/wp-content/uploads/2010/08/how-to-make-a-mojito-recipe-735x1103.jpg"
         }
       ]
     }
