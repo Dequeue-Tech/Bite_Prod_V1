@@ -87,6 +87,9 @@ Prisma.NullTypes = {
  * Enums
  */
 exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
+  ReadUncommitted: 'ReadUncommitted',
+  ReadCommitted: 'ReadCommitted',
+  RepeatableRead: 'RepeatableRead',
   Serializable: 'Serializable'
 });
 
@@ -139,6 +142,11 @@ exports.Prisma.JsonNullValueInput = {
   JsonNull: Prisma.JsonNull
 };
 
+exports.Prisma.QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
+};
+
 exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
@@ -148,11 +156,6 @@ exports.Prisma.JsonNullValueFilter = {
   DbNull: Prisma.DbNull,
   JsonNull: Prisma.JsonNull,
   AnyNull: Prisma.AnyNull
-};
-
-exports.Prisma.QueryMode = {
-  default: 'default',
-  insensitive: 'insensitive'
 };
 exports.SpiceLevel = exports.$Enums.SpiceLevel = {
   NONE: 'NONE',
@@ -196,7 +199,7 @@ const config = {
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": "../../.env",
+    "rootEnvPath": null,
     "schemaEnvPath": "../../.env"
   },
   "relativePath": "../../prisma",
@@ -205,8 +208,7 @@ const config = {
   "datasourceNames": [
     "db"
   ],
-  "activeProvider": "sqlite",
-  "postinstall": false,
+  "activeProvider": "postgresql",
   "inlineDatasources": {
     "db": {
       "url": {
@@ -215,9 +217,9 @@ const config = {
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/menu-client\"\n}\n\ndatasource db {\n  provider = \"sqlite\"\n  url      = env(\"MENU_DATABASE_URL\")\n}\n\nenum SpiceLevel {\n  NONE\n  MILD\n  MEDIUM\n  HOT\n  EXTRA_HOT\n}\n\nmodel Restaurant {\n  id         String     @id @default(cuid())\n  name       String\n  slug       String     @unique\n  createdAt  DateTime   @default(now())\n  updatedAt  DateTime   @updatedAt\n  categories Category[]\n  menuItems  MenuItem[]\n\n  @@map(\"restaurants\")\n}\n\nmodel Category {\n  id           String     @id @default(cuid())\n  name         String\n  description  String?\n  image        String?\n  active       Boolean    @default(true)\n  sortOrder    Int        @default(0)\n  createdAt    DateTime   @default(now())\n  updatedAt    DateTime   @updatedAt\n  restaurantId String\n  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)\n  menuItems    MenuItem[]\n\n  @@unique([restaurantId, name])\n  @@map(\"categories\")\n}\n\nmodel MenuItem {\n  id              String     @id @default(cuid())\n  name            String\n  description     String?\n  image           String?\n  categoryId      String\n  available       Boolean    @default(true)\n  preparationTime Int        @default(15)\n  ingredients     Json       @default(\"[]\")\n  allergens       Json       @default(\"[]\")\n  isVeg           Boolean    @default(true)\n  isVegan         Boolean    @default(false)\n  isGlutenFree    Boolean    @default(false)\n  spiceLevel      SpiceLevel @default(MILD)\n  createdAt       DateTime   @default(now())\n  updatedAt       DateTime   @updatedAt\n  pricePaise      Int\n  restaurantId    String\n  category        Category   @relation(fields: [categoryId], references: [id])\n  restaurant      Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)\n\n  @@map(\"menu_items\")\n}\n",
-  "inlineSchemaHash": "384f4823ff9c45a65130bc9d9c3a41128d4f58044d4cc0b6e846b46ab09d26df",
-  "copyEngine": true
+  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/menu-client\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"MENU_DATABASE_URL\")\n}\n\nenum SpiceLevel {\n  NONE\n  MILD\n  MEDIUM\n  HOT\n  EXTRA_HOT\n}\n\nmodel Restaurant {\n  id         String     @id @default(cuid())\n  name       String\n  slug       String     @unique\n  createdAt  DateTime   @default(now())\n  updatedAt  DateTime   @updatedAt\n  categories Category[]\n  menuItems  MenuItem[]\n\n  @@map(\"restaurants\")\n}\n\nmodel Category {\n  id           String     @id @default(cuid())\n  name         String\n  description  String?\n  image        String?\n  active       Boolean    @default(true)\n  sortOrder    Int        @default(0)\n  createdAt    DateTime   @default(now())\n  updatedAt    DateTime   @updatedAt\n  restaurantId String\n  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)\n  menuItems    MenuItem[]\n\n  @@unique([restaurantId, name])\n  @@map(\"categories\")\n}\n\nmodel MenuItem {\n  id              String     @id @default(cuid())\n  name            String\n  description     String?\n  image           String?\n  categoryId      String\n  available       Boolean    @default(true)\n  preparationTime Int        @default(15)\n  ingredients     Json       @default(\"[]\")\n  allergens       Json       @default(\"[]\")\n  isVeg           Boolean    @default(true)\n  isVegan         Boolean    @default(false)\n  isGlutenFree    Boolean    @default(false)\n  spiceLevel      SpiceLevel @default(MILD)\n  createdAt       DateTime   @default(now())\n  updatedAt       DateTime   @updatedAt\n  pricePaise      Int\n  restaurantId    String\n  category        Category   @relation(fields: [categoryId], references: [id])\n  restaurant      Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)\n\n  @@map(\"menu_items\")\n}\n",
+  "inlineSchemaHash": "ef1d30584d0c1b6cab5df757d3c38a6b63cb1ee6eb7670c3b3e18ba24accc049",
+  "copyEngine": false
 }
 config.dirname = '/'
 

@@ -1,8 +1,7 @@
 import { Suspense, cache } from 'react';
 import { notFound } from 'next/navigation';
 import { ChefHat } from 'lucide-react';
-import { menuPrisma } from '@/lib/menu-prisma';
-// Make sure this path is correct for your project
+import { prisma } from '@/lib/prisma';
 import MenuPageClient, { MenuPageCategory, MenuPageItem } from '@/app/menu/page-client';
 
 type PageProps = {
@@ -16,7 +15,7 @@ type MenuPageData = {
 };
 
 const getMenuPageData = cache(async (slug: string): Promise<MenuPageData | null> => {
-  const restaurant = await menuPrisma.restaurant.findUnique({
+  const restaurant = await prisma.restaurant.findUnique({
     where: { slug },
     include: {
       categories: {
@@ -69,7 +68,7 @@ const getMenuPageData = cache(async (slug: string): Promise<MenuPageData | null>
       category: item.category,
     })),
   };
-}); // <--- ADDED missing `);` HERE
+}); 
 
 export default async function MenuPage({ params }: PageProps) {
   const { restaurantSlug } = await params;
