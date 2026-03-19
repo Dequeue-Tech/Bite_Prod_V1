@@ -3,6 +3,7 @@ import './globals.css'
 import { Toaster } from 'react-hot-toast'
 import Navbar from '@/components/Navbar'
 import { testRedisConnection } from '@/lib/redis-test'
+import { Suspense } from 'react'
 
 export const metadata: Metadata = {
   title: 'Restaurant Online Ordering',
@@ -35,7 +36,12 @@ export default function RootLayout({
       </head>
       <body className="antialiased">
         <div id="root" className="min-h-screen flex flex-col pb-20 md:pb-0 safe-area-pb">
-          <Navbar />
+          
+          {/* 2. Wrap Navbar in Suspense */}
+          <Suspense fallback={<div className="h-16 bg-white" />}>
+            <Navbar />
+          </Suspense>
+
           {/* main content area now flexes; padding applied on root to push pages up above fixed nav */}
           <main className="flex-1">
             {children}

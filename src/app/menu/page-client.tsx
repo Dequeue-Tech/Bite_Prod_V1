@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
+import { Suspense } from 'react';
 import { useSearchParams } from "next/navigation";
 import { MenuItem, Category } from "@/lib/api-client";
 import {
@@ -59,7 +60,6 @@ function MenuPageContent({
     spiceLevel: "all",
   });
   const [showCategoriesPanel, setShowCategoriesPanel] = useState(false);
-  const hasShownFirstAddToast = useRef(false);
 
   useEffect(() => {
     setActiveOrderId(searchParams.get("orderId"));
@@ -112,12 +112,7 @@ function MenuPageContent({
         quantity: 1,
       });
 
-      const isFirstAddToast = !hasShownFirstAddToast.current;
-      if (isFirstAddToast) {
-        hasShownFirstAddToast.current = true;
-      }
-
-      // Enhanced toast notification with item details
+      // Show toast notification every time an item is added
       toast.success(
         <div className="flex items-center">
           <span className="font-medium">{item.name || "Item"}</span>
@@ -141,10 +136,8 @@ function MenuPageContent({
     try {
       if (newQuantity <= 0) {
         removeItem(item.id);
-        toast.success(`${item.name || "Item"} removed from cart`);
       } else {
         updateQuantity(item.id, newQuantity);
-        toast.success(`Quantity updated to ${newQuantity}`);
       }
     } catch (err) {
       console.error("Error updating item quantity:", err);
@@ -242,7 +235,7 @@ function MenuPageContent({
                 ([categoryName, items]) => (
                   <div key={categoryName}>
                     {/* Category separator - only show when viewing all categories */}
-                    {showAllCategories && (
+                    {showAllCategories && items.length > 0 && (
                       <div className="flex items-center gap-4 mb-4">
                         <h2 className="text-lg sm:text-xl font-bold text-gray-800 whitespace-nowrap">
                           {categoryName}
@@ -303,20 +296,22 @@ function MenuPageContent({
                                 </div>
 
                                 {/* Right side - Image and Add button */}
-                                <div className="flex flex-col items-center gap-2">
-                                  {/* Item image (fallback to placeholder if missing) */}
-                                  <Image
-                                    src={encodeURI(
-                                      item.image ||
-                                        "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=600",
-                                    )}
-                                    alt={item.name || ""}
-                                    width={80}
-                                    height={80}
-                                    loading="lazy"
-                                    unoptimized
-                                    className="w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-lg"
-                                  />
+                                <div
+                                  className={`flex flex-col items-center gap-2 ${
+                                    !item.image ? "justify-center min-h-[120px]" : ""
+                                  }`}
+                                >
+                                  {item.image && (
+                                    <Image
+                                      src={encodeURI(item.image)}
+                                      alt={item.name || ""}
+                                      width={80}
+                                      height={80}
+                                      loading="lazy"
+                                      unoptimized
+                                      className="w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-lg"
+                                    />
+                                  )}
 
                                   {/* Add button / Quantity controls */}
                                   {quantity === 0 ? (
@@ -436,5 +431,16 @@ function MenuPageContent({
 }
 
 export default function MenuPage(props: MenuPageProps) {
-  return <MenuPageContent {...props} />;
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <ChefHat className="h-12 w-12 text-orange-600 mx-auto mb-4 animate-spin" />
+          <p className="text-gray-600">Loading menu...</p>
+        </div>
+      </div>
+    }>
+      <MenuPageContent {...props} />
+    </Suspense>
+  );
 }

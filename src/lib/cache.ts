@@ -27,12 +27,24 @@ export const CACHE_TTL = {
 export async function getFromCache<T>(key: string): Promise<T | null> {
   try {
     const startTime = Date.now();
-    const data = await redis.get<string>(key);
+    const data = await redis.get<string | T>(key);
     
     if (data) {
       const parseTime = Date.now() - startTime;
       console.log(`✅ Cache HIT for ${key} (${parseTime}ms)`);
-      return JSON.parse(data) as T;
+      
+      // If data is already an object (not a string), return it directly
+      if (typeof data !== 'string') {
+        return data as T;
+      }
+      
+      // If data is a string, parse it as JSON
+      try {
+        return JSON.parse(data as string) as T;
+      } catch (parseError) {
+        console.error('Failed to parse cached data:', parseError);
+        return null;
+      }
     }
     
     console.log(`❌ Cache MISS for ${key}`);
@@ -51,7 +63,9 @@ export async function getFromCache<T>(key: string): Promise<T | null> {
  */
 export async function setInCache<T>(key: string, value: T, ttl: number): Promise<void> {
   try {
-    await redis.setex(key, ttl, JSON.stringify(value));
+    // Always stringify the value before storing
+    const stringValue = JSON.stringify(value);
+    await redis.set(key, stringValue, { ex: ttl });
     console.log(`💾 Cached ${key} with TTL ${ttl}s`);
   } catch (error) {
     console.error('❌ Redis SET error:', error);
