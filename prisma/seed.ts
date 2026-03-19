@@ -1710,20 +1710,12 @@ async function main() {
 
   const OFFER_DATA = [
     {
-      title: "Welcome Deal",
-      description: "Get flat 15% OFF on your first order above ₹399.",
-      type: "PERCENTAGE", 
-      value: 15,
-      active: true,
-    },
-    {
       title: "For BIT Students",
-      description: "Get flat 30% OFF on all orders above ₹399 for BIT students.",
+      description: "Get flat 10% OFF on all orders above ₹399 for BIT students.",
       type: "PERCENTAGE", 
       value: 30, 
       active: true,
     },
-    
   ];
 
   // Database insertion logic
