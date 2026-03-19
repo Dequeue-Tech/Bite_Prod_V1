@@ -47,7 +47,7 @@ const getMenuPageData = cache(async (slug: string): Promise<MenuPageData | null>
         },
       },
     },
-  });
+  }) as any;
 
   if (!restaurant) return null;
 
