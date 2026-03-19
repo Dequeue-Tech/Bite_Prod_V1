@@ -65,7 +65,7 @@ async function getLandingRestaurant(slug: string): Promise<LandingRestaurant | n
         orderBy: { rank: 'asc' },
       },
     },
-  });
+  }) as any;
 
   if (!restaurant) return null;
 
@@ -82,10 +82,10 @@ async function getLandingRestaurant(slug: string): Promise<LandingRestaurant | n
     googleReviewUrl: restaurant.googleReviewUrl || null,
     slug: restaurant.slug,
     subdomain: restaurant.subdomain || null,
-    backgroundImage: (restaurant as any).backgroundImage || null,
-    logo: (restaurant as any).logo || null,
-    paymentCollectionTiming: (restaurant as any).paymentCollectionTiming,
-    cashPaymentEnabled: (restaurant as any).cashPaymentEnabled || false,
+    backgroundImage: restaurant.backgroundImage || null,
+    logo: restaurant.logo || null,
+    paymentCollectionTiming: restaurant.paymentCollectionTiming,
+    cashPaymentEnabled: restaurant.cashPaymentEnabled || false,
   };
   
   // Store in cache
