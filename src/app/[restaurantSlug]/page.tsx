@@ -19,6 +19,11 @@ async function getLandingRestaurant(slug: string): Promise<LandingRestaurant | n
           name: 'asc',
         },
       },
+      offers: {
+        where: {
+          active: true,
+        },
+      },
       menuItems: {
         where: {
           available: true,
@@ -62,6 +67,7 @@ async function getLandingRestaurant(slug: string): Promise<LandingRestaurant | n
       restaurant.popularDishes?.length > 0
         ? restaurant.popularDishes.map((pd: any) => pd.menuItem)
         : restaurant.menuItems || [],
+    offers: restaurant.offers || [],
     googleReviewUrl: restaurant.googleReviewUrl || null,
     slug: restaurant.slug,
     subdomain: restaurant.subdomain || null,

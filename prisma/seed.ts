@@ -22,6 +22,7 @@ async function main() {
   await prisma.menuItem.deleteMany({ where: { restaurantId: restaurant.id } });
   await prisma.category.deleteMany({ where: { restaurantId: restaurant.id } });
   await prisma.popularDish.deleteMany({ where: { restaurantId: restaurant.id } });
+  await prisma.offer.deleteMany({ where: { restaurantId: restaurant.id } });
 
   const MENU_DATA = [
     {
@@ -1707,6 +1708,24 @@ async function main() {
     }
   ];
 
+  const OFFER_DATA = [
+    {
+      title: "Welcome Deal",
+      description: "Get flat 15% OFF on your first order above ₹399.",
+      type: "PERCENTAGE", 
+      value: 15,
+      active: true,
+    },
+    {
+      title: "For BIT Students",
+      description: "Get flat 30% OFF on all orders above ₹399 for BIT students.",
+      type: "PERCENTAGE", 
+      value: 30, 
+      active: true,
+    },
+    
+  ];
+
   // Database insertion logic
   for (const catData of MENU_DATA) {
     const category = await prisma.category.create({
@@ -1741,6 +1760,17 @@ async function main() {
     where: { restaurantId: restaurant.id },
     orderBy: { createdAt: 'asc' },
     take: 6,
+  });
+
+  await prisma.offer.createMany({
+    data: OFFER_DATA.map((offer) => ({
+      restaurantId: restaurant.id,
+      title: offer.title,
+      description: offer.description,
+      type: offer.type as any, // Cast to your Prisma Enum if necessary
+      value: offer.value,
+      active: offer.active,
+    })),
   });
 
   if (topItems.length > 0) {

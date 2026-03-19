@@ -33,12 +33,23 @@ type LandingMenuItem = {
   } | null;
 };
 
+// 1. ADD THE OFFER TYPE
+export type LandingOffer = {
+  id: string;
+  title?: string | null;
+  name?: string | null;
+  description?: string | null;
+  type?: string | null;
+  value: number;
+};
+
 export type LandingRestaurant = {
   id?: string;
   name: string;
   address: string;
   categories: RestaurantCategory[];
   menuItems: LandingMenuItem[];
+  offers?: LandingOffer[]; // 2. INCLUDE OFFERS IN RESTAURANT TYPE
   googleReviewUrl?: string | null;
   slug?: string | null;
   subdomain?: string | null;
@@ -58,30 +69,20 @@ export default function RestaurantLandingClient({ restaurant }: { restaurant: La
   const defaultBg = '/WhatsApp Image 2026-02-20 at 2.26.12 PM.jpeg';
   const defaultLogo = '/WhatsApp Image 2026-02-20 at 2.25.28 PM.jpeg';
 
-  // Format deals for the high-end UI Carousel
+  // 3. MAP OFFERS FROM DB (NO MORE HARDCODING)
   const deals = useMemo(() => {
-    if (!restaurant) return [];
-    const topPrice = Math.max(...(restaurant.menuItems || []).map((item) => item.pricePaise), 0);
-    return [
-      {
-        id: 'deal-1',
-        title: 'Welcome Deal',
-        detail: '15% OFF above ' + formatInr(39900),
-        design: 'modern_cashback'
-      },
-      {
-        id: 'deal-2',
-        title: 'Chef Special',
-        detail: topPrice > 0 ? `Combos from ${formatInr(Math.max(topPrice - 10000, 12900))}` : 'Ask for today’s special',
-        design: 'premium_gold'
-      },
-      {
-        id: 'deal-3',
-        title: 'Flexible Payment',
-        detail: restaurant.paymentCollectionTiming === 'BEFORE_MEAL' ? 'Pay before meal' : 'Pay after meal',
-        design: 'minimalist_glass'
-      }
-    ];
+    if (!restaurant?.offers || restaurant.offers.length === 0) return [];
+
+    // The designs will cycle automatically based on the index, 
+    // ensuring two PERCENTAGE offers look completely different!
+    const designs = ['modern_cashback', 'premium_gold', 'minimalist_glass'];
+
+    return restaurant.offers.map((offer, index) => ({
+      id: offer.id,
+      title: offer.title || offer.name || 'Special Offer',
+      detail: offer.description || `Enjoy ${offer.value} off!`,
+      design: designs[index % designs.length]
+    }));
   }, [restaurant]);
 
   // Helper to safely scroll to a specific offer card
@@ -264,13 +265,17 @@ export default function RestaurantLandingClient({ restaurant }: { restaurant: La
 
                       {/* Style 2: Candy Stripes */}
                       {deal.design === 'premium_gold' && (
-                        <div className="absolute inset-0 bg-rose-400">
-                          {/* CSS Diagonal Stripes */}
-                          <div className="absolute inset-0 opacity-[0.15]" style={{ backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 10px, #000 10px, #000 20px)' }} />
-                          {/* Bottom gradient to ensure text readability */}
-                          <div className="absolute inset-0 bg-gradient-to-t from-rose-600/80 to-transparent" />
-                          {/* Requires importing Star from lucide-react */}
-                          <Star className="absolute top-3 right-4 h-8 w-8 text-yellow-300 fill-yellow-300 rotate-12 drop-shadow-md hover:scale-110 transition-transform" />
+                        <div className="absolute inset-0 bg-fuchsia-600 overflow-hidden rounded-3xl">
+                          {/* Color Blobs */}
+                          <div className="absolute top-0 -left-4 w-28 h-28 bg-rose-400 rounded-full mix-blend-multiply filter blur-2xl opacity-80"></div>
+                          <div className="absolute top-0 -right-4 w-28 h-28 bg-orange-400 rounded-full mix-blend-multiply filter blur-2xl opacity-80"></div>
+                          <div className="absolute -bottom-8 left-10 w-28 h-28 bg-pink-400 rounded-full mix-blend-multiply filter blur-2xl opacity-80"></div>
+
+                          {/* Frosted Glass Overlay */}
+                          <div className="absolute inset-0 bg-white/10 backdrop-blur-[2px]"></div>
+                          <div className="absolute inset-0 bg-gradient-to-t from-fuchsia-900/90 to-transparent" />
+
+                          <Crown className="absolute top-4 right-4 h-7 w-7 text-white/90 drop-shadow-lg -rotate-12 hover:scale-110 transition-transform" />
                         </div>
                       )}
 
@@ -283,10 +288,10 @@ export default function RestaurantLandingClient({ restaurant }: { restaurant: La
 
                       {/* Card Content */}
                       <div className="relative z-10 h-full flex flex-col justify-center">
-                        <h3 className={`text-xl sm:text-2xl font-black mb-1 ${deal.design === 'minimalist_glass' ? 'text-blue-900' : 'text-white'}`}>
+                        <h3 className={`text-xl sm:text-2xl font-black mb-1 line-clamp-1 ${deal.design === 'minimalist_glass' ? 'text-blue-900' : 'text-white'}`}>
                           {deal.title}
                         </h3>
-                        <p className={`text-xs sm:text-sm font-medium ${deal.design === 'minimalist_glass' ? 'text-blue-600' : 'text-white/80'}`}>
+                        <p className={`text-xs sm:text-sm font-medium line-clamp-2 ${deal.design === 'minimalist_glass' ? 'text-blue-600' : 'text-white/80'}`}>
                           {deal.detail}
                         </p>
                       </div>
