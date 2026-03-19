@@ -315,7 +315,7 @@ export default function RestaurantLandingClient({ restaurant }: { restaurant: La
             )}
 
             {/* Pre-booking Offers Section */}
-            <div className="mb-8">
+            {/* <div className="mb-8">
               <h3 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-3">More deals</h3>
               <div className="flex flex-wrap gap-2">
                 {['Pre-booking offers', 'Early bird discount', 'Weekend special', 'Flat ₹100 OFF'].map((badge) => (
@@ -327,7 +327,7 @@ export default function RestaurantLandingClient({ restaurant }: { restaurant: La
                   </button>
                 ))}
               </div>
-            </div>
+            </div> */}
 
             {/* CTA Button */}
             <button

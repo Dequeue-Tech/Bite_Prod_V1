@@ -1711,9 +1711,9 @@ async function main() {
   const OFFER_DATA = [
     {
       title: "For BIT Students",
-      description: "Get flat 10% OFF on all orders above ₹399 for BIT students.",
+      description: "Exclusive discount for BIT students.",
       type: "PERCENTAGE", 
-      value: 30, 
+      value: 0, 
       active: true,
     },
   ];
